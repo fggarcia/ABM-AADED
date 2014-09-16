@@ -28,11 +28,11 @@ public final class SessionFactory {
 	public <T> Session<T> getSession(Class<T> clazz) {
 
 		checkArgument(clazz != null, "clazz cannot be null");
-		Session<T> session = (Session<T>) sessions.get(clazz);
+		Session<T> session = (Session<T>) this.sessions.get(clazz);
 
 		if (session == null) {
-			session = sessionStrategy.buildSession(clazz);
-			sessions.put(clazz, session);
+			session = this.sessionStrategy.buildSession(clazz);
+			this.sessions.put(clazz, session);
 		}
 
 		return session;
