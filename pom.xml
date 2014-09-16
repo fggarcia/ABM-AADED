@@ -11,5 +11,6 @@
     <modules>
         <module>JABM-core</module>
         <module>JABM-html</module>
+        <module>JABM-client</module>
     </modules>
 </project>

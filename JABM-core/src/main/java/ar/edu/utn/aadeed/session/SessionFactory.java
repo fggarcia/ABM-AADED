@@ -1,15 +1,19 @@
 package ar.edu.utn.aadeed.session;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.util.Map;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public final class SessionFactory {
 
 	private static SessionFactory instance = null;
 
-	private final Map<Class<?>, Session> sessions = Maps.newConcurrentMap();
+	private final Map<Class, Session> sessions = Maps.newHashMap();
+
+	private SessionRegistrationStrategy sessionStrategy = new SessionRegistrationStrategy();
 
 	private SessionFactory() {
 	}
@@ -21,7 +25,16 @@ public final class SessionFactory {
 		return instance;
 	}
 
-	public <T> Optional<Session> findSession(Class<T> clazz) {
-		return Optional.fromNullable(sessions.get(clazz));
+	public <T> Session<T> getSession(Class<T> clazz) {
+
+		checkArgument(clazz != null, "clazz cannot be null");
+		Session<T> session = (Session<T>) sessions.get(clazz);
+
+		if (session == null) {
+			session = sessionStrategy.buildSession(clazz);
+			sessions.put(clazz, session);
+		}
+
+		return session;
 	}
 }
