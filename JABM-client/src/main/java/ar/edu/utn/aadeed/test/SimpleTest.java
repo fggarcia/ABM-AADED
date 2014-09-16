@@ -8,6 +8,9 @@ public class SimpleTest {
 
 	public static void main(String[] args) {
 		Session<Hotel> session = SessionFactory.getInstance().getSession(Hotel.class);
-		session.add(new Hotel(234L, "Churma"));
+		
+		Hotel aHotel = new Hotel(234L, "Churma");
+		
+		session.add(aHotel);
 	}
 }

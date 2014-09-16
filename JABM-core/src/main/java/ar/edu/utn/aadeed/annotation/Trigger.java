@@ -6,10 +6,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import ar.edu.utn.aadeed.event.Moment;
+import ar.edu.utn.aadeed.event.Operation;
+
 @Target({ TYPE })
 @Retention(RUNTIME)
-public @interface Triggers {
+public @interface Trigger {
 
-	Trigger[] value();
+	Operation operation();
 
+	Moment moment();
+
+	Class<?> event();
 }

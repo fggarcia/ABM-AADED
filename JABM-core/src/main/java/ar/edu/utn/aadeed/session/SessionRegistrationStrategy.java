@@ -1,15 +1,19 @@
 package ar.edu.utn.aadeed.session;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import ar.edu.utn.aadeed.annotation.Entity;
+import ar.edu.utn.aadeed.annotation.Trigger;
 import ar.edu.utn.aadeed.annotation.Triggers;
-import ar.edu.utn.aadeed.annotation.Triggers.Trigger;
 import ar.edu.utn.aadeed.event.TriggerComponent;
 import ar.edu.utn.aadeed.repository.Repository;
 import ar.edu.utn.aadeed.repository.RepositoryFactory;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.eventbus.Subscribe;
 
 public class SessionRegistrationStrategy {
 
@@ -18,12 +22,12 @@ public class SessionRegistrationStrategy {
 		checkEntityAnnotationPresence(clazz);
 
 		Repository<T> repository = buildRepository(clazz);
-		List<TriggerComponent> triggers = retrieveTriggers(clazz);
+		List<TriggerComponent> triggers = retrieveArrayOfTriggers(clazz);
 
 		return new Session<T>(repository, triggers);
 	}
 
-	private <T> List<TriggerComponent> retrieveTriggers(Class<T> clazz) {
+	private <T> List<TriggerComponent> retrieveArrayOfTriggers(Class<T> clazz) {
 
 		List<TriggerComponent> result = Lists.newArrayList();
 
@@ -39,18 +43,34 @@ public class SessionRegistrationStrategy {
 	
 	private TriggerComponent buildTriggerComponent(Trigger trigger) {
 		
+		Class<?> event = trigger.event();
+		checkEvent(event);
+		
 		TriggerComponent result = null;
-		Class<?> observer = trigger.action();
 		try {
 			
-			result = new TriggerComponent(trigger.action().newInstance(), trigger.moment(), trigger.operation());
+			result = new TriggerComponent(event.newInstance(), trigger.moment(), trigger.operation());
 			
 		} catch (Exception e) {
-			String errorMsg = String.format("Could not instantiate observer %s", observer.getName());
+			String errorMsg = String.format("Could not instantiate event %s", event.getName());
 			throw new RuntimeException(errorMsg);
 		}
 		
 		return result;
+	}
+	
+	private void checkEvent(Class<?> event) {
+		
+		boolean anySubscribe = Iterables.any(Lists.newArrayList(event.getMethods()), new Predicate<Method>() {
+			public boolean apply(Method method) {
+				return method.isAnnotationPresent(Subscribe.class);
+			}
+		});
+		
+		if(!anySubscribe) {
+			String errorMsg = String.format("Trigger class %s must contain at least one method annotated with Subscribe", event.getName());
+			throw new RuntimeException(errorMsg);			
+		}
 	}
 
 	private <T> Repository<T> buildRepository(Class<T> clazz) {
