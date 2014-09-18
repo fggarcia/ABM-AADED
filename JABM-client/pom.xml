@@ -5,11 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.aaded.framework</groupId>
-    <artifactId>JABM</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>JABM-client</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>JABM-core</module>
-        <module>JABM-html</module>
-    </modules>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.aaded.framework</groupId>
+            <artifactId>JABM-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
