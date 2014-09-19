@@ -3,6 +3,9 @@ package ar.edu.utn.aadeed.session;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ar.edu.utn.aadeed.annotation.Entity;
 import ar.edu.utn.aadeed.annotation.Trigger;
 import ar.edu.utn.aadeed.annotation.Triggers;
@@ -16,6 +19,8 @@ import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
 
 public class SessionRegistrationStrategy {
+	
+	static final Logger Log = LoggerFactory.getLogger(SessionRegistrationStrategy.class);
 
 	public <T> Session<T> buildSession(Class<T> clazz) {
 
@@ -53,6 +58,7 @@ public class SessionRegistrationStrategy {
 			
 		} catch (Exception e) {
 			String errorMsg = String.format("Could not instantiate event %s", event.getName());
+			Log.error(errorMsg);
 			throw new RuntimeException(errorMsg);
 		}
 		
@@ -69,6 +75,7 @@ public class SessionRegistrationStrategy {
 		
 		if(!anySubscribe) {
 			String errorMsg = String.format("Trigger class %s must contain at least one method annotated with Subscribe", event.getName());
+			Log.error(errorMsg);
 			throw new IllegalArgumentException(errorMsg);			
 		}
 	}
@@ -84,6 +91,7 @@ public class SessionRegistrationStrategy {
 
 		} catch (Exception e) {
 			String errorMsg = String.format("Could not instantiate repository through factory %s for class %s", entity.repositoryFactory().getName(), clazz.getName());
+			Log.error(errorMsg);
 			throw new RuntimeException(errorMsg);
 		}
 
@@ -93,6 +101,7 @@ public class SessionRegistrationStrategy {
 	private <T> void checkEntityAnnotationPresence(Class<T> clazz) {
 		if (!clazz.isAnnotationPresent(Entity.class)) {
 			String errorMsg = String.format("Class %s must be annotated with %s", clazz.getName(), Entity.class.getName());
+			Log.error(errorMsg);
 			throw new IllegalArgumentException(errorMsg);
 		}
 	}
