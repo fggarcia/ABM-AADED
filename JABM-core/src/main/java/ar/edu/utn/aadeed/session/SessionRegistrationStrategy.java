@@ -69,7 +69,7 @@ public class SessionRegistrationStrategy {
 		
 		if(!anySubscribe) {
 			String errorMsg = String.format("Trigger class %s must contain at least one method annotated with Subscribe", event.getName());
-			throw new RuntimeException(errorMsg);			
+			throw new IllegalArgumentException(errorMsg);			
 		}
 	}
 
@@ -93,7 +93,7 @@ public class SessionRegistrationStrategy {
 	private <T> void checkEntityAnnotationPresence(Class<T> clazz) {
 		if (!clazz.isAnnotationPresent(Entity.class)) {
 			String errorMsg = String.format("Class %s must be annotated with %s", clazz.getName(), Entity.class.getName());
-			throw new RuntimeException(errorMsg);
+			throw new IllegalArgumentException(errorMsg);
 		}
 	}
 }
