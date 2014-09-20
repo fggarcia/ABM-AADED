@@ -13,7 +13,7 @@ public final class SessionFactory {
 
 	private final Map<Class, Session> sessions = Maps.newHashMap();
 
-	private SessionRegistrationStrategy sessionStrategy = new SessionRegistrationStrategy();
+	private final SessionRegistrationStrategy sessionStrategy = new SessionRegistrationStrategy();
 
 	private SessionFactory() {
 	}

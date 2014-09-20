@@ -6,7 +6,7 @@ import com.google.common.eventbus.Subscribe;
 
 public class PrintConsoleAction {
 	@Subscribe
-	public void update(Hotel hotel) {
+	public void handle(Hotel hotel) {
 		System.out.println(hotel);
 	}
 }

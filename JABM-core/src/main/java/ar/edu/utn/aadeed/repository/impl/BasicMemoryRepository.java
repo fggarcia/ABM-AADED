@@ -10,16 +10,16 @@ public class BasicMemoryRepository<T> implements Repository<T> {
 
 	private Set<T> livingObjects = Sets.newConcurrentHashSet();
 
-	public boolean add(T object) {
-		return livingObjects.add(object);
+	public boolean add(T newObject) {
+		return livingObjects.add(newObject);
 	}
 
-	public boolean remove(T object) {
-		return livingObjects.remove(object);
+	public boolean remove(T oldObject) {
+		return livingObjects.remove(oldObject);
 	}
 
 	public boolean update(T oldObject, T newObject) {
-		return (remove(oldObject)) ? (add(newObject)) : false;
+		return (remove(oldObject)) ? add(newObject) : false;
 	}
 
 	public int release() {
