@@ -2,6 +2,9 @@ package ar.edu.utn.aadeed.session;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ar.edu.utn.aadeed.event.Moment;
 import ar.edu.utn.aadeed.event.Operation;
 import ar.edu.utn.aadeed.event.TriggerComponent;
@@ -12,6 +15,8 @@ import com.google.common.collect.Table;
 import com.google.common.eventbus.EventBus;
 
 public class Session<T> {
+	
+	static final Logger Log = LoggerFactory.getLogger(Session.class);
 
 	private Repository<T> repository;
 
@@ -23,21 +28,23 @@ public class Session<T> {
 	}
 
 	public boolean add(T object) {
-		postEventChange(Moment.BEFORE, Operation.ADD, object);
 		boolean result = this.repository.add(object);
-		postEventChange(Moment.AFTER, Operation.ADD, object);
 		return result;
 	}
 
 	public boolean remove(T object) {
-		postEventChange(Moment.BEFORE, Operation.REMOVE, object);
 		boolean result = this.repository.remove(object);
-		postEventChange(Moment.AFTER, Operation.REMOVE, object);
+		return result;
+	}
+	
+	public boolean update(T oldObject, T newObject) {
+		boolean result = this.repository.update(oldObject, newObject);
 		return result;
 	}
 
-	public void release() {
-		this.repository.release();
+	public int release() {
+		int result = this.repository.release();
+		return result;
 	}
 	
 	private void addTriggers(List<TriggerComponent> triggerComponents) {

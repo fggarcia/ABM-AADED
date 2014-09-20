@@ -17,7 +17,7 @@ public class TriggerComponent {
 	}
 	
 	public String getName() {
-		return this.toString();
+		return Objects.toStringHelper(this).add("moment", moment).add("operation", operation).toString();
 	}
 	
 	public Object getEvent() {
@@ -34,6 +34,6 @@ public class TriggerComponent {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("moment", moment).add("operation", operation).toString();
+		return Objects.toStringHelper(this).add("moment", moment).add("operation", operation).add("event", event.getClass().getName()).toString();
 	}
 }

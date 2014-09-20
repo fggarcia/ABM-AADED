@@ -6,6 +6,8 @@ public interface Repository<T> {
 
 	public boolean remove(T object);
 	
-	public void release();
+	public boolean update(T oldObject, T newObject);
+	
+	public int release();
 
 }

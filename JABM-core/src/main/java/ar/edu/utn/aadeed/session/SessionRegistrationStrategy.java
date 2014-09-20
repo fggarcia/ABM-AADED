@@ -63,7 +63,7 @@ public class SessionRegistrationStrategy {
 			
 		} catch (Exception e) {
 			String errorMsg = String.format("Could not instantiate event %s", event.getName());
-			Log.error(errorMsg);
+			Log.error(errorMsg, e);
 			throw new RuntimeException(errorMsg);
 		}
 		
@@ -96,7 +96,7 @@ public class SessionRegistrationStrategy {
 
 		} catch (Exception e) {
 			String errorMsg = String.format("Could not instantiate repository through factory %s for class %s", entity.repositoryFactory().getName(), clazz.getName());
-			Log.error(errorMsg);
+			Log.error(errorMsg, e);
 			throw new RuntimeException(errorMsg);
 		}
 

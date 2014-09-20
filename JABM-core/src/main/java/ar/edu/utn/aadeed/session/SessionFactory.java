@@ -25,7 +25,7 @@ public final class SessionFactory {
 		return instance;
 	}
 
-	public <T> Session<T> getSession(Class<T> clazz) {
+	public synchronized <T> Session<T> getSession(Class<T> clazz) {
 
 		checkArgument(clazz != null, "clazz cannot be null");
 		Session<T> session = (Session<T>) this.sessions.get(clazz);

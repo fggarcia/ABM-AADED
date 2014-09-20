@@ -1,14 +1,14 @@
 package ar.edu.utn.aadeed.repository.impl;
 
-import java.util.List;
+import java.util.Set;
 
 import ar.edu.utn.aadeed.repository.Repository;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class BasicMemoryRepository<T> implements Repository<T> {
 
-	private List<T> livingObjects = Lists.newArrayList();
+	private Set<T> livingObjects = Sets.newConcurrentHashSet();
 
 	public boolean add(T object) {
 		return livingObjects.add(object);
@@ -18,7 +18,13 @@ public class BasicMemoryRepository<T> implements Repository<T> {
 		return livingObjects.remove(object);
 	}
 
-	public void release() {
+	public boolean update(T oldObject, T newObject) {
+		return (remove(oldObject)) ? (add(newObject)) : false;
+	}
+
+	public int release() {
+		int size = livingObjects.size();
 		livingObjects.clear();
+		return size;
 	}
 }
