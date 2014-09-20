@@ -27,23 +27,28 @@ public class SessionRegistrationStrategy {
 		checkEntityAnnotationPresence(clazz);
 
 		Repository<T> repository = buildRepository(clazz);
-		List<TriggerComponent> triggers = retrieveArrayOfTriggers(clazz);
+		
+		List<TriggerComponent> triggers = Lists.newArrayList();
+		addArrayOfTriggers(clazz, triggers);
+		addSingleTrigger(clazz, triggers);
 
 		return new Session<T>(repository, triggers);
 	}
 
-	private <T> List<TriggerComponent> retrieveArrayOfTriggers(Class<T> clazz) {
-
-		List<TriggerComponent> result = Lists.newArrayList();
-
+	private <T> void addSingleTrigger(Class<T> clazz, List<TriggerComponent> triggerComponents) {
+		if (clazz.isAnnotationPresent(Trigger.class)) {
+			Trigger trigger = clazz.getAnnotation(Trigger.class);
+			triggerComponents.add(buildTriggerComponent(trigger));
+		}
+	}
+	
+	private <T> void addArrayOfTriggers(Class<T> clazz, List<TriggerComponent> triggerComponents) {
 		if (clazz.isAnnotationPresent(Triggers.class)) {
 			Trigger[] triggers = clazz.getAnnotation(Triggers.class).value();
 			for (Trigger trigger : triggers) {
-				result.add(buildTriggerComponent(trigger));
+				triggerComponents.add(buildTriggerComponent(trigger));
 			}
 		}
-
-		return result;
 	}
 	
 	private TriggerComponent buildTriggerComponent(Trigger trigger) {
