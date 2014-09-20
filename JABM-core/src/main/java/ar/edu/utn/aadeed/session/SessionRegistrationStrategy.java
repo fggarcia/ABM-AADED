@@ -1,12 +1,9 @@
 package ar.edu.utn.aadeed.session;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ar.edu.utn.aadeed.annotation.Entity;
-import ar.edu.utn.aadeed.event.TriggerComponent;
 import ar.edu.utn.aadeed.repository.Repository;
 
 public class SessionRegistrationStrategy {
@@ -15,16 +12,13 @@ public class SessionRegistrationStrategy {
 	
 	private final RepositoryBuilder repositoryBuilder = new RepositoryBuilder();
 	
-	private final TriggersBuilder triggersBuilder = new TriggersBuilder();
-
 	public <T> Session<T> buildSession(Class<T> clazz) {
 
 		checkEntityAnnotationPresence(clazz);
 
 		Repository<T> repository = repositoryBuilder.build(clazz);
-		List<TriggerComponent> triggers = triggersBuilder.build(clazz);
 
-		return new Session<T>(repository, triggers);
+		return new Session<T>(repository);
 	}
 
 	private <T> void checkEntityAnnotationPresence(Class<T> clazz) {
