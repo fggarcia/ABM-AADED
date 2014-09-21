@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ar.edu.utn.aadeed.annotation.Descriptor;
-import ar.edu.utn.aadeed.annotation.View;
 import ar.edu.utn.aadeed.model.FieldDescription;
 import ar.edu.utn.aadeed.model.ViewDescription;
 
@@ -16,6 +15,8 @@ import com.google.common.collect.Lists;
 public class FieldDescriptionsParser {
 
 	static final Logger Log = LoggerFactory.getLogger(FieldDescriptionsParser.class);
+	
+	private final ViewDescriptionsParser viewDescriptionsParser = new ViewDescriptionsParser();
 
 	public <T> List<FieldDescription> build(Class<T> clazz) {
 
@@ -36,7 +37,7 @@ public class FieldDescriptionsParser {
 
 			Descriptor descriptor = field.getAnnotation(Descriptor.class);
 			
-			ViewDescription viewDescription = buildView(field);
+			ViewDescription viewDescription = viewDescriptionsParser.build(field);
 			if (viewDescription == null) {
 				throw new IllegalArgumentException(String.format("Field %s must be annotated with View", field.getName()));
 			}
@@ -48,28 +49,5 @@ public class FieldDescriptionsParser {
 
 			result.add(fieldDescription);
 		}
-	}
-	
-	private ViewDescription buildView(Field field) {
-
-		ViewDescription viewDescription = null;
-		try {
-			
-			if (field.isAnnotationPresent(View.class)) {
-				
-				View view = field.getAnnotation(View.class);
-				viewDescription = new ViewDescription(view.component());
-				viewDescription.setLabel(view.label());
-				viewDescription.setOrder(view.order());
-				viewDescription.setSize(view.size());
-			}
-			
-		} catch(Exception e) {
-			String errorMsg = String.format("Could not retrieve View info from field %s", field.getName());
-			Log.error(errorMsg, e);
-			throw new RuntimeException(errorMsg);
-		}
-		
-		return viewDescription;
 	}
 }

@@ -18,7 +18,7 @@ public final class SessionFactory {
 
 	private final Map<Class, Session> sessions = Maps.newHashMap();
 	
-	private ViewModule viewModule = null;
+	private volatile ViewModule viewModule = null;
 
 	private final SessionParser sessionParser = new SessionParser();
 
@@ -31,15 +31,9 @@ public final class SessionFactory {
 		return instance;
 	}
 
-	public ViewModuleBuilder getViewModuleBuilder() {
-		return new ViewModuleBuilder(this);
-	}
-	
 	public synchronized <T> ViewSession<T> getViewSession(Class<T> clazz) {
-
 		checkArgument(clazz != null, "clazz cannot be null");
 		checkArgument(viewModule != null, "Please, register a view module first");
-		
 		return new ViewSession<T>(getSession(clazz), viewModule);
 	}
 	
@@ -48,16 +42,19 @@ public final class SessionFactory {
 		this.viewModule = viewModule;
 	}
 	
+	public ViewModuleBuilder getViewModuleBuilder() {
+		return new ViewModuleBuilder(this);
+	}
+	
 	private <T> Session<T> getSession(Class<T> clazz) {
-		
 		checkArgument(clazz != null, "clazz cannot be null");
-		
 		Session<T> session = (Session<T>) this.sessions.get(clazz);
-		if (session == null) {
-			session = this.sessionParser.buildSession(clazz);
-			this.sessions.put(clazz, session);
-		}
-
+		return (session == null) ? (createSession(clazz)) : session;
+	}
+	
+	private <T> Session<T> createSession(Class<T> clazz) {
+		Session<T> session = this.sessionParser.buildSession(clazz);
+		this.sessions.put(clazz, session);
 		return session;
 	}
 }

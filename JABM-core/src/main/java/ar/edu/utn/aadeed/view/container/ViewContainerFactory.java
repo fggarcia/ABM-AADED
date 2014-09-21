@@ -1,7 +1,7 @@
 package ar.edu.utn.aadeed.view.container;
 
-public interface ViewContainerFactory {
+public interface ViewContainerFactory<T> {
 
-	public ViewContainer newInstance();
+	public ViewContainer<T> newInstance(Object... params);
 
 }

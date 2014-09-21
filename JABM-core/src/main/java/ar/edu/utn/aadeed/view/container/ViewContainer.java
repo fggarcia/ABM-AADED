@@ -1,10 +1,10 @@
 package ar.edu.utn.aadeed.view.container;
 
-public interface ViewContainer {
+public interface ViewContainer<T> {
 	
 	public void start();
 	
-	public void addMember(Object member);
+	public void addMember(T member);
 	
 	public void end();
 	
