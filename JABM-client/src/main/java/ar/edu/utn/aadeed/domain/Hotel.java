@@ -3,6 +3,7 @@ package ar.edu.utn.aadeed.domain;
 import ar.edu.utn.aadeed.annotation.Entity;
 import ar.edu.utn.aadeed.annotation.Descriptor;
 import ar.edu.utn.aadeed.annotation.View;
+import static ar.edu.utn.aadeed.view.ViewComponentOption.TEXT_BOX;
 import ar.edu.utn.aadeed.repository.impl.MemoryRepositoryFactory;
 
 import com.google.common.base.Objects;
@@ -10,11 +11,11 @@ import com.google.common.base.Objects;
 @Entity(repositoryFactory = MemoryRepositoryFactory.class)
 public class Hotel {
 
-	@View(order = 2, label = "Identificador")
+	@View(order = 2, label = "Identificador", component = TEXT_BOX)
 	@Descriptor(required = true, editable = false, filter = true)
 	private Long id;
 
-	@View(order = 1)
+	@View(order = 1, component = TEXT_BOX)
 	@Descriptor
 	private String name;
 
@@ -41,7 +42,6 @@ public class Hotel {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("id", id).add("name", name)
-				.toString();
+		return Objects.toStringHelper(this).add("id", id).add("name", name).toString();
 	}
 }

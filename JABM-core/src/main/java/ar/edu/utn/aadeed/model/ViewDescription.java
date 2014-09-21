@@ -1,5 +1,7 @@
 package ar.edu.utn.aadeed.model;
 
+import ar.edu.utn.aadeed.view.ViewComponentOption;
+
 public class ViewDescription {
 
 	private FieldDescription field;
@@ -7,6 +9,10 @@ public class ViewDescription {
 	private String label;
 
 	private int order;
+	
+	private int size;
+	
+	private ViewComponentOption component;
 
 	public ViewDescription(FieldDescription field) {
 		this.field = field;
@@ -30,5 +36,21 @@ public class ViewDescription {
 
 	public void setOrder(int order) {
 		this.order = order;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public ViewComponentOption getComponent() {
+		return component;
+	}
+
+	public void setComponent(ViewComponentOption component) {
+		this.component = component;
 	}
 }

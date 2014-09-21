@@ -18,8 +18,7 @@ import com.google.common.collect.Sets;
 
 public class BasicMemoryRepository<T> implements Repository<T> {
 
-	static final Logger Log = LoggerFactory
-			.getLogger(BasicMemoryRepository.class);
+	static final Logger Log = LoggerFactory.getLogger(BasicMemoryRepository.class);
 
 	private Set<T> livingObjects = Sets.newConcurrentHashSet();
 
@@ -52,6 +51,7 @@ public class BasicMemoryRepository<T> implements Repository<T> {
 	}
 
 	private boolean filter(final T object, List<Filter> filters) {
+		
 		return Iterables.all(filters, new Predicate<Filter>() {
 			public boolean apply(Filter filter) {
 				return filter(object, filter);
@@ -60,13 +60,18 @@ public class BasicMemoryRepository<T> implements Repository<T> {
 	}
 
 	private boolean filter(T object, Filter filter) {
+		
 		try {
+			
 			Field field = object.getClass().getDeclaredField(filter.getFieldName());
 			field.setAccessible(true);
+			
 			return Objects.equals(field.get(object), filter.getValue());
+			
 		} catch (Exception e) {
 			Log.error(String.format("Could not filter field %s in class %s", filter.getFieldName(), object.getClass().getName()));
 		}
+		
 		return false;
 	}
 }

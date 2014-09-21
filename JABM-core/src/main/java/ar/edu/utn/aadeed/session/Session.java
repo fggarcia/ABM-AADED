@@ -16,7 +16,7 @@ public class Session<T> {
 
 	private List<FieldDescription> fieldDescriptions = Lists.newArrayList();
 	
-	private List<ViewDescription> viewDescriptions = Lists.newArrayList(); 
+	private List<ViewDescription> viewDescriptions = Lists.newArrayList();
 
 	protected Session(Repository<T> repository, List<FieldDescription> fields, List<ViewDescription> views) {
 		this.repository = repository;

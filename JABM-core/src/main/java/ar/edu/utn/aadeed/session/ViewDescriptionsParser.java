@@ -40,6 +40,8 @@ public class ViewDescriptionsParser {
 				ViewDescription viewDescription = new ViewDescription(fieldDescription);
 				viewDescription.setLabel(view.label());
 				viewDescription.setOrder(view.order());
+				viewDescription.setSize(view.size());
+				viewDescription.setComponent(view.component());
 				
 				result.add(viewDescription);
 			}
