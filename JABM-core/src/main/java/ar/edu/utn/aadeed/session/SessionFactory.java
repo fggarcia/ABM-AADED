@@ -19,8 +19,7 @@ public final class SessionFactory {
 
 	private final SessionRegistrationStrategy sessionStrategy = new SessionRegistrationStrategy();
 
-	private SessionFactory() {
-	}
+	private SessionFactory() { }
 
 	public synchronized static SessionFactory getInstance() {
 		if (instance == null) {
@@ -28,23 +27,25 @@ public final class SessionFactory {
 		}
 		return instance;
 	}
-	
-	public synchronized void registerViewModule(ViewModule module) {
-		
-		checkArgument(module != null, "module cannot be null");
-		viewModules.put(module.getName(), module);
+
+	public ViewModuleBuilder getViewModuleBuilder() {
+		return new ViewModuleBuilder(this);
 	}
-
+	
 	public synchronized <T> Session<T> getSession(Class<T> clazz) {
-
 		checkArgument(clazz != null, "clazz cannot be null");
+		
 		Session<T> session = (Session<T>) this.sessions.get(clazz);
-
 		if (session == null) {
 			session = this.sessionStrategy.buildSession(clazz);
 			this.sessions.put(clazz, session);
 		}
 
 		return session;
+	}
+	
+	synchronized void registerViewModule(ViewModule module) {
+		checkArgument(module != null, "module cannot be null");
+		viewModules.put(module.getName(), module);
 	}
 }

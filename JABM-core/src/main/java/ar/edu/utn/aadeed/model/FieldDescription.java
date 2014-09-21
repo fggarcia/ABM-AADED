@@ -5,16 +5,19 @@ public class FieldDescription {
 	private String name;
 	
 	private Class<?> clazz;
-
+	
+	private ViewDescription view;
+	
 	private boolean required;
 
 	private boolean editable;
 
 	private boolean filter;
 
-	public FieldDescription(String name, Class<?> clazz) {
+	public FieldDescription(String name, Class<?> clazz, ViewDescription view) {
 		this.name = name;
 		this.clazz = clazz;
+		this.view = view;
 	}
 
 	public String getName() {
@@ -47,5 +50,9 @@ public class FieldDescription {
 	
 	public Class<?> getClazz() {
 		return clazz;
+	}
+	
+	public ViewDescription getView() {
+		return view;
 	}
 }

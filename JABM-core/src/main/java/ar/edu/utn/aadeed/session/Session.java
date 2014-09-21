@@ -3,7 +3,6 @@ package ar.edu.utn.aadeed.session;
 import java.util.List;
 
 import ar.edu.utn.aadeed.model.FieldDescription;
-import ar.edu.utn.aadeed.model.ViewDescription;
 import ar.edu.utn.aadeed.repository.Repository;
 
 import com.google.common.base.Predicate;
@@ -16,12 +15,9 @@ public class Session<T> {
 
 	private List<FieldDescription> fieldDescriptions = Lists.newArrayList();
 	
-	private List<ViewDescription> viewDescriptions = Lists.newArrayList();
-
-	protected Session(Repository<T> repository, List<FieldDescription> fields, List<ViewDescription> views) {
+	Session(Repository<T> repository, List<FieldDescription> fields) {
 		this.repository = repository;
 		this.fieldDescriptions = fields;
-		this.viewDescriptions = views;
 	}
 
 	public boolean add(T newObject) {

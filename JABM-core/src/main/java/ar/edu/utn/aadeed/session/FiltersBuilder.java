@@ -20,7 +20,7 @@ public class FiltersBuilder<T> {
 
 	private List<Filter> filters = Lists.newArrayList();
 
-	public FiltersBuilder(List<FieldDescription> availableFieldFilters, Repository<T> repository) {
+	FiltersBuilder(List<FieldDescription> availableFieldFilters, Repository<T> repository) {
 		this.repository = repository;
 		this.setAvailableFieldFilters(availableFieldFilters);
 	}
