@@ -1,7 +1,7 @@
 package ar.edu.utn.aadeed.domain;
 
 import ar.edu.utn.aadeed.annotation.Entity;
-import ar.edu.utn.aadeed.annotation.Field;
+import ar.edu.utn.aadeed.annotation.Descriptor;
 import ar.edu.utn.aadeed.annotation.View;
 import ar.edu.utn.aadeed.repository.impl.MemoryRepositoryFactory;
 
@@ -11,7 +11,7 @@ import com.google.common.base.Objects;
 public class Room {
 
 	@View(order = 2, label = "Identificador")
-	@Field(required = true, editable = false)
+	@Descriptor(required = true, editable = false)
 	private Long id;
 	
 	public Room(Long id) {

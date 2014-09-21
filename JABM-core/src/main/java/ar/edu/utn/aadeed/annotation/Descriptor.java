@@ -7,9 +7,11 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 @Target({FIELD})
 @Retention(RUNTIME)
-public @interface Field {
+public @interface Descriptor {
 
     boolean required() default false;
 
     boolean editable() default true;
+    
+    boolean filter() default false;
 }

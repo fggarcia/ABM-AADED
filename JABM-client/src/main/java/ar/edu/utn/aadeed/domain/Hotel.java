@@ -1,7 +1,7 @@
 package ar.edu.utn.aadeed.domain;
 
 import ar.edu.utn.aadeed.annotation.Entity;
-import ar.edu.utn.aadeed.annotation.Field;
+import ar.edu.utn.aadeed.annotation.Descriptor;
 import ar.edu.utn.aadeed.annotation.View;
 import ar.edu.utn.aadeed.repository.impl.MemoryRepositoryFactory;
 
@@ -11,13 +11,13 @@ import com.google.common.base.Objects;
 public class Hotel {
 
 	@View(order = 2, label = "Identificador")
-	@Field(required = true, editable = false)
+	@Descriptor(required = true, editable = false, filter = true)
 	private Long id;
 
-	@View(order = 1)
-	@Field
+	@View(order = 1, filter = true)
+	@Descriptor
 	private String name;
-
+	
 	public Hotel(Long id, String name) {
 		this.id = id;
 		this.name = name;
