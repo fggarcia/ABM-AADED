@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Map;
 
+import ar.edu.utn.aadeed.view.ViewModule;
+
 import com.google.common.collect.Maps;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -12,6 +14,8 @@ public final class SessionFactory {
 	private static SessionFactory instance = null;
 
 	private final Map<Class, Session> sessions = Maps.newHashMap();
+	
+	private final Map<String, ViewModule> viewModules = Maps.newHashMap();
 
 	private final SessionRegistrationStrategy sessionStrategy = new SessionRegistrationStrategy();
 
@@ -23,6 +27,12 @@ public final class SessionFactory {
 			instance = new SessionFactory();
 		}
 		return instance;
+	}
+	
+	public synchronized void registerViewModule(ViewModule module) {
+		
+		checkArgument(module != null, "module cannot be null");
+		viewModules.put(module.getName(), module);
 	}
 
 	public synchronized <T> Session<T> getSession(Class<T> clazz) {
