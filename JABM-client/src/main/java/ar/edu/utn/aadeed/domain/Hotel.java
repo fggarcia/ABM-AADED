@@ -3,8 +3,8 @@ package ar.edu.utn.aadeed.domain;
 import ar.edu.utn.aadeed.annotation.Entity;
 import ar.edu.utn.aadeed.annotation.Descriptor;
 import ar.edu.utn.aadeed.annotation.View;
-import static ar.edu.utn.aadeed.view.ViewComponent.TEXT_BOX;
-import ar.edu.utn.aadeed.repository.impl.MemoryRepositoryFactory;
+import static ar.edu.utn.aadeed.view.component.ViewComponent.TEXT_BOX;
+import ar.edu.utn.aadeed.repository.memory.MemoryRepositoryFactory;
 
 import com.google.common.base.Objects;
 

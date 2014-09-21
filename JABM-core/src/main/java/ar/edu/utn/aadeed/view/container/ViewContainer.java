@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.view;
+package ar.edu.utn.aadeed.view.container;
 
 public interface ViewContainer {
 	
@@ -7,5 +7,7 @@ public interface ViewContainer {
 	public void addMember(Object member);
 	
 	public void end();
+	
+	public void render();
 
 }

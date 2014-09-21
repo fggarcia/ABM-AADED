@@ -1,6 +1,6 @@
 package ar.edu.utn.aadeed.model;
 
-import ar.edu.utn.aadeed.view.ViewComponent;
+import ar.edu.utn.aadeed.view.component.ViewComponent;
 
 public class ViewDescription {
 

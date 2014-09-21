@@ -1,6 +1,6 @@
 package ar.edu.utn.aadeed.module;
 
-import ar.edu.utn.aadeed.view.ViewContainer;
+import ar.edu.utn.aadeed.view.container.ViewContainer;
 
 public class FormContainer implements ViewContainer {
 
@@ -16,5 +16,9 @@ public class FormContainer implements ViewContainer {
 
 	public void end() {
 
+	}
+	
+	public void render() {
+		
 	}
 }

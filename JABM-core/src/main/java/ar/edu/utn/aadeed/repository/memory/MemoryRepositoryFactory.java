@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.repository.impl;
+package ar.edu.utn.aadeed.repository.memory;
 
 import ar.edu.utn.aadeed.repository.Repository;
 import ar.edu.utn.aadeed.repository.RepositoryFactory;

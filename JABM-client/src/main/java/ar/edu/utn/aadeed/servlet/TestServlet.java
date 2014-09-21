@@ -7,15 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class TestServlet extends HttpServlet {
+import ar.edu.utn.aadeed.RegisterComponents;
+import ar.edu.utn.aadeed.domain.Hotel;
+import ar.edu.utn.aadeed.session.SessionFactory;
+import ar.edu.utn.aadeed.view.ViewSession;
 
-	private String greeting = "Hello World";
+public class TestServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		SessionFactory.getInstance().getViewSession(Hotel.class);
+		
 		response.setContentType("text/html");
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.getWriter().println("<h1>" + greeting + "</h1>");
-		response.getWriter().println("session=" + request.getSession(true).getId());
+		response.getWriter().println("");
 	}
 }

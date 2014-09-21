@@ -1,8 +1,9 @@
-package ar.edu.utn.aadeed.view;
+package ar.edu.utn.aadeed.view.component;
 
 import com.google.common.base.Objects;
 
 import ar.edu.utn.aadeed.model.FieldDescription;
+import ar.edu.utn.aadeed.view.container.ViewContainer;
 
 public abstract class ViewComponentBehaviour {
 

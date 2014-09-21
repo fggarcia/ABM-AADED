@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.session;
+package ar.edu.utn.aadeed.builder;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -20,7 +20,7 @@ public class FiltersBuilder<T> {
 
 	private List<Filter> filters = Lists.newArrayList();
 
-	FiltersBuilder(List<FieldDescription> availableFieldFilters, Repository<T> repository) {
+	public FiltersBuilder(List<FieldDescription> availableFieldFilters, Repository<T> repository) {
 		this.repository = repository;
 		this.setAvailableFieldFilters(availableFieldFilters);
 	}

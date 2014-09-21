@@ -1,9 +1,9 @@
 package ar.edu.utn.aadeed.module;
 
 import ar.edu.utn.aadeed.model.FieldDescription;
-import ar.edu.utn.aadeed.view.ViewComponent;
-import ar.edu.utn.aadeed.view.ViewComponentBehaviour;
-import ar.edu.utn.aadeed.view.ViewContainer;
+import ar.edu.utn.aadeed.view.component.ViewComponent;
+import ar.edu.utn.aadeed.view.component.ViewComponentBehaviour;
+import ar.edu.utn.aadeed.view.container.ViewContainer;
 
 public class TextBoxComponent extends ViewComponentBehaviour {
 
@@ -22,7 +22,7 @@ public class TextBoxComponent extends ViewComponentBehaviour {
 		sb.append(" : ");
 		sb.append("<input type=\"text\" ");
 		sb.append(String.format("name=\"%s\" ", field.getName()));
-		if(size > 0) sb.append(String.format("maxlength=\"%s\" ", size));
+		if (size > 0) sb.append(String.format("maxlength=\"%s\" ", size));
 		sb.append(">");
 		
 		container.addMember(sb);

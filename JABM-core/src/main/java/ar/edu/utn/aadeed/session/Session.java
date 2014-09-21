@@ -2,6 +2,7 @@ package ar.edu.utn.aadeed.session;
 
 import java.util.List;
 
+import ar.edu.utn.aadeed.builder.FiltersBuilder;
 import ar.edu.utn.aadeed.model.FieldDescription;
 import ar.edu.utn.aadeed.repository.Repository;
 
@@ -15,7 +16,7 @@ public class Session<T> {
 
 	private List<FieldDescription> fieldDescriptions = Lists.newArrayList();
 	
-	Session(Repository<T> repository, List<FieldDescription> fields) {
+	public Session(Repository<T> repository, List<FieldDescription> fields) {
 		this.repository = repository;
 		this.fieldDescriptions = fields;
 	}
@@ -38,6 +39,10 @@ public class Session<T> {
 
 	public FiltersBuilder<T> getFiltersBuilder() {
 		return new FiltersBuilder<T>(Lists.newArrayList(findAvailableFilters()), repository);
+	}
+	
+	public List<FieldDescription> getFieldDescriptions() {
+		return fieldDescriptions;
 	}
 
 	private Iterable<FieldDescription> findAvailableFilters() {

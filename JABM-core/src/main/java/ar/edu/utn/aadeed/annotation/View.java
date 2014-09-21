@@ -3,7 +3,7 @@ package ar.edu.utn.aadeed.annotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import ar.edu.utn.aadeed.view.ViewComponent;
+import ar.edu.utn.aadeed.view.component.ViewComponent;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 

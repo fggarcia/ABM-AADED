@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.session;
+package ar.edu.utn.aadeed.parser;
 
 import java.lang.reflect.Field;
 import java.util.List;

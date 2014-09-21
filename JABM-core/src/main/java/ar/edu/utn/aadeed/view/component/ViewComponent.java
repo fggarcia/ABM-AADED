@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.view;
+package ar.edu.utn.aadeed.view.component;
 
 public enum ViewComponent {
 

@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.session;
+package ar.edu.utn.aadeed.parser;
 
 import java.util.List;
 
@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 import ar.edu.utn.aadeed.annotation.Entity;
 import ar.edu.utn.aadeed.model.FieldDescription;
 import ar.edu.utn.aadeed.repository.Repository;
+import ar.edu.utn.aadeed.session.Session;
 
-public class SessionRegistrationStrategy {
+public class SessionParser {
 	
-	static final Logger Log = LoggerFactory.getLogger(SessionRegistrationStrategy.class);
+	static final Logger Log = LoggerFactory.getLogger(SessionParser.class);
 	
 	private final RepositoryParser repositoryParser = new RepositoryParser();
 	

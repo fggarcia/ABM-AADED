@@ -4,7 +4,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Map;
 
+import ar.edu.utn.aadeed.builder.ViewModuleBuilder;
+import ar.edu.utn.aadeed.parser.SessionParser;
 import ar.edu.utn.aadeed.view.ViewModule;
+import ar.edu.utn.aadeed.view.ViewSession;
 
 import com.google.common.collect.Maps;
 
@@ -15,9 +18,9 @@ public final class SessionFactory {
 
 	private final Map<Class, Session> sessions = Maps.newHashMap();
 	
-	private final Map<String, ViewModule> viewModules = Maps.newHashMap();
+	private ViewModule viewModule = null;
 
-	private final SessionRegistrationStrategy sessionStrategy = new SessionRegistrationStrategy();
+	private final SessionParser sessionParser = new SessionParser();
 
 	private SessionFactory() { }
 
@@ -32,20 +35,29 @@ public final class SessionFactory {
 		return new ViewModuleBuilder(this);
 	}
 	
-	public synchronized <T> Session<T> getSession(Class<T> clazz) {
+	public synchronized <T> ViewSession<T> getViewSession(Class<T> clazz) {
+
+		checkArgument(clazz != null, "clazz cannot be null");
+		checkArgument(viewModule != null, "Please, register a view module first");
+		
+		return new ViewSession<T>(getSession(clazz), viewModule);
+	}
+	
+	public synchronized void registerViewModule(ViewModule viewModule) {
+		checkArgument(viewModule != null, "viewModule cannot be null");
+		this.viewModule = viewModule;
+	}
+	
+	private <T> Session<T> getSession(Class<T> clazz) {
+		
 		checkArgument(clazz != null, "clazz cannot be null");
 		
 		Session<T> session = (Session<T>) this.sessions.get(clazz);
 		if (session == null) {
-			session = this.sessionStrategy.buildSession(clazz);
+			session = this.sessionParser.buildSession(clazz);
 			this.sessions.put(clazz, session);
 		}
 
 		return session;
-	}
-	
-	synchronized void registerViewModule(ViewModule module) {
-		checkArgument(module != null, "module cannot be null");
-		viewModules.put(module.getName(), module);
 	}
 }
