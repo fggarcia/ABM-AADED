@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.session.filter;
+package ar.edu.utn.aadeed.model;
 
 public class Filter {
 

@@ -16,7 +16,7 @@ public class SimpleTest {
 		SessionFactory.getInstance().getSession(Hotel.class).add(aHotel);
 		SessionFactory.getInstance().getSession(Room.class).add(aRoom);
 		
-		List<Hotel> hotels = SessionFactory.getInstance().getSession(Hotel.class).getFiltersBuilder().add("id", 2634L).add("name", 2634L).search();
+		List<Hotel> hotels = SessionFactory.getInstance().getSession(Hotel.class).getFiltersBuilder().search();
 		System.out.println(hotels);
 	}
 }

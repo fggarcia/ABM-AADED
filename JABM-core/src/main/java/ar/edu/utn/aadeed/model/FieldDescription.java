@@ -1,17 +1,20 @@
-package ar.edu.utn.aadeed.session.field;
+package ar.edu.utn.aadeed.model;
 
 public class FieldDescription {
 
 	private String name;
+	
+	private Class<?> clazz;
 
-	private boolean required;;
+	private boolean required;
 
 	private boolean editable;
 
 	private boolean filter;
 
-	public FieldDescription(String name) {
+	public FieldDescription(String name, Class<?> clazz) {
 		this.name = name;
+		this.clazz = clazz;
 	}
 
 	public String getName() {
@@ -40,5 +43,9 @@ public class FieldDescription {
 
 	public void setFilter(boolean filter) {
 		this.filter = filter;
+	}
+	
+	public Class<?> getClazz() {
+		return clazz;
 	}
 }

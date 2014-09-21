@@ -2,7 +2,7 @@ package ar.edu.utn.aadeed.repository;
 
 import java.util.List;
 
-import ar.edu.utn.aadeed.session.filter.Filter;
+import ar.edu.utn.aadeed.model.Filter;
 
 public interface Repository<T> {
 

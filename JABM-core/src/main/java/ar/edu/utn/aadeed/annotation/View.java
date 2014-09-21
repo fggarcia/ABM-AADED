@@ -13,5 +13,4 @@ public @interface View {
 
     String label() default "";
 
-    boolean filter() default false;
 }

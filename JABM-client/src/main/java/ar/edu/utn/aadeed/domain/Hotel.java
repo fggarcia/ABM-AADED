@@ -14,10 +14,10 @@ public class Hotel {
 	@Descriptor(required = true, editable = false, filter = true)
 	private Long id;
 
-	@View(order = 1, filter = true)
+	@View(order = 1)
 	@Descriptor
 	private String name;
-	
+
 	public Hotel(Long id, String name) {
 		this.id = id;
 		this.name = name;
@@ -41,6 +41,7 @@ public class Hotel {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("id", id).add("name", name).toString();
+		return Objects.toStringHelper(this).add("id", id).add("name", name)
+				.toString();
 	}
 }

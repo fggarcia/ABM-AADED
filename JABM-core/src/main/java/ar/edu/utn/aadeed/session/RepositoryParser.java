@@ -7,9 +7,9 @@ import ar.edu.utn.aadeed.annotation.Entity;
 import ar.edu.utn.aadeed.repository.Repository;
 import ar.edu.utn.aadeed.repository.RepositoryFactory;
 
-public class RepositoryBuilder {
+public class RepositoryParser {
 	
-	static final Logger Log = LoggerFactory.getLogger(RepositoryBuilder.class);
+	static final Logger Log = LoggerFactory.getLogger(RepositoryParser.class);
 
 	public <T> Repository<T> build(Class<T> clazz) {
 

@@ -1,23 +1,27 @@
 package ar.edu.utn.aadeed.session;
 
 import java.util.List;
-import java.util.Map;
 
+import ar.edu.utn.aadeed.model.FieldDescription;
+import ar.edu.utn.aadeed.model.ViewDescription;
 import ar.edu.utn.aadeed.repository.Repository;
-import ar.edu.utn.aadeed.session.field.FieldDescription;
-import ar.edu.utn.aadeed.session.filter.FiltersBuilder;
 
-import com.google.common.collect.Maps;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 public class Session<T> {
 
 	private Repository<T> repository;
 
-	private Map<String, FieldDescription> fieldDescriptions = Maps.newHashMap();
+	private List<FieldDescription> fieldDescriptions = Lists.newArrayList();
+	
+	private List<ViewDescription> viewDescriptions = Lists.newArrayList(); 
 
-	protected Session(Repository<T> repository, List<FieldDescription> fields) {
+	protected Session(Repository<T> repository, List<FieldDescription> fields, List<ViewDescription> views) {
 		this.repository = repository;
-		this.setFields(fields);
+		this.fieldDescriptions = fields;
+		this.viewDescriptions = views;
 	}
 
 	public boolean add(T newObject) {
@@ -37,12 +41,14 @@ public class Session<T> {
 	}
 
 	public FiltersBuilder<T> getFiltersBuilder() {
-		return new FiltersBuilder<T>(fieldDescriptions.keySet(), repository);
+		return new FiltersBuilder<T>(Lists.newArrayList(findAvailableFilters()), repository);
 	}
 
-	private void setFields(List<FieldDescription> fields) {
-		for (FieldDescription field : fields) {
-			fieldDescriptions.put(field.getName(), field);
-		}
+	private Iterable<FieldDescription> findAvailableFilters() {
+		return Iterables.filter(fieldDescriptions, new Predicate<FieldDescription>() {
+			public boolean apply(FieldDescription input) {
+				return input.isFilter();
+			}
+		});
 	}
 }

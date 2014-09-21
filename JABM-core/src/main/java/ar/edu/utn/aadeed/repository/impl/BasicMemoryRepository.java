@@ -8,8 +8,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ar.edu.utn.aadeed.model.Filter;
 import ar.edu.utn.aadeed.repository.Repository;
-import ar.edu.utn.aadeed.session.filter.Filter;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;

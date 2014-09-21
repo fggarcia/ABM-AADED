@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.session.field;
+package ar.edu.utn.aadeed.session;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -7,12 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ar.edu.utn.aadeed.annotation.Descriptor;
+import ar.edu.utn.aadeed.model.FieldDescription;
 
 import com.google.common.collect.Lists;
 
-public class FieldsBuilder {
+public class FieldDescriptionsParser {
 
-	static final Logger Log = LoggerFactory.getLogger(FieldsBuilder.class);
+	static final Logger Log = LoggerFactory.getLogger(FieldDescriptionsParser.class);
 
 	public <T> List<FieldDescription> build(Class<T> clazz) {
 
@@ -32,7 +33,8 @@ public class FieldsBuilder {
 		if (field.isAnnotationPresent(Descriptor.class)) {
 
 			Descriptor descriptor = field.getAnnotation(Descriptor.class);
-			FieldDescription fieldDescription = new FieldDescription(field.getName());
+			
+			FieldDescription fieldDescription = new FieldDescription(field.getName(), field.getType());
 			fieldDescription.setEditable(descriptor.editable());
 			fieldDescription.setFilter(descriptor.filter());
 			fieldDescription.setRequired(descriptor.required());
