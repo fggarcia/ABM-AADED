@@ -2,11 +2,13 @@ package ar.edu.utn.aadeed.view;
 
 import java.util.Map;
 
+import com.google.common.collect.Maps;
+
 public class ViewModule {
 
 	private String name;
 	
-	private Map<ViewComponent, ViewComponentBehaviour> behaviours;
+	private Map<ViewComponent, ViewComponentBehaviour> behaviours = Maps.newHashMap();
 
 	public ViewModule(String name) {
 		this.name = name;

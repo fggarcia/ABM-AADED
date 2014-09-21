@@ -8,6 +8,7 @@ import ar.edu.utn.aadeed.view.ViewComponentBehaviour;
 import ar.edu.utn.aadeed.view.ViewModule;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 public class ViewModuleBuilder {
 	
@@ -15,7 +16,7 @@ public class ViewModuleBuilder {
 	
 	private String name;
 	
-	private List<ViewComponentBehaviour> behaviours;
+	private List<ViewComponentBehaviour> behaviours = Lists.newArrayList();
 
 	ViewModuleBuilder(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;

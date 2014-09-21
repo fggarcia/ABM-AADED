@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class TestServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -382769370562102045L;
-	
 	private String greeting = "Hello World";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
