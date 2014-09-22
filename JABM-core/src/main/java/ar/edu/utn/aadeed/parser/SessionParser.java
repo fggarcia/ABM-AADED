@@ -2,17 +2,12 @@ package ar.edu.utn.aadeed.parser;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ar.edu.utn.aadeed.annotation.Entity;
 import ar.edu.utn.aadeed.model.FieldDescription;
 import ar.edu.utn.aadeed.repository.Repository;
 import ar.edu.utn.aadeed.session.Session;
 
 public class SessionParser {
-	
-	static final Logger Log = LoggerFactory.getLogger(SessionParser.class);
 	
 	private final RepositoryParser repositoryParser = new RepositoryParser();
 	
@@ -31,7 +26,6 @@ public class SessionParser {
 	private <T> void checkEntityAnnotationPresence(Class<T> clazz) {
 		if (!clazz.isAnnotationPresent(Entity.class)) {
 			String errorMsg = String.format("Class %s must be annotated with %s", clazz.getName(), Entity.class.getName());
-			Log.error(errorMsg);
 			throw new IllegalArgumentException(errorMsg);
 		}
 	}

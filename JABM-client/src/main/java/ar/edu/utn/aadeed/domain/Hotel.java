@@ -1,9 +1,9 @@
 package ar.edu.utn.aadeed.domain;
 
-import ar.edu.utn.aadeed.annotation.Entity;
-import ar.edu.utn.aadeed.annotation.Descriptor;
-import ar.edu.utn.aadeed.annotation.View;
 import static ar.edu.utn.aadeed.view.component.ViewComponent.TEXT_BOX;
+import ar.edu.utn.aadeed.annotation.Descriptor;
+import ar.edu.utn.aadeed.annotation.Entity;
+import ar.edu.utn.aadeed.annotation.View;
 import ar.edu.utn.aadeed.repository.memory.MemoryRepositoryFactory;
 
 import com.google.common.base.Objects;
@@ -11,7 +11,7 @@ import com.google.common.base.Objects;
 @Entity(repositoryFactory = MemoryRepositoryFactory.class)
 public class Hotel {
 
-	@View(order = 2, label = "Identificador", component = TEXT_BOX)
+	@View(order = 2, label = "Identificador", component = TEXT_BOX, size = 10)
 	@Descriptor(required = true, editable = false, filter = true)
 	private Long id;
 

@@ -1,5 +1,9 @@
 package ar.edu.utn.aadeed.model;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.google.common.base.Strings;
+
 public class FieldDescription {
 
 	private String name;
@@ -18,6 +22,14 @@ public class FieldDescription {
 		this.name = name;
 		this.clazz = clazz;
 		this.view = view;
+	}
+	
+	public String getLabel() {
+		String viewLabel = view.getLabel();
+		if (!Strings.isNullOrEmpty(viewLabel)) {
+			return StringUtils.capitalize(viewLabel);
+		}
+		return StringUtils.capitalize(name);
 	}
 
 	public String getName() {

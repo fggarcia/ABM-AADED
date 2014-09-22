@@ -17,7 +17,7 @@ public class ViewModuleBuilder {
 	
 	private String name;
 	
-	private List<ViewComponentBehaviour<?>> behaviours = Lists.newArrayList();
+	private List<ViewComponentBehaviour> behaviours = Lists.newArrayList();
 	
 	public ViewModuleBuilder(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -28,7 +28,7 @@ public class ViewModuleBuilder {
 		return this;
 	}
 	
-	public ViewModuleBuilder addViewComponentBehaviour(ViewComponentBehaviour<?> behaviour) {
+	public ViewModuleBuilder addViewComponentBehaviour(ViewComponentBehaviour behaviour) {
 		checkArgument(behaviour != null, "behaviour cannot be null");
 		checkArgument(behaviour.getViewComponent() != null, "view component cannot be null");
 		behaviours.add(behaviour);
@@ -44,7 +44,7 @@ public class ViewModuleBuilder {
 		checkArgument(!Strings.isNullOrEmpty(name), "name is mandatory");
 		
 		ViewModule viewModule = new ViewModule(name);
-		for (ViewComponentBehaviour<?> behaviour : behaviours) {
+		for (ViewComponentBehaviour behaviour : behaviours) {
 			viewModule.addViewComponent(behaviour);
 		}
 		

@@ -1,6 +1,6 @@
 package ar.edu.utn.aadeed;
 
-import ar.edu.utn.aadeed.module.TextBoxComponent;
+import ar.edu.utn.aadeed.component.TextBoxComponent;
 import ar.edu.utn.aadeed.session.SessionFactory;
 
 public final class RegisterComponents {

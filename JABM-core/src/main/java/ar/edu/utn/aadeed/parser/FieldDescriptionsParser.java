@@ -3,9 +3,6 @@ package ar.edu.utn.aadeed.parser;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ar.edu.utn.aadeed.annotation.Descriptor;
 import ar.edu.utn.aadeed.model.FieldDescription;
 import ar.edu.utn.aadeed.model.ViewDescription;
@@ -14,8 +11,6 @@ import com.google.common.collect.Lists;
 
 public class FieldDescriptionsParser {
 
-	static final Logger Log = LoggerFactory.getLogger(FieldDescriptionsParser.class);
-	
 	private final ViewDescriptionsParser viewDescriptionsParser = new ViewDescriptionsParser();
 
 	public <T> List<FieldDescription> build(Class<T> clazz) {

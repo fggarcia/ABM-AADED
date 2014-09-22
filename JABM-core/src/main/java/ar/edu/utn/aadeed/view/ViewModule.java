@@ -13,18 +13,18 @@ public class ViewModule {
 	
 	private String name;
 
-	private Map<ViewComponent, ViewComponentBehaviour<?>> behaviours = Maps.newHashMap();
+	private Map<ViewComponent, ViewComponentBehaviour> behaviours = Maps.newHashMap();
 	
 	public ViewModule(String name) {
 		this.name = name;
 	}
 	
-	public void addViewComponent(ViewComponentBehaviour<?> behaviour) {
+	public void addViewComponent(ViewComponentBehaviour behaviour) {
 		checkArgument(behaviour != null, "behaviour cannot be null");
 		behaviours.put(behaviour.getViewComponent(), behaviour);
 	}
 	
-	public ViewComponentBehaviour<?> findComponentBehaviour(ViewComponent component) {
+	public ViewComponentBehaviour findComponentBehaviour(ViewComponent component) {
 		return this.behaviours.get(component);
 	}
 
