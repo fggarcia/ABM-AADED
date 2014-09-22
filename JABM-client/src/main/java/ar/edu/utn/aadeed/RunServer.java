@@ -6,7 +6,7 @@ import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import ar.edu.utn.aadeed.servlet.TestServlet;
+import ar.edu.utn.aadeed.servlet.BasicServlet;
 
 public class RunServer {
 	
@@ -29,7 +29,7 @@ public class RunServer {
 	        context.setContextPath("/");
 	        server.setHandler(context);
 	 
-	        context.addServlet(new ServletHolder(new TestServlet()),"/*");
+	        context.addServlet(new ServletHolder(new BasicServlet()),"/*");
 			
 			server.start();
 			server.join();

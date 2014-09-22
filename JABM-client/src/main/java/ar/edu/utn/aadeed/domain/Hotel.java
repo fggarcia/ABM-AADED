@@ -1,22 +1,22 @@
 package ar.edu.utn.aadeed.domain;
 
-import static ar.edu.utn.aadeed.view.component.ViewComponent.TEXT_BOX;
-import ar.edu.utn.aadeed.annotation.Descriptor;
-import ar.edu.utn.aadeed.annotation.Entity;
-import ar.edu.utn.aadeed.annotation.View;
-import ar.edu.utn.aadeed.repository.memory.MemoryRepositoryFactory;
+import static ar.edu.utn.aadeed.view.component.JAViewType.TEXT_BOX;
+import ar.edu.utn.aadeed.annotation.JADescriptor;
+import ar.edu.utn.aadeed.annotation.JAEntity;
+import ar.edu.utn.aadeed.annotation.JAView;
+import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
 
 import com.google.common.base.Objects;
 
-@Entity(repositoryFactory = MemoryRepositoryFactory.class)
+@JAEntity(repositoryFactory = JAMemoryRepositoryFactory.class)
 public class Hotel {
 
-	@View(order = 2, label = "Identificador", component = TEXT_BOX, size = 10)
-	@Descriptor(required = true, editable = false, filter = true)
+	@JAView(order = 2, label = "Identificador", type = TEXT_BOX, size = 10)
+	@JADescriptor(required = true, editable = false, filter = true)
 	private Long id;
 
-	@View(order = 1, component = TEXT_BOX)
-	@Descriptor
+	@JAView(order = 1, type = TEXT_BOX)
+	@JADescriptor
 	private String name;
 
 	public Hotel(Long id, String name) {

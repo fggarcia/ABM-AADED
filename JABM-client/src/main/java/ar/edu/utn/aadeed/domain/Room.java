@@ -1,18 +1,18 @@
 package ar.edu.utn.aadeed.domain;
 
-import ar.edu.utn.aadeed.annotation.Entity;
-import ar.edu.utn.aadeed.annotation.Descriptor;
-import ar.edu.utn.aadeed.annotation.View;
-import ar.edu.utn.aadeed.repository.memory.MemoryRepositoryFactory;
-import static ar.edu.utn.aadeed.view.component.ViewComponent.TEXT_BOX;
+import ar.edu.utn.aadeed.annotation.JAEntity;
+import ar.edu.utn.aadeed.annotation.JADescriptor;
+import ar.edu.utn.aadeed.annotation.JAView;
+import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
+import static ar.edu.utn.aadeed.view.component.JAViewType.TEXT_BOX;
 
 import com.google.common.base.Objects;
 
-@Entity(repositoryFactory = MemoryRepositoryFactory.class)
+@JAEntity(repositoryFactory = JAMemoryRepositoryFactory.class)
 public class Room {
 
-	@View(order = 2, label = "Identificador", component = TEXT_BOX)
-	@Descriptor(required = true, editable = false)
+	@JAView(order = 2, label = "Identificador", type = TEXT_BOX)
+	@JADescriptor(required = true, editable = false)
 	private Long id;
 	
 	public Room(Long id) {
