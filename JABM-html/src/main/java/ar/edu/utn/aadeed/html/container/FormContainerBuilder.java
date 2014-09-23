@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.PrintWriter;
 
-import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 public class FormContainerBuilder {
@@ -34,7 +33,7 @@ public class FormContainerBuilder {
 		public void start() {
 		}
 
-		public void addMember(JAViewComponent member) {
+		public void addMember(Object member) {
 			sb.append("<p>");
 			sb.append(member);
 			sb.append("</p>");

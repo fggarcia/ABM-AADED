@@ -23,7 +23,7 @@ public class RunServer {
 			server.addConnector(con);
 			
 			// Register JA_HTM_Module
-			Class.forName("ar.edu.utn.aadeed.RegisterComponents");
+			Class.forName("ar.edu.utn.aadeed.html.RegisterComponents");
 
 			ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 	        context.setContextPath("/");

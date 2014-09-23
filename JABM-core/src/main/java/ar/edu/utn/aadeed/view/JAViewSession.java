@@ -55,7 +55,7 @@ public class JAViewSession {
 		if (viewComponent != null) {
 			
 			Log.info(String.format("Rendering field %s with type %s", field.getName(), viewDescription.getType()));
-			container.addMember(viewComponent);
+			viewComponent.render(field, container);
 		}
 	}
 }

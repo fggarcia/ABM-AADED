@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.utn.aadeed.domain.Room;
+import ar.edu.utn.aadeed.domain.Hotel;
 import ar.edu.utn.aadeed.html.container.FormContainerBuilder;
 import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
@@ -21,7 +21,7 @@ public class BasicServlet extends HttpServlet {
 		response.setContentType("text/html");
 		response.setStatus(HttpServletResponse.SC_OK);
 		
-		JAViewContainer<String> container = new FormContainerBuilder().withPrintWriter(response.getWriter()).build();
-		JASessionFactory.getInstance().getViewSession(Room.class).withContainer(container).render();
+		JAViewContainer container = new FormContainerBuilder().withPrintWriter(response.getWriter()).build();
+		JASessionFactory.getInstance().getViewSession(Hotel.class).withContainer(container).render();
 	}
 }
