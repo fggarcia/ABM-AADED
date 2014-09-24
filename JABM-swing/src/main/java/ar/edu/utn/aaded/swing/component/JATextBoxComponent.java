@@ -7,7 +7,7 @@ import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 import javax.swing.*;
 
-public class TextBoxComponent implements JAViewComponent {
+public class JATextBoxComponent implements JAViewComponent {
 
 	public JAViewType getViewType() {
         return JAViewType.TEXT_BOX;
