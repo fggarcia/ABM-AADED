@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed;
+package ar.edu.utn.aadeed.front.html;
 
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
@@ -6,7 +6,7 @@ import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import ar.edu.utn.aadeed.servlet.BasicServlet;
+import ar.edu.utn.aadeed.front.html.servlet.BasicServlet;
 
 public class RunServer {
 	

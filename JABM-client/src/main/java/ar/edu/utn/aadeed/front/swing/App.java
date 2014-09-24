@@ -1,14 +1,12 @@
-package ar.utn.aaded.swing;
+package ar.edu.utn.aadeed.front.swing;
 
+import ar.edu.utn.aaded.swing.RegisterComponents;
+import ar.edu.utn.aaded.swing.container.FrameContainerBuilder;
+import ar.edu.utn.aadeed.domain.Hotel;
 import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
-import ar.utn.aaded.swing.container.FrameContainerBuilder;
-import ar.utn.aaded.swing.domain.Hotel;
 
-/**
- * Hello world!
- *
- */
+
 public class App
 {
     public static void main(String args[]) throws ClassNotFoundException {

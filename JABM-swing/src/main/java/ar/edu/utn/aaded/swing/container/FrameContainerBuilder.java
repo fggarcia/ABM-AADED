@@ -1,4 +1,4 @@
-package ar.utn.aaded.swing.container;
+package ar.edu.utn.aaded.swing.container;
 
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
@@ -24,22 +24,18 @@ public class FrameContainerBuilder {
             this.frame = frame;
         }
 
-        @Override
         public void start() {
 
         }
 
-        @Override
         public void addMember(Object member) {
             frame.getContentPane().add(JComponent.class.cast(member));
         }
 
-        @Override
         public void end() {
 
         }
 
-        @Override
         public void render() {
             frame.setVisible(true);
         }

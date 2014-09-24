@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.servlet;
+package ar.edu.utn.aadeed.front.html.servlet;
 
 import java.io.IOException;
 

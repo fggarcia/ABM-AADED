@@ -1,7 +1,7 @@
-package ar.utn.aaded.swing;
+package ar.edu.utn.aaded.swing;
 
+import ar.edu.utn.aaded.swing.component.TextBoxComponent;
 import ar.edu.utn.aadeed.session.JASessionFactory;
-import ar.utn.aaded.swing.component.TextBoxComponent;
 
 public final class RegisterComponents {
 
