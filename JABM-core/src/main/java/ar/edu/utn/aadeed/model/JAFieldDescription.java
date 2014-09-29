@@ -2,17 +2,17 @@ package ar.edu.utn.aadeed.model;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Strings;
-
 
 public class JAFieldDescription {
 
 	private String name;
-	
+
 	private Class<?> clazz;
-	
+
 	private JAViewDescription view;
-	
+
 	private boolean required;
 
 	private boolean editable;
@@ -24,25 +24,25 @@ public class JAFieldDescription {
 		this.clazz = clazz;
 		this.view = view;
 	}
-	
+
 	public boolean hasView() {
 		return view != null;
 	}
-	
+
 	public String getLabel() {
-		
+
 		if (hasView()) {
-			
+
 			String viewLabel = view.getLabel();
-		
+
 			if (!Strings.isNullOrEmpty(viewLabel)) {
 				return StringUtils.capitalize(viewLabel);
-			}	
+			}
 		}
-		
+
 		return StringUtils.capitalize(name);
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -70,12 +70,17 @@ public class JAFieldDescription {
 	public void setFilter(boolean filter) {
 		this.filter = filter;
 	}
-	
+
 	public Class<?> getClazz() {
 		return clazz;
 	}
-	
+
 	public JAViewDescription getView() {
 		return view;
+	}
+
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this).add("name", name).toString();
 	}
 }

@@ -11,6 +11,7 @@ import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAViewDescription;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.container.table.JAViewRecordTable;
 
 public class JAViewSession<T> {
 
@@ -23,6 +24,14 @@ public class JAViewSession<T> {
 	public JAViewSession(List<JAFieldDescription> fields, JAViewModule viewModule) {
 		this.fields = fields;
 		this.viewModule = viewModule;
+	}
+
+	public void renderRecordTable(JAViewContainer container, List<T> items) {
+		JAViewRecordTable<T> table = viewModule.getTableBuilder().build();
+		table.setColumns(fields);
+		table.render(container);
+		table.refresh(items);
+		container.render();
 	}
 	
 	public void render(JAViewContainer container) {

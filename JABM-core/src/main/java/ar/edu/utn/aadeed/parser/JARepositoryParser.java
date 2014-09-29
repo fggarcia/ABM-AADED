@@ -17,7 +17,7 @@ public class JARepositoryParser {
 
 		} catch (Exception e) {
 			String errorMsg = String.format("Could not instantiate repository through factory %s for class %s", entity.repositoryFactory().getName(), clazz.getName());
-			throw new RuntimeException(errorMsg);
+			throw new RuntimeException(errorMsg, e);
 		}
 	}
 }

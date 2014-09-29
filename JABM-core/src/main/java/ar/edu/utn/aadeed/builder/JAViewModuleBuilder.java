@@ -7,6 +7,7 @@ import java.util.List;
 import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
+import ar.edu.utn.aadeed.view.container.table.JAViewRecordTableBuilder;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -19,12 +20,19 @@ public class JAViewModuleBuilder {
 	
 	private List<JAViewComponent> viewComponents = Lists.newArrayList();
 	
+	private JAViewRecordTableBuilder tableBuilder;
+	
 	public JAViewModuleBuilder(JASessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 	
 	public JAViewModuleBuilder withName(String name) {
 		this.name = name;
+		return this;
+	}
+	
+	public JAViewModuleBuilder withTableBuilder(JAViewRecordTableBuilder tableBuilder) {
+		this.tableBuilder = tableBuilder;
 		return this;
 	}
 	
@@ -42,8 +50,9 @@ public class JAViewModuleBuilder {
 	private JAViewModule build() {
 
 		checkArgument(!Strings.isNullOrEmpty(name), "name is mandatory");
+		checkArgument(tableBuilder != null, "tableBuilder is mandatory");
 		
-		JAViewModule viewModule = new JAViewModule(name);
+		JAViewModule viewModule = new JAViewModule(name, tableBuilder);
 		for (JAViewComponent viewComponent : viewComponents) {
 			viewModule.addViewComponent(viewComponent);
 		}

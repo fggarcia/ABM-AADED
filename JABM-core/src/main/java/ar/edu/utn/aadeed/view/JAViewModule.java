@@ -6,6 +6,7 @@ import java.util.Map;
 
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
+import ar.edu.utn.aadeed.view.container.table.JAViewRecordTableBuilder;
 
 import com.google.common.collect.Maps;
 
@@ -15,8 +16,11 @@ public class JAViewModule {
 
 	private Map<JAViewType, JAViewComponent> viewComponents = Maps.newHashMap();
 	
-	public JAViewModule(String name) {
+	private JAViewRecordTableBuilder tableBuilder;
+	
+	public JAViewModule(String name, JAViewRecordTableBuilder tableBuilder) {
 		this.name = name;
+		this.tableBuilder = tableBuilder;
 	}
 	
 	public void addViewComponent(JAViewComponent viewComponent) {
@@ -30,5 +34,9 @@ public class JAViewModule {
 
 	public String getName() {
 		return name;
+	}
+	
+	public JAViewRecordTableBuilder getTableBuilder() {
+		return tableBuilder;
 	}
 }

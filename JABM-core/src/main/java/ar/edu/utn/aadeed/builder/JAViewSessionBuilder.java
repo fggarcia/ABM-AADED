@@ -26,7 +26,7 @@ public class JAViewSessionBuilder<T> {
 	}
 
 	public JAViewSessionBuilder<T> withFields(List<JAFieldDescription> fields) {
-		this.fields = filterAndOrder(fields);
+		this.fields = fields;
 		return this;
 	}
 
@@ -35,12 +35,15 @@ public class JAViewSessionBuilder<T> {
 		checkArgument(viewModule != null, "viewModule cannot be null");
 		checkArgument(fields != null, "fields cannot be null");
 
-		return new JAViewSession<T>(fields, viewModule);
+		return new JAViewSession<T>(filterAndOrder(fields), viewModule);
 	}
 	
 	private List<JAFieldDescription> filterAndOrder(List<JAFieldDescription> fields) {
+		
 		List<JAFieldDescription> fieldsToShow = Lists.newArrayList(getFieldsToShow(fields));
+		
 		Collections.sort(fieldsToShow, new JAFieldDescriptionComparator());
+		
 		return fieldsToShow;
 	}
 	
