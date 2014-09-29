@@ -9,7 +9,7 @@ import ar.edu.utn.aadeed.model.JAFieldDescription;
 
 public class JARecordTableModel<T> extends AbstractTableModel {
 
-	private static final long serialVersionUID = -9095681663487846176L;
+	private static final long serialVersionUID = -9138784218808144314L;
 
 	private List<T> items;
 

@@ -19,9 +19,19 @@ public class Hotel {
 	@JADescriptor
 	private String name;
 
-	public Hotel(Long id, String name) {
+	@JAView(order = 4, type = TEXT_BOX)
+	@JADescriptor
+	private String address;
+	
+	@JAView(order = 3, type = TEXT_BOX)
+	@JADescriptor
+	private String hotelType;
+
+	public Hotel(Long id, String name, String address, String hotelType) {
 		this.id = id;
 		this.name = name;
+		this.address = address;
+		this.hotelType = hotelType;
 	}
 
 	public Long getId() {
@@ -39,9 +49,25 @@ public class Hotel {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getHotelType() {
+		return hotelType;
+	}
+
+	public void setHotelType(String hotelType) {
+		this.hotelType = hotelType;
+	}
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("id", id).add("name", name).toString();
+		return Objects.toStringHelper(this).add("id", id).add("name", name).add("address", address).add("hotelType", hotelType).toString();
 	}
 }

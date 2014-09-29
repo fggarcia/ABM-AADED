@@ -3,7 +3,7 @@ package ar.edu.utn.aadeed.html.component;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
-import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
 
 public class TextBoxComponent implements JAViewComponent {
 

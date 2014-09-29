@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.view.container;
+package ar.edu.utn.aadeed.view.container.frame;
 
 public interface JAViewContainer {
 

@@ -1,17 +1,19 @@
 package ar.edu.utn.aaded.swing.container;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
 
 import javax.swing.*;
+
+import com.google.common.base.Function;
 
 import java.awt.*;
 
 public class JAFrameContainerBuilder {
 
-	private LayoutManager layout;
+	private Function<JFrame, LayoutManager> layout;
 
-	public JAFrameContainerBuilder withLayout(LayoutManager layout) {
+	public JAFrameContainerBuilder withLayout(Function<JFrame, LayoutManager> layout) {
 		this.layout = layout;
 		return this;
 	}
@@ -25,7 +27,7 @@ public class JAFrameContainerBuilder {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Container container = frame.getContentPane();
-		container.setLayout(this.layout);
+		container.setLayout(layout.apply(frame));
 
 		return new JAFrameContainer(frame);
 	}
