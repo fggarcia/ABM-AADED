@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.common.base.Strings;
 
+
 public class JAFieldDescription {
 
 	private String name;
@@ -24,14 +25,24 @@ public class JAFieldDescription {
 		this.view = view;
 	}
 	
+	public boolean hasView() {
+		return view != null;
+	}
+	
 	public String getLabel() {
-		String viewLabel = view.getLabel();
-		if (!Strings.isNullOrEmpty(viewLabel)) {
-			return StringUtils.capitalize(viewLabel);
+		
+		if (hasView()) {
+			
+			String viewLabel = view.getLabel();
+		
+			if (!Strings.isNullOrEmpty(viewLabel)) {
+				return StringUtils.capitalize(viewLabel);
+			}	
 		}
+		
 		return StringUtils.capitalize(name);
 	}
-
+	
 	public String getName() {
 		return name;
 	}

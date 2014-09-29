@@ -22,6 +22,6 @@ public class BasicServlet extends HttpServlet {
 		response.setStatus(HttpServletResponse.SC_OK);
 		
 		JAViewContainer container = new FormContainerBuilder().withPrintWriter(response.getWriter()).build();
-		JASessionFactory.getInstance().getViewSession(Hotel.class).withContainer(container).render();
+		JASessionFactory.getInstance().getViewSession(Hotel.class).render(container);
 	}
 }

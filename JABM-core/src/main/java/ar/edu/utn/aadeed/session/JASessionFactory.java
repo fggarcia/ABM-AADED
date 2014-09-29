@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import java.util.Map;
 
 import ar.edu.utn.aadeed.builder.JAViewModuleBuilder;
+import ar.edu.utn.aadeed.builder.JAViewSessionBuilder;
 import ar.edu.utn.aadeed.parser.JASessionParser;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.JAViewSession;
@@ -37,10 +38,11 @@ public final class JASessionFactory {
 		return (session == null) ? (createSession(clazz)) : session;
 	}
 
-	public JAViewSession getViewSession(Class<?> clazz) {
+	public <T> JAViewSession<T> getViewSession(Class<T> clazz) {
 		checkArgument(clazz != null, "clazz cannot be null");
 		checkArgument(viewModule != null, "Please, register a view module first");
-		return new JAViewSession(getSession(clazz), viewModule);
+		JAViewSessionBuilder<T> builder = getSession(clazz).getViewSessionBuilder();
+		return builder.withViewModule(viewModule).build();
 	}
 
 	public synchronized void registerViewModule(JAViewModule viewModule) {

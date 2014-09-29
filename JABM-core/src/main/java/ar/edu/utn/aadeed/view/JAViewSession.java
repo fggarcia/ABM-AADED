@@ -9,45 +9,38 @@ import org.slf4j.LoggerFactory;
 
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAViewDescription;
-import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
-public class JAViewSession {
+public class JAViewSession<T> {
 
 	static final Logger Log = LoggerFactory.getLogger(JAViewSession.class);
 
-	private JASession<?> session;
+	private List<JAFieldDescription> fields;
 
 	private JAViewModule viewModule;
 	
-	private JAViewContainer container;
-	
-	public JAViewSession(JASession<?> session, JAViewModule viewModule) {
-		this.session = session;
+	public JAViewSession(List<JAFieldDescription> fields, JAViewModule viewModule) {
+		this.fields = fields;
 		this.viewModule = viewModule;
 	}
 	
-	public JAViewSession withContainer(JAViewContainer container) {
-		this.container = container;
-		return this;
-	}
-	
-	public void render() {
+	public void render(JAViewContainer container) {
 
 		Log.info(String.format("Rendering with view module %s", viewModule.getName()));
 		
 		checkArgument(container != null, "container cannot be null");
 		
-		List<JAFieldDescription> fieldDescriptions = session.getFieldDescriptions();
-		for (JAFieldDescription field : fieldDescriptions) {
-			renderFieldDescription(field);
+		for (JAFieldDescription field : fields) {
+			if (field.hasView()) {
+				renderFieldDescription(field, container);				
+			}
 		}
 		
 		container.render();
 	}
 	
-	private void renderFieldDescription(JAFieldDescription field) {
+	private void renderFieldDescription(JAFieldDescription field, JAViewContainer container) {
 		
 		JAViewDescription viewDescription = field.getView();
 		JAViewComponent viewComponent = viewModule.findComponent(viewDescription.getType());

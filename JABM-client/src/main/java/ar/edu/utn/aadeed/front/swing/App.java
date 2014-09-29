@@ -14,7 +14,7 @@ public class App
     public static void main(String args[]) throws ClassNotFoundException {
         Class.forName(JARegisterComponents.class.getName());
 
-        JAViewContainer viewContainer = new JAFrameContainerBuilder().withSize(300, 100).withLayout(new GridLayout(0, 2)).build();
-        JASessionFactory.getInstance().getViewSession(Hotel.class).withContainer(viewContainer).render();
+        JAViewContainer viewContainer = new JAFrameContainerBuilder().withLayout(new GridLayout(0, 2)).build();
+        JASessionFactory.getInstance().getViewSession(Hotel.class).render(viewContainer);
     }
 }

@@ -3,6 +3,7 @@ package ar.edu.utn.aadeed.session;
 import java.util.List;
 
 import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
+import ar.edu.utn.aadeed.builder.JAViewSessionBuilder;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.repository.JARepository;
 
@@ -36,15 +37,15 @@ public class JASession<T> {
 	public int release() {
 		return this.repository.release();
 	}
+	
+	public JAViewSessionBuilder<T> getViewSessionBuilder() {
+		return new JAViewSessionBuilder<T>().withFields(fieldDescriptions);
+	}
 
 	public JAFiltersBuilder<T> getFiltersBuilder() {
 		return new JAFiltersBuilder<T>(Lists.newArrayList(findAvailableFilters()), repository);
 	}
 	
-	public List<JAFieldDescription> getFieldDescriptions() {
-		return fieldDescriptions;
-	}
-
 	private Iterable<JAFieldDescription> findAvailableFilters() {
 		return Iterables.filter(fieldDescriptions, new Predicate<JAFieldDescription>() {
 			public boolean apply(JAFieldDescription input) {

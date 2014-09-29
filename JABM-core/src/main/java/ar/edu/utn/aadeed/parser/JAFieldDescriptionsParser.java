@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 public class JAFieldDescriptionsParser {
 
 	private final JAViewDescriptionsParser viewDescriptionsParser = new JAViewDescriptionsParser();
-
+	
 	public <T> List<JAFieldDescription> build(Class<T> clazz) {
 
 		List<JAFieldDescription> result = Lists.newArrayList();
@@ -33,9 +33,6 @@ public class JAFieldDescriptionsParser {
 			JADescriptor descriptor = field.getAnnotation(JADescriptor.class);
 			
 			JAViewDescription viewDescription = viewDescriptionsParser.build(field);
-			if (viewDescription == null) {
-				throw new IllegalArgumentException(String.format("Field %s must be annotated with View", field.getName()));
-			}
 			
 			JAFieldDescription fieldDescription = new JAFieldDescription(field.getName(), field.getType(), viewDescription);
 			fieldDescription.setEditable(descriptor.editable());

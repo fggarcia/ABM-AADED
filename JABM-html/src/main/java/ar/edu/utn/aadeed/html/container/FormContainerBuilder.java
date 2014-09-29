@@ -30,18 +30,12 @@ public class FormContainerBuilder {
 			this.writer = writer;
 		}
 
-		public void start() {
-		}
-
 		public void addMember(Object member) {
 			sb.append("<p>");
 			sb.append(member);
 			sb.append("</p>");
 		}
 
-		public void end() {
-		}
-		
 		public void render() {
 			writer.println(sb.toString());
 			writer.flush();
