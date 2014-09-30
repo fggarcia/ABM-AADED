@@ -1,5 +1,7 @@
 package ar.edu.utn.aadeed.view.panel;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.util.List;
 
 import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
@@ -20,7 +22,7 @@ public class JAMainPagePanel {
 		this.container = container;
 		return this;
 	}
-	
+
 	public JAMainPagePanel withTableBuilder(JAViewRecordTableBuilder tableBuilder) {
 		this.tableBuilder = tableBuilder;
 		return this;
@@ -32,12 +34,18 @@ public class JAMainPagePanel {
 	}
 	
 	public <T> void render(JAFiltersBuilder<T> filtersBuilder) {
+
+		checkArgument(filtersBuilder != null, "filtersBuilder cannot be null");
+		
+		checkArgument(tableBuilder != null, "tableBuilder cannot be null");
+		checkArgument(container != null, "mainContainer cannot be null");
+		checkArgument(fields != null, "fields cannot be null");
 		
 		JAViewRecordTable<T> table = tableBuilder.build();
 		
 		table.setColumns(fields);
-		table.render(container);
 		table.refresh(filtersBuilder.search());
+		table.render(container);
 		
 		container.render();
 	}

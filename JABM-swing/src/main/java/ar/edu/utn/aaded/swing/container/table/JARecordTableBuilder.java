@@ -9,6 +9,7 @@ public class JARecordTableBuilder implements JAViewRecordTableBuilder {
 
 	public <T> JAViewRecordTable<T> build() {
 		JTable table = new JTable();
+		table.getTableHeader().setReorderingAllowed(false);
 		return new JARecordTable<T>(table);
 	}
 }
