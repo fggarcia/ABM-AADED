@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import ar.edu.utn.aaded.swing.component.JATextBoxComponent;
 import ar.edu.utn.aaded.swing.container.JAFrameContainerBuilder;
 import ar.edu.utn.aaded.swing.container.table.JARecordTableBuilder;
+import ar.edu.utn.aaded.swing.panel.JADeleteActionButton;
+import ar.edu.utn.aaded.swing.panel.JASearchPanel;
 import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
@@ -26,7 +28,7 @@ public final class JARegisterComponents {
     	
         JASessionFactory.getInstance().getViewModuleBuilder()
                 .addViewComponent(new JATextBoxComponent())
-                .withMainPagePanel(new JAMainPagePanel().withTableBuilder(new JARecordTableBuilder()).withContainer(mainFrameContainer))
+                .withMainPagePanel(new JAMainPagePanel().withTableBuilder(new JARecordTableBuilder()).withContainer(mainFrameContainer).withSearchPanel(new JASearchPanel()).withDeleteActionButton(new JADeleteActionButton()))
                 .withName("SwingModule").register();
     }
 }

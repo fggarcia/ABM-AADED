@@ -12,5 +12,7 @@ public interface JAViewRecordTable<T> {
 	public void render(JAViewContainer container);
 
 	public void setColumns(List<JAFieldDescription> fields);
+	
+	public T getSelectedItem();
 
 }

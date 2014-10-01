@@ -35,4 +35,8 @@ public class JARecordTable<T> implements JAViewRecordTable<T> {
 	public void setColumns(List<JAFieldDescription> fields) {
 		this.fields = fields;
 	}
+
+	public T getSelectedItem() {
+		return (T) JARecordTableModel.class.cast(table.getModel()).getItem(table.getSelectedRow());
+	}
 }
