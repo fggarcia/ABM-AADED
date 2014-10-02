@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.PrintWriter;
 
-import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
+import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 public class FormContainerBuilder {
 

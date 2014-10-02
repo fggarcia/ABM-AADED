@@ -12,8 +12,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
-import ar.edu.utn.aadeed.view.panel.search.JAViewSearchPanel;
+import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.panel.JAViewSearchPanel;
 
 public class JASearchPanel implements JAViewSearchPanel {
 

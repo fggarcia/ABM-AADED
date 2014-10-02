@@ -1,7 +1,7 @@
 package ar.edu.utn.aadeed.view.component;
 
 import ar.edu.utn.aadeed.model.JAFieldDescription;
-import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
+import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 public interface JAViewComponent {
 	

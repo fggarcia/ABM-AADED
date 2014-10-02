@@ -8,8 +8,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import ar.edu.utn.aadeed.model.JAFieldDescription;
-import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
-import ar.edu.utn.aadeed.view.container.table.JAViewRecordTable;
+import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
 
 public class JARecordTable<T> implements JAViewRecordTable<T> {
 

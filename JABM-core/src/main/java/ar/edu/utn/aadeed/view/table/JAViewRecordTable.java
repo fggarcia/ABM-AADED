@@ -1,9 +1,9 @@
-package ar.edu.utn.aadeed.view.container.table;
+package ar.edu.utn.aadeed.view.table;
 
 import java.util.List;
 
 import ar.edu.utn.aadeed.model.JAFieldDescription;
-import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
+import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 public interface JAViewRecordTable<T> {
 

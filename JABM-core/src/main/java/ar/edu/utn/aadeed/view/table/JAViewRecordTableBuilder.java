@@ -1,4 +1,5 @@
-package ar.edu.utn.aadeed.view.container.table;
+package ar.edu.utn.aadeed.view.table;
+
 
 public interface JAViewRecordTableBuilder {
 

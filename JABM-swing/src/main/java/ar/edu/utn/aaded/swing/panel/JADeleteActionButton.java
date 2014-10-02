@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import ar.edu.utn.aadeed.session.JASessionFactory;
-import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
-import ar.edu.utn.aadeed.view.container.table.JAViewRecordTable;
-import ar.edu.utn.aadeed.view.panel.JAViewActionButton;
+import ar.edu.utn.aadeed.view.component.JAViewActionButton;
+import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
 
 public class JADeleteActionButton implements JAViewActionButton {
 

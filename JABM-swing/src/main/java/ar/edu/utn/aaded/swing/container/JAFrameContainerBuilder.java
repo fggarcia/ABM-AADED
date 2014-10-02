@@ -1,7 +1,7 @@
 package ar.edu.utn.aaded.swing.container;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
+import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 import javax.swing.*;
 

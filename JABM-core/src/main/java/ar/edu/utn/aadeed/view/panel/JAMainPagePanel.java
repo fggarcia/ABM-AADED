@@ -10,10 +10,10 @@ import javax.swing.JSeparator;
 
 import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
-import ar.edu.utn.aadeed.view.container.frame.JAViewContainer;
-import ar.edu.utn.aadeed.view.container.table.JAViewRecordTable;
-import ar.edu.utn.aadeed.view.container.table.JAViewRecordTableBuilder;
-import ar.edu.utn.aadeed.view.panel.search.JAViewSearchPanel;
+import ar.edu.utn.aadeed.view.component.JAViewActionButton;
+import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
+import ar.edu.utn.aadeed.view.table.JAViewRecordTableBuilder;
 
 public class JAMainPagePanel {
 
@@ -24,6 +24,8 @@ public class JAMainPagePanel {
 	private JAViewContainer container;
 	
 	private JAViewActionButton delete;
+	
+	private JAViewActionButton add;
 	
 	private List<JAFieldDescription> fields;
 	
@@ -44,6 +46,11 @@ public class JAMainPagePanel {
 	
 	public JAMainPagePanel withDeleteActionButton(JAViewActionButton delete) {
 		this.delete = delete;
+		return this;
+	}
+	
+	public JAMainPagePanel withAddActionButton(JAViewActionButton add) {
+		this.add = add;
 		return this;
 	}
 	
@@ -75,6 +82,7 @@ public class JAMainPagePanel {
 		table.render(container);
 		
 		delete.render(container, table);
+		add.render(container, table);
 		
 		container.render();
 	}
