@@ -23,8 +23,7 @@ public class JAViewSession<T> {
 	}
 	
 	public void renderMainPagePanel(JAFiltersBuilder<T> filtersBuilder) {
-		JAMainPagePanel mainPage = viewModule.getMainPagePanel();
-		mainPage.withFields(fields);
-		mainPage.render(filtersBuilder);
+		JAMainPagePanel<T> mainPage = viewModule.getMainPagePanelBuilder().build(viewModule);
+		mainPage.render(fields, filtersBuilder);
 	}
 }

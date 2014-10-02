@@ -4,9 +4,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Map;
 
+import ar.edu.utn.aadeed.builder.JAMainPagePanelBuilder;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
-import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 
 import com.google.common.collect.Maps;
 
@@ -16,11 +16,11 @@ public class JAViewModule {
 
 	private Map<JAViewType, JAViewComponent> viewComponents = Maps.newHashMap();
 	
-	private JAMainPagePanel mainPagePanel;
+	private JAMainPagePanelBuilder mainPagePanelBuilder;
 	
-	public JAViewModule(String name, JAMainPagePanel mainPagePanel) {
+	public JAViewModule(String name, JAMainPagePanelBuilder mainPagePanelBuilder) {
 		this.name = name;
-		this.mainPagePanel = mainPagePanel;
+		this.mainPagePanelBuilder = mainPagePanelBuilder;
 	}
 	
 	public void addViewComponent(JAViewComponent viewComponent) {
@@ -36,7 +36,7 @@ public class JAViewModule {
 		return name;
 	}
 	
-	public JAMainPagePanel getMainPagePanel() {
-		return mainPagePanel;
+	public JAMainPagePanelBuilder getMainPagePanelBuilder() {
+		return mainPagePanelBuilder;
 	}
 }

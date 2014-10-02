@@ -16,15 +16,15 @@ public class Hotel {
 	private Long id;
 
 	@JAView(order = 1, type = TEXT_BOX)
-	@JADescriptor
+	@JADescriptor(filter = true)
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)
-	@JADescriptor
+	@JADescriptor(filter = true)
 	private String address;
 	
 	@JAView(order = 3, type = TEXT_BOX)
-	@JADescriptor
+	@JADescriptor(filter = true)
 	private String hotelType;
 
 	public Hotel(Long id, String name, String address, String hotelType) {

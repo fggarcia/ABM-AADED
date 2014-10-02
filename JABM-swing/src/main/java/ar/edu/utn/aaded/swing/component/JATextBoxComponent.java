@@ -15,7 +15,7 @@ public class JATextBoxComponent implements JAViewComponent {
 
     public void render(JAFieldDescription field, JAViewContainer container) {
     	
-        JLabel fieldLabel = new JLabel(field.getLabel());
+        JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
         JTextField textField = new JTextField(15);
 
         container.addMember(fieldLabel);
