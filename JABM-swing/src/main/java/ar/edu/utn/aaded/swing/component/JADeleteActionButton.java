@@ -1,4 +1,4 @@
-package ar.edu.utn.aaded.swing.panel;
+package ar.edu.utn.aaded.swing.component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

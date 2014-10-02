@@ -1,4 +1,4 @@
-package ar.edu.utn.aaded.swing.container.table;
+package ar.edu.utn.aaded.swing.table;
 
 import java.lang.reflect.Field;
 import java.util.List;

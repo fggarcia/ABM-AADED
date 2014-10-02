@@ -1,4 +1,4 @@
-package ar.edu.utn.aaded.swing.container.table;
+package ar.edu.utn.aaded.swing.table;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
