@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.comparator.JAFieldDescriptionComparator;
+import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.JAViewSession;
 
@@ -19,9 +20,16 @@ public class JAViewSessionBuilder<T> {
 	private JAViewModule viewModule;
 
 	private List<JAFieldDescription> fields;
+	
+	private JASession<T> session;
 
 	public JAViewSessionBuilder<T> withViewModule(JAViewModule viewModule) {
 		this.viewModule = viewModule;
+		return this;
+	}
+	
+	public JAViewSessionBuilder<T> withSession(JASession<T> session) {
+		this.session = session;
 		return this;
 	}
 
@@ -35,7 +43,7 @@ public class JAViewSessionBuilder<T> {
 		checkArgument(viewModule != null, "viewModule cannot be null");
 		checkArgument(fields != null, "fields cannot be null");
 
-		return new JAViewSession<T>(filterAndOrder(fields), viewModule);
+		return new JAViewSession<T>(filterAndOrder(fields), viewModule, session);
 	}
 	
 	private List<JAFieldDescription> filterAndOrder(List<JAFieldDescription> fields) {

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
+import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 
 public class JAViewSession<T> {
@@ -17,13 +18,16 @@ public class JAViewSession<T> {
 
 	private JAViewModule viewModule;
 	
-	public JAViewSession(List<JAFieldDescription> fields, JAViewModule viewModule) {
+	private JASession<T> session;
+	
+	public JAViewSession(List<JAFieldDescription> fields, JAViewModule viewModule, JASession<T> session) {
 		this.fields = fields;
 		this.viewModule = viewModule;
+		this.session = session;
 	}
 	
 	public void renderMainPagePanel(JAFiltersBuilder<T> filtersBuilder) {
-		JAMainPagePanel<T> mainPage = viewModule.getMainPagePanelBuilder().build(viewModule);
+		JAMainPagePanel<T> mainPage = viewModule.getMainPagePanelBuilder().build(session, viewModule);
 		mainPage.render(fields, filtersBuilder);
 	}
 }

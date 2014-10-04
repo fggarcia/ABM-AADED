@@ -5,6 +5,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.ConvertUtils;
+
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAFilter;
 import ar.edu.utn.aadeed.repository.JARepository;
@@ -31,11 +33,14 @@ public class JAFiltersBuilder<T> {
 		checkArgument(value != null, "value cannot be null");
 		
 		checkFieldName(fieldName);
-		checkFieldValue(fieldName, value.getClass());
 		
-		filters.add(new JAFilter(fieldName, value));
+		filters.add(new JAFilter(fieldName, convertFieldValue(fieldName, value)));
 		
 		return this;
+	}
+	
+	public boolean isValidField(String name) {
+		return availableFieldFilters.containsKey(name);
 	}
 
 	public List<T> search() {
@@ -48,10 +53,8 @@ public class JAFiltersBuilder<T> {
 		}
 	}
 	
-	private void checkFieldValue(String fieldName, Class<?> clazz) {
-		if (!availableFieldFilters.get(fieldName).getClazz().isAssignableFrom(clazz)) {
-			throw new IllegalArgumentException(String.format("The type of field %s is not compatible with %s", fieldName, clazz.getName()));
-		}
+	private Object convertFieldValue(String fieldName, Object value) {
+		return ConvertUtils.convert(value, availableFieldFilters.get(fieldName).getClazz());
 	}
 	
 	private void setAvailableFieldFilters(List<JAFieldDescription> fields) {

@@ -1,6 +1,7 @@
 package ar.edu.utn.aadeed.builder;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
@@ -29,13 +30,14 @@ public class JAMainPagePanelBuilder {
 		return this;
 	}
 	
-	public <T> JAMainPagePanel<T> build(JAViewModule viewModule) {
+	public <T> JAMainPagePanel<T> build(JASession<T> session, JAViewModule viewModule) {
 		
 		checkArgument(tableBuilder != null, "tableBuilder cannot be null");
 		checkArgument(searchPanelBuilder != null, "searchPanelBuilder cannot be null");
 		checkArgument(container != null, "container cannot be null");
 		checkArgument(viewModule != null, "viewModule cannot be null");
+		checkArgument(session != null, "session cannot be null");
 		
-		return new JAMainPagePanel<T>(tableBuilder, searchPanelBuilder, container, viewModule);
+		return new JAMainPagePanel<T>(tableBuilder.<T>build(), searchPanelBuilder, container, viewModule, session);
 	}
 }

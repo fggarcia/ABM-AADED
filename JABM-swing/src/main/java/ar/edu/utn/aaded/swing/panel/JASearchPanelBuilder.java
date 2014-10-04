@@ -1,7 +1,11 @@
 package ar.edu.utn.aaded.swing.panel;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -9,11 +13,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import com.google.common.base.Strings;
+
+import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
 import ar.edu.utn.aadeed.builder.JAViewSearchPanelBuilder;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
@@ -29,6 +37,7 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 
 		private JPanel containerPanel;
 		private JPanel fieldsPanel;
+		private JButton searchButton;
 		private JAMainPagePanel<T> mainPagePanel;
 
 		public JASearchPanel(JAMainPagePanel<T> mainPagePanel) {
@@ -39,7 +48,10 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 			
 			containerPanel.add(fieldsPanel);
 			containerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-			containerPanel.add(new JButton("Search"));
+			
+			searchButton = new JButton("Search");
+			searchButton.addActionListener(createActionListener());
+			containerPanel.add(searchButton);
 		}
 
 		public void render(JAViewContainer container) {
@@ -53,6 +65,25 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 
 		public void render() {
 			containerPanel.setVisible(true);
+		}
+		
+		private ActionListener createActionListener() {
+			return new ActionListener() {
+				public void actionPerformed(ActionEvent ae) {
+					JAFiltersBuilder<T> filtersBuilder = mainPagePanel.getFiltersBuilder();
+					for (Component component : fieldsPanel.getComponents()) {
+						String name = component.getName();
+						if (filtersBuilder.isValidField(name)) {
+							String value = JTextField.class.cast(component).getText();
+							if(!Strings.isNullOrEmpty(value)) {
+								filtersBuilder.add(name, value);
+							}
+						}
+					}
+					List<T> items = filtersBuilder.search();
+					mainPagePanel.refreshTable(items);
+				}
+			};
 		}
 		
 		private JPanel createContainerPanel() {

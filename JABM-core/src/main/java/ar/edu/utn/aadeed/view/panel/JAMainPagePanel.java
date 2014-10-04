@@ -11,11 +11,11 @@ import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
 import ar.edu.utn.aadeed.builder.JAViewSearchPanelBuilder;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAViewDescription;
+import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
-import ar.edu.utn.aadeed.view.table.JAViewRecordTableBuilder;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -24,7 +24,7 @@ public class JAMainPagePanel<T> {
 
 	static final Logger Log = LoggerFactory.getLogger(JAMainPagePanel.class);
 	
-	private JAViewRecordTableBuilder tableBuilder;
+	private JAViewRecordTable<T> table;
 	
 	private JAViewSearchPanelBuilder searchPanelBuilder;
 	
@@ -32,28 +32,41 @@ public class JAMainPagePanel<T> {
 	
 	private JAViewModule viewModule;
 	
-	public JAMainPagePanel(JAViewRecordTableBuilder tableBuilder, JAViewSearchPanelBuilder searchPanelBuilder, JAViewContainer container, JAViewModule viewModule) {
-		this.tableBuilder = tableBuilder;
+	private JASession<T> session;
+	
+	public JAMainPagePanel(JAViewRecordTable<T> table, JAViewSearchPanelBuilder searchPanelBuilder, JAViewContainer container, JAViewModule viewModule, JASession<T> session) {
+		this.table = table;
 		this.searchPanelBuilder = searchPanelBuilder;
 		this.container = container;
 		this.viewModule = viewModule;
+		this.session = session;
 	}
 
 	public void render(List<JAFieldDescription> fields, JAFiltersBuilder<T> filtersBuilder) {
 
 		checkArgument(filtersBuilder != null, "filtersBuilder cannot be null");
 		checkArgument(fields != null, "fields cannot be null");
+		checkArgument(table != null, "table cannot be null");
+		checkArgument(searchPanelBuilder != null, "searchPanel cannot be null");
 
 		JAViewSearchPanel<T> searchPanel = searchPanelBuilder.build(this);
+		
 		renderSearchFieldFilters(fields, searchPanel);
 		searchPanel.render(container);
 		
-		JAViewRecordTable<T> table = tableBuilder.build();
 		table.setColumns(fields);
 		table.refresh(filtersBuilder.search());
 		table.render(container);
 		
 		container.render();
+	}
+	
+	public void refreshTable(List<T> items) {
+		table.refresh(items);
+	}
+	
+	public JAFiltersBuilder<T> getFiltersBuilder() {
+		return session.getFiltersBuilder();
 	}
 	
 	private void renderSearchFieldFilters(List<JAFieldDescription> fields, JAViewSearchPanel<T> searchPanel) {

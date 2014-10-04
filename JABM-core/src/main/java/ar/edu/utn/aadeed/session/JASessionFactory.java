@@ -38,11 +38,13 @@ public final class JASessionFactory {
 		return (session == null) ? (createSession(clazz)) : session;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> JAViewSession<T> getViewSession(Class<T> clazz) {
 		checkArgument(clazz != null, "clazz cannot be null");
 		checkArgument(viewModule != null, "Please, register a view module first");
-		JAViewSessionBuilder<T> builder = getSession(clazz).getViewSessionBuilder();
-		return builder.withViewModule(viewModule).build();
+		JASession<T> session = (JASession<T>) this.sessions.get(clazz);
+		JAViewSessionBuilder<T> builder = session.getViewSessionBuilder();
+		return builder.withViewModule(viewModule).withSession(session).build();
 	}
 
 	public synchronized void registerViewModule(JAViewModule viewModule) {
