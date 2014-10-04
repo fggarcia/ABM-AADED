@@ -44,7 +44,7 @@ public class JAMainPagePanel<T> {
 		checkArgument(filtersBuilder != null, "filtersBuilder cannot be null");
 		checkArgument(fields != null, "fields cannot be null");
 
-		JAViewSearchPanel searchPanel = searchPanelBuilder.build();
+		JAViewSearchPanel<T> searchPanel = searchPanelBuilder.build(this);
 		renderSearchFieldFilters(fields, searchPanel);
 		searchPanel.render(container);
 		
@@ -56,13 +56,13 @@ public class JAMainPagePanel<T> {
 		container.render();
 	}
 	
-	private void renderSearchFieldFilters(List<JAFieldDescription> fields, JAViewSearchPanel searchPanel) {
+	private void renderSearchFieldFilters(List<JAFieldDescription> fields, JAViewSearchPanel<T> searchPanel) {
 		for (JAFieldDescription field : findSearchFilters(fields)) {
 			renderFieldDescription(field, searchPanel);
 		}
 	}
 	
-	private void renderFieldDescription(JAFieldDescription field, JAViewSearchPanel searchPanel) {
+	private void renderFieldDescription(JAFieldDescription field, JAViewSearchPanel<T> searchPanel) {
 		
 		JAViewDescription viewDescription = field.getView();
 		JAViewComponent viewComponent = viewModule.findComponent(viewDescription.getType());

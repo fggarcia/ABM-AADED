@@ -2,8 +2,10 @@ package ar.edu.utn.aaded.swing.table;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import java.awt.Dimension;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -29,6 +31,7 @@ public class JARecordTable<T> implements JAViewRecordTable<T> {
 
 	public void render(JAViewContainer container) {
 		JScrollPane panel = new JScrollPane(table);
+		container.addMember(Box.createRigidArea(new Dimension(0, 20)));
 		container.addMember(panel);
 	}
 
