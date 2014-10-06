@@ -16,6 +16,6 @@ public class App
         hotelSession.add(new Hotel(567L, "Churma", "Billinghurst 897", "Guesthouse"));
         hotelSession.add(new Hotel(666L, "Independiente", "Gaona 987", "Albergue"));
         
-        JASessionFactory.getInstance().getViewSession(Hotel.class).renderMainPagePanel(hotelSession.getFiltersBuilder());
+        JASessionFactory.getInstance().getViewSession(Hotel.class).renderMainPagePanel();
     }
 }

@@ -1,25 +1,21 @@
 package ar.edu.utn.aadeed.session;
 
-import java.util.List;
-
 import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
 import ar.edu.utn.aadeed.builder.JAViewSessionBuilder;
-import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.repository.JARepository;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 public class JASession<T> {
 
 	private JARepository<T> repository;
-
-	private List<JAFieldDescription> fieldDescriptions = Lists.newArrayList();
 	
-	public JASession(JARepository<T> repository, List<JAFieldDescription> fields) {
+	private JAFields fields;
+
+	private Class<T> representationFor;
+	
+	public JASession(JARepository<T> repository, JAFields fields, Class<T> representationFor) {
 		this.repository = repository;
-		this.fieldDescriptions = fields;
+		this.fields = fields;
+		this.representationFor = representationFor;
 	}
 
 	public boolean add(T newObject) {
@@ -38,19 +34,15 @@ public class JASession<T> {
 		return this.repository.release();
 	}
 	
+	public Class<T> getRepresentationFor() {
+		return representationFor;
+	}
+	
 	public JAViewSessionBuilder<T> getViewSessionBuilder() {
-		return new JAViewSessionBuilder<T>().withFields(fieldDescriptions);
+		return new JAViewSessionBuilder<T>().withFields(fields).withRepresentationFor(representationFor);
 	}
 
 	public JAFiltersBuilder<T> getFiltersBuilder() {
-		return new JAFiltersBuilder<T>(Lists.newArrayList(findAvailableFilters()), repository);
-	}
-	
-	private Iterable<JAFieldDescription> findAvailableFilters() {
-		return Iterables.filter(fieldDescriptions, new Predicate<JAFieldDescription>() {
-			public boolean apply(JAFieldDescription input) {
-				return input.isFilter();
-			}
-		});
+		return new JAFiltersBuilder<T>(fields, repository);
 	}
 }

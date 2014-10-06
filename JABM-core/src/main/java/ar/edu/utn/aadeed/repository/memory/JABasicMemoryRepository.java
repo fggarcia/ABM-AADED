@@ -2,15 +2,16 @@ package ar.edu.utn.aadeed.repository.memory;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ar.edu.utn.aadeed.model.JAFilter;
 import ar.edu.utn.aadeed.repository.JARepository;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -21,7 +22,7 @@ public class JABasicMemoryRepository<T> implements JARepository<T> {
 	static final Logger Log = LoggerFactory.getLogger(JABasicMemoryRepository.class);
 
 	private Set<T> livingObjects = Sets.newConcurrentHashSet();
-
+	
 	public boolean add(T newObject) {
 		return livingObjects.add(newObject);
 	}
@@ -65,13 +66,20 @@ public class JABasicMemoryRepository<T> implements JARepository<T> {
 			
 			Field field = object.getClass().getDeclaredField(filter.getFieldName());
 			field.setAccessible(true);
-			
-			return Objects.equals(field.get(object), filter.getValue());
+			return doEquals(field.get(object), filter.getValue());
 			
 		} catch (Exception e) {
 			Log.error(String.format("Could not filter field %s in class %s", filter.getFieldName(), object.getClass().getName()));
 		}
 		
 		return false;
+	}
+	
+	//TODO See how we can refactor this...
+	public boolean doEquals(Object first, Object second) {
+		if (String.class.isInstance(first) && String.class.isInstance(second)) {
+			return StringUtils.containsIgnoreCase(first.toString(), second.toString());
+		}
+		return Objects.equal(first, second);
 	}
 }

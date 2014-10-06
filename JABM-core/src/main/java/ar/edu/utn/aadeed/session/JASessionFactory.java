@@ -13,10 +13,12 @@ import ar.edu.utn.aadeed.view.JAViewSession;
 import com.google.common.collect.Maps;
 
 public final class JASessionFactory {
+	
+	private static final Object lock = new Object();
 
-	private static JASessionFactory instance = null;
+	private volatile static JASessionFactory instance = null;
 
-	private final Map<Class<?>, JASession<?>> sessions = Maps.newHashMap();
+	private final Map<Class<?>, JASession<?>> sessions = Maps.newConcurrentMap();
 	
 	private volatile JAViewModule viewModule = null;
 
@@ -24,30 +26,32 @@ public final class JASessionFactory {
 
 	private JASessionFactory() { }
 
-	public synchronized static JASessionFactory getInstance() {
+	public static JASessionFactory getInstance() {
 		if (instance == null) {
-			instance = new JASessionFactory();
+			synchronized (lock) {
+				if (instance == null) {
+					instance = new JASessionFactory();		
+				}
+			}
 		}
 		return instance;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public synchronized <T> JASession<T> getSession(Class<T> clazz) {
+	public <T> JASession<T> getSession(Class<T> clazz) {
 		checkArgument(clazz != null, "clazz cannot be null");
 		JASession<T> session = (JASession<T>) this.sessions.get(clazz);
 		return (session == null) ? (createSession(clazz)) : session;
 	}
 
-	@SuppressWarnings("unchecked")
 	public <T> JAViewSession<T> getViewSession(Class<T> clazz) {
 		checkArgument(clazz != null, "clazz cannot be null");
 		checkArgument(viewModule != null, "Please, register a view module first");
-		JASession<T> session = (JASession<T>) this.sessions.get(clazz);
-		JAViewSessionBuilder<T> builder = session.getViewSessionBuilder();
-		return builder.withViewModule(viewModule).withSession(session).build();
+		JAViewSessionBuilder<T> builder = getSession(clazz).getViewSessionBuilder();
+		return builder.withViewModule(viewModule).build();
 	}
 
-	public synchronized void registerViewModule(JAViewModule viewModule) {
+	public void registerViewModule(JAViewModule viewModule) {
 		checkArgument(viewModule != null, "viewModule cannot be null");
 		this.viewModule = viewModule;
 	}

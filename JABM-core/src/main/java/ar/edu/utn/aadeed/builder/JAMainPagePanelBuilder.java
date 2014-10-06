@@ -1,9 +1,9 @@
 package ar.edu.utn.aadeed.builder;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import ar.edu.utn.aadeed.session.JASession;
+import ar.edu.utn.aadeed.session.JAFields;
 import ar.edu.utn.aadeed.view.JAViewModule;
-import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.container.JAViewContainerBuilder;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 import ar.edu.utn.aadeed.view.table.JAViewRecordTableBuilder;
 
@@ -13,10 +13,10 @@ public class JAMainPagePanelBuilder {
 	
 	private JAViewSearchPanelBuilder searchPanelBuilder;
 	
-	private JAViewContainer container;
+	private JAViewContainerBuilder containerBuilder;
 	
-	public JAMainPagePanelBuilder withContainer(JAViewContainer container) {
-		this.container = container;
+	public JAMainPagePanelBuilder withContainerBuilder(JAViewContainerBuilder containerBuilder) {
+		this.containerBuilder = containerBuilder;
 		return this;
 	}
 	
@@ -30,14 +30,24 @@ public class JAMainPagePanelBuilder {
 		return this;
 	}
 	
-	public <T> JAMainPagePanel<T> build(JASession<T> session, JAViewModule viewModule) {
+	public <T> JAMainPagePanel<T> build(JAViewModule viewModule, Class<T> representationFor, JAFields fields) {
 		
 		checkArgument(tableBuilder != null, "tableBuilder cannot be null");
 		checkArgument(searchPanelBuilder != null, "searchPanelBuilder cannot be null");
-		checkArgument(container != null, "container cannot be null");
-		checkArgument(viewModule != null, "viewModule cannot be null");
-		checkArgument(session != null, "session cannot be null");
+		checkArgument(containerBuilder != null, "containerBuilder cannot be null");
 		
-		return new JAMainPagePanel<T>(tableBuilder.<T>build(), searchPanelBuilder, container, viewModule, session);
+		checkArgument(viewModule != null, "viewModule cannot be null");
+		checkArgument(representationFor != null, "representationFor cannot be null");
+		checkArgument(fields != null, "fields cannot be null");
+		
+		JAMainPagePanel<T> mainPagePanel = new JAMainPagePanel<T>();
+		mainPagePanel.setContainer(containerBuilder.build());
+		mainPagePanel.setFields(fields);
+		mainPagePanel.setRepresentationFor(representationFor);
+		mainPagePanel.setSearchPanel(searchPanelBuilder.<T>build(mainPagePanel));
+		mainPagePanel.setTable(tableBuilder.<T>build());
+		mainPagePanel.setViewModule(viewModule);
+		
+		return mainPagePanel;
 	}
 }

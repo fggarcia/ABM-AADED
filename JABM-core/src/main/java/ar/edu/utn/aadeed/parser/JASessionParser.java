@@ -1,10 +1,8 @@
 package ar.edu.utn.aadeed.parser;
 
-import java.util.List;
-
 import ar.edu.utn.aadeed.annotation.JAEntity;
-import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.repository.JARepository;
+import ar.edu.utn.aadeed.session.JAFields;
 import ar.edu.utn.aadeed.session.JASession;
 
 public class JASessionParser {
@@ -18,9 +16,9 @@ public class JASessionParser {
 		checkEntityAnnotationPresence(clazz);
 
 		JARepository<T> repository = repositoryParser.build(clazz);
-		List<JAFieldDescription> fields = fieldDescriptionsParser.build(clazz);
+		JAFields fields = fieldDescriptionsParser.build(clazz);
 
-		return new JASession<T>(repository, fields);
+		return new JASession<T>(repository, fields, clazz);
 	}
 
 	private <T> void checkEntityAnnotationPresence(Class<T> clazz) {

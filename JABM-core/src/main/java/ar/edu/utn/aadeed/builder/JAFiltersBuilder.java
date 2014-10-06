@@ -10,7 +10,9 @@ import org.apache.commons.beanutils.ConvertUtils;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAFilter;
 import ar.edu.utn.aadeed.repository.JARepository;
+import ar.edu.utn.aadeed.session.JAFields;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -22,14 +24,14 @@ public class JAFiltersBuilder<T> {
 
 	private List<JAFilter> filters = Lists.newArrayList();
 
-	public JAFiltersBuilder(List<JAFieldDescription> availableFieldFilters, JARepository<T> repository) {
+	public JAFiltersBuilder(JAFields fields, JARepository<T> repository) {
 		this.repository = repository;
-		this.setAvailableFieldFilters(availableFieldFilters);
+		this.setAvailableFieldFilters(fields.findAvailableFilters());
 	}
 
 	public JAFiltersBuilder<T> add(String fieldName, Object value) {
 		
-		checkArgument(fieldName != null, "fieldName cannot be null");
+		checkArgument(!Strings.isNullOrEmpty(fieldName), "fieldName cannot be null or empty");
 		checkArgument(value != null, "value cannot be null");
 		
 		checkFieldName(fieldName);
@@ -39,7 +41,7 @@ public class JAFiltersBuilder<T> {
 		return this;
 	}
 	
-	public boolean isValidField(String name) {
+	public boolean isValidSearchField(String name) {
 		return availableFieldFilters.containsKey(name);
 	}
 
@@ -57,7 +59,7 @@ public class JAFiltersBuilder<T> {
 		return ConvertUtils.convert(value, availableFieldFilters.get(fieldName).getClazz());
 	}
 	
-	private void setAvailableFieldFilters(List<JAFieldDescription> fields) {
+	private void setAvailableFieldFilters(Iterable<JAFieldDescription> fields) {
 		for (JAFieldDescription field : fields) {
 			availableFieldFilters.put(field.getName(), field);
 		}

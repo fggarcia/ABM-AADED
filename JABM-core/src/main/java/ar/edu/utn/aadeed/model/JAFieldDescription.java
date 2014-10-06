@@ -2,7 +2,7 @@ package ar.edu.utn.aadeed.model;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 
 public class JAFieldDescription {
@@ -81,6 +81,6 @@ public class JAFieldDescription {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("name", name).toString();
+		return MoreObjects.toStringHelper(this).add("name", name).toString();
 	}
 }

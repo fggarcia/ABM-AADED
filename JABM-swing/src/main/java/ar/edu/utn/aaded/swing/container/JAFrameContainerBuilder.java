@@ -2,6 +2,7 @@ package ar.edu.utn.aaded.swing.container;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.container.JAViewContainerBuilder;
 
 import javax.swing.*;
 
@@ -9,7 +10,7 @@ import com.google.common.base.Function;
 
 import java.awt.*;
 
-public class JAFrameContainerBuilder {
+public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 
 	private Function<JFrame, LayoutManager> layout;
 

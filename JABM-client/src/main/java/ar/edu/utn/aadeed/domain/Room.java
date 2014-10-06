@@ -1,12 +1,12 @@
 package ar.edu.utn.aadeed.domain;
 
-import ar.edu.utn.aadeed.annotation.JAEntity;
+import static ar.edu.utn.aadeed.view.component.JAViewType.TEXT_BOX;
 import ar.edu.utn.aadeed.annotation.JADescriptor;
+import ar.edu.utn.aadeed.annotation.JAEntity;
 import ar.edu.utn.aadeed.annotation.JAView;
 import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
-import static ar.edu.utn.aadeed.view.component.JAViewType.TEXT_BOX;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 @JAEntity(repositoryFactory = JAMemoryRepositoryFactory.class)
 public class Room {
@@ -29,6 +29,6 @@ public class Room {
 	
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("id", id).toString();
+		return MoreObjects.toStringHelper(this).add("id", id).toString();
 	}
 }

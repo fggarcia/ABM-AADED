@@ -8,17 +8,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
-import ar.edu.utn.aadeed.builder.JAViewSearchPanelBuilder;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAViewDescription;
-import ar.edu.utn.aadeed.session.JASession;
+import ar.edu.utn.aadeed.session.JAFields;
+import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 public class JAMainPagePanel<T> {
 
@@ -26,53 +25,49 @@ public class JAMainPagePanel<T> {
 	
 	private JAViewRecordTable<T> table;
 	
-	private JAViewSearchPanelBuilder searchPanelBuilder;
+	private JAViewSearchPanel<T> searchPanel;
 	
 	private JAViewContainer container;
 	
 	private JAViewModule viewModule;
 	
-	private JASession<T> session;
+	private Class<T> representationFor;
 	
-	public JAMainPagePanel(JAViewRecordTable<T> table, JAViewSearchPanelBuilder searchPanelBuilder, JAViewContainer container, JAViewModule viewModule, JASession<T> session) {
-		this.table = table;
-		this.searchPanelBuilder = searchPanelBuilder;
-		this.container = container;
-		this.viewModule = viewModule;
-		this.session = session;
-	}
-
-	public void render(List<JAFieldDescription> fields, JAFiltersBuilder<T> filtersBuilder) {
-
-		checkArgument(filtersBuilder != null, "filtersBuilder cannot be null");
+	private JAFields fields;
+	
+	public void render() {
+		
 		checkArgument(fields != null, "fields cannot be null");
 		checkArgument(table != null, "table cannot be null");
-		checkArgument(searchPanelBuilder != null, "searchPanel cannot be null");
+		checkArgument(searchPanel != null, "searchPanel cannot be null");
+		checkArgument(representationFor != null, "representationFor cannot be null");
+		checkArgument(container != null, "container cannot be null");
+		checkArgument(viewModule != null, "container cannot be null");
 
-		JAViewSearchPanel<T> searchPanel = searchPanelBuilder.build(this);
+		renderSearchFieldFilters();
 		
-		renderSearchFieldFilters(fields, searchPanel);
-		searchPanel.render(container);
-		
-		table.setColumns(fields);
-		table.refresh(filtersBuilder.search());
+		table.setColumns(Lists.newArrayList(fields.findFielsdsToShow()));
+		table.refresh(getFiltersBuilder().search());
 		table.render(container);
 		
 		container.render();
+	}
+	
+	public JAFiltersBuilder<T> getFiltersBuilder() {
+		return JASessionFactory.getInstance().getSession(representationFor).getFiltersBuilder();
 	}
 	
 	public void refreshTable(List<T> items) {
 		table.refresh(items);
 	}
 	
-	public JAFiltersBuilder<T> getFiltersBuilder() {
-		return session.getFiltersBuilder();
-	}
-	
-	private void renderSearchFieldFilters(List<JAFieldDescription> fields, JAViewSearchPanel<T> searchPanel) {
-		for (JAFieldDescription field : findSearchFilters(fields)) {
+	private void renderSearchFieldFilters() {
+		
+		for (JAFieldDescription field : fields.findAvailableFilters()) {
 			renderFieldDescription(field, searchPanel);
 		}
+		
+		searchPanel.render(container);
 	}
 	
 	private void renderFieldDescription(JAFieldDescription field, JAViewSearchPanel<T> searchPanel) {
@@ -87,11 +82,27 @@ public class JAMainPagePanel<T> {
 		}
 	}
 	
-	private Iterable<JAFieldDescription> findSearchFilters(List<JAFieldDescription> fields) {
-		return Iterables.filter(fields, new Predicate<JAFieldDescription>() {
-			public boolean apply(JAFieldDescription input) {
-				return input.isFilter();
-			}
-		});
+	public void setTable(JAViewRecordTable<T> table) {
+		this.table = table;
+	}
+
+	public void setSearchPanel(JAViewSearchPanel<T> searchPanel) {
+		this.searchPanel = searchPanel;
+	}
+
+	public void setContainer(JAViewContainer container) {
+		this.container = container;
+	}
+
+	public void setViewModule(JAViewModule viewModule) {
+		this.viewModule = viewModule;
+	}
+
+	public void setRepresentationFor(Class<T> representationFor) {
+		this.representationFor = representationFor;
+	}
+
+	public void setFields(JAFields fields) {
+		this.fields = fields;
 	}
 }

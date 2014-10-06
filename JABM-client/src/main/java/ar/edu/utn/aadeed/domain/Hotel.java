@@ -6,7 +6,7 @@ import ar.edu.utn.aadeed.annotation.JAEntity;
 import ar.edu.utn.aadeed.annotation.JAView;
 import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 @JAEntity(repositoryFactory = JAMemoryRepositoryFactory.class)
 public class Hotel {
@@ -20,7 +20,7 @@ public class Hotel {
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)
-	@JADescriptor(filter = true)
+	@JADescriptor(filter = false)
 	private String address;
 	
 	@JAView(order = 3, type = TEXT_BOX)
@@ -68,6 +68,6 @@ public class Hotel {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("id", id).add("name", name).add("address", address).add("hotelType", hotelType).toString();
+		return MoreObjects.toStringHelper(this).add("id", id).add("name", name).add("address", address).add("hotelType", hotelType).toString();
 	}
 }
