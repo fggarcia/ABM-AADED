@@ -26,6 +26,8 @@ public class JAMainPagePanel<T> {
 	private JAViewRecordTable<T> table;
 	
 	private JAViewSearchPanel<T> searchPanel;
+
+    private JAViewOperationPanel<T> operationPanel;
 	
 	private JAViewContainer container;
 	
@@ -40,6 +42,7 @@ public class JAMainPagePanel<T> {
 		checkArgument(fields != null, "fields cannot be null");
 		checkArgument(table != null, "table cannot be null");
 		checkArgument(searchPanel != null, "searchPanel cannot be null");
+        checkArgument(operationPanel != null, "operationPanel cannot be null");
 		checkArgument(representationFor != null, "representationFor cannot be null");
 		checkArgument(container != null, "container cannot be null");
 		checkArgument(viewModule != null, "container cannot be null");
@@ -49,7 +52,9 @@ public class JAMainPagePanel<T> {
 		table.setColumns(Lists.newArrayList(fields.findFielsdsToShow()));
 		table.refresh(getFiltersBuilder().search());
 		table.render(container);
-		
+
+        operationPanel.render(container);
+
 		container.render();
 	}
 	
@@ -89,6 +94,10 @@ public class JAMainPagePanel<T> {
 	public void setSearchPanel(JAViewSearchPanel<T> searchPanel) {
 		this.searchPanel = searchPanel;
 	}
+
+    public void setOperationPanel(JAViewOperationPanel<T> operationPanel) {
+        this.operationPanel = operationPanel;
+    }
 
 	public void setContainer(JAViewContainer container) {
 		this.container = container;

@@ -1,32 +1,21 @@
 package ar.edu.utn.aaded.swing.panel;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-
 import ar.edu.utn.aaded.swing.JAComponentUtils;
 import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
 import ar.edu.utn.aadeed.builder.JAViewSearchPanelBuilder;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 import ar.edu.utn.aadeed.view.panel.JAViewSearchPanel;
-
 import com.google.common.base.Strings;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 
@@ -50,8 +39,6 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 			
 			this.containerPanel.add(this.fieldsPanel);
 			this.containerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-			
-			addSearchButton();
 		}
 
 		public void render(JAViewContainer container) {
@@ -68,13 +55,7 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 		public void render() {
 			containerPanel.setVisible(true);
 		}
-		
-		private void addSearchButton() {
-			JButton button = new JButton("Search");
-			button.addActionListener(createActionListener());
-			this.containerPanel.add(button);
-		}
-		
+
 		private KeyListener createKeyListener() {
 			return new KeyListener() {
 				
@@ -104,30 +85,7 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 				}
 			};
 		}
-		
-		private ActionListener createActionListener() {
-			return new ActionListener() {
-				public void actionPerformed(ActionEvent ae) {
-					
-					JAFiltersBuilder<T> filtersBuilder = mainPagePanel.getFiltersBuilder();
-					
-					for (Component component : fieldsPanel.getComponents()) {
 
-						String name = component.getName();
-						if (filtersBuilder.isValidSearchField(name)) {
-							
-							String value = JAComponentUtils.getValue(component);
-							if(!Strings.isNullOrEmpty(value)) {
-								filtersBuilder.add(name, value);
-							}
-						}
-					}
-
-					mainPagePanel.refreshTable(filtersBuilder.search());
-				}
-			};
-		}
-		
 		private JPanel createContainerPanel() {
 			
 			JPanel panel = new JPanel();
