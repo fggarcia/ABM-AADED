@@ -1,11 +1,12 @@
 package ar.edu.utn.aaded.swing.panel;
 
 import ar.edu.utn.aaded.swing.JAComponentUtils;
-import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
-import ar.edu.utn.aadeed.builder.JAViewSearchPanelBuilder;
+import ar.edu.utn.aadeed.session.builder.JAFiltersBuilder;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 import ar.edu.utn.aadeed.view.panel.JAViewSearchPanel;
+import ar.edu.utn.aadeed.view.panel.builder.JAViewSearchPanelBuilder;
+
 import com.google.common.base.Strings;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

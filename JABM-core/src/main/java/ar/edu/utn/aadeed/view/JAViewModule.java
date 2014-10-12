@@ -4,9 +4,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Map;
 
-import ar.edu.utn.aadeed.builder.JAMainPagePanelBuilder;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
+import ar.edu.utn.aadeed.view.panel.builder.JAMainPagePanelBuilder;
 
 import com.google.common.collect.Maps;
 

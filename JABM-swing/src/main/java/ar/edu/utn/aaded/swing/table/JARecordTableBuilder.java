@@ -2,8 +2,9 @@ package ar.edu.utn.aaded.swing.table;
 
 import javax.swing.JTable;
 
+import ar.edu.utn.aaded.swing.table.JARecordTable;
 import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
-import ar.edu.utn.aadeed.view.table.JAViewRecordTableBuilder;
+import ar.edu.utn.aadeed.view.table.builder.JAViewRecordTableBuilder;
 
 public class JARecordTableBuilder implements JAViewRecordTableBuilder {
 

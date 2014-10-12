@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.builder;
+package ar.edu.utn.aadeed.view.builder;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -7,6 +7,7 @@ import java.util.List;
 import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
+import ar.edu.utn.aadeed.view.panel.builder.JAMainPagePanelBuilder;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;

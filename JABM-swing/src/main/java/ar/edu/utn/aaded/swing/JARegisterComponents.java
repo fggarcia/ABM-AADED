@@ -10,9 +10,9 @@ import ar.edu.utn.aaded.swing.container.JAFrameContainerBuilder;
 import ar.edu.utn.aaded.swing.panel.JAOperationPanelBuilder;
 import ar.edu.utn.aaded.swing.panel.JASearchPanelBuilder;
 import ar.edu.utn.aaded.swing.table.JARecordTableBuilder;
-import ar.edu.utn.aadeed.builder.JAMainPagePanelBuilder;
 import ar.edu.utn.aadeed.session.JASessionFactory;
-import ar.edu.utn.aadeed.view.container.JAViewContainerBuilder;
+import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
+import ar.edu.utn.aadeed.view.panel.builder.JAMainPagePanelBuilder;
 
 import com.google.common.base.Function;
 

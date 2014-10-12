@@ -7,11 +7,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAViewDescription;
 import ar.edu.utn.aadeed.session.JAFields;
 import ar.edu.utn.aadeed.session.JASessionFactory;
+import ar.edu.utn.aadeed.session.builder.JAFiltersBuilder;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;

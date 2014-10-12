@@ -1,8 +1,8 @@
 package ar.edu.utn.aadeed.session;
 
-import ar.edu.utn.aadeed.builder.JAFiltersBuilder;
-import ar.edu.utn.aadeed.builder.JAViewSessionBuilder;
 import ar.edu.utn.aadeed.repository.JARepository;
+import ar.edu.utn.aadeed.session.builder.JAFiltersBuilder;
+import ar.edu.utn.aadeed.view.builder.JAViewSessionBuilder;
 
 public class JASession<T> {
 

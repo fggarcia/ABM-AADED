@@ -4,11 +4,11 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Map;
 
-import ar.edu.utn.aadeed.builder.JAViewModuleBuilder;
-import ar.edu.utn.aadeed.builder.JAViewSessionBuilder;
 import ar.edu.utn.aadeed.parser.JASessionParser;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.JAViewSession;
+import ar.edu.utn.aadeed.view.builder.JAViewModuleBuilder;
+import ar.edu.utn.aadeed.view.builder.JAViewSessionBuilder;
 
 import com.google.common.collect.Maps;
 

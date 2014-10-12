@@ -2,7 +2,7 @@ package ar.edu.utn.aaded.swing.container;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
-import ar.edu.utn.aadeed.view.container.JAViewContainerBuilder;
+import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
 
 import javax.swing.*;
 

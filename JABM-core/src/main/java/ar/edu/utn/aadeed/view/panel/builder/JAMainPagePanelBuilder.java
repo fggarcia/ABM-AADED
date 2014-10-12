@@ -1,11 +1,11 @@
-package ar.edu.utn.aadeed.builder;
+package ar.edu.utn.aadeed.view.panel.builder;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import ar.edu.utn.aadeed.session.JAFields;
 import ar.edu.utn.aadeed.view.JAViewModule;
-import ar.edu.utn.aadeed.view.container.JAViewContainerBuilder;
+import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
-import ar.edu.utn.aadeed.view.table.JAViewRecordTableBuilder;
+import ar.edu.utn.aadeed.view.table.builder.JAViewRecordTableBuilder;
 
 public class JAMainPagePanelBuilder {
 	

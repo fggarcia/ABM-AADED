@@ -1,4 +1,4 @@
-package ar.edu.utn.aadeed.builder;
+package ar.edu.utn.aadeed.session.builder;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
