@@ -10,6 +10,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 import ar.edu.utn.aadeed.view.panel.JAViewOperationPanel;
@@ -65,6 +66,7 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
         private ActionListener getAddActionListener() {
         	return new ActionListener() {
     			public void actionPerformed(ActionEvent ae) {
+                    mainPagePanel.getViewSession().renderAddPanel();
     			}
     		};
         }
