@@ -38,8 +38,12 @@ public class JASession<T> {
 		return representationFor;
 	}
 	
+	public JAFields getFields() {
+		return fields;
+	}
+	
 	public JAViewSessionBuilder<T> getViewSessionBuilder() {
-		return new JAViewSessionBuilder<T>().withFields(fields).withRepresentationFor(representationFor);
+		return new JAViewSessionBuilder<T>().withSession(this);
 	}
 
 	public JAFiltersBuilder<T> getFiltersBuilder() {

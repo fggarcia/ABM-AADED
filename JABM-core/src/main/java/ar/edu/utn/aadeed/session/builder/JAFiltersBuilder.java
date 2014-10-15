@@ -50,7 +50,7 @@ public class JAFiltersBuilder<T> {
 	}
 
 	private void checkFieldName(String fieldName) {
-		if (!availableFieldFilters.keySet().contains(fieldName)) {
+		if (!isValidSearchField(fieldName)) {
 			throw new IllegalArgumentException(String.format("Field %s is not allowed to be a filter", fieldName));
 		}
 	}

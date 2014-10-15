@@ -1,11 +1,12 @@
 package ar.edu.utn.aaded.swing.component;
 
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
-
-import javax.swing.*;
 
 public class JATextBoxComponent implements JAViewComponent {
 

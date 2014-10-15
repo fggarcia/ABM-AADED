@@ -27,7 +27,7 @@ public class JAFields {
 		return filterFields;
 	}
 	
-	public Iterable<JAFieldDescription> findFielsdsToShow() {
+	public Iterable<JAFieldDescription> findFieldsToShow() {
 		List<JAFieldDescription> fieldsToShow = Lists.newArrayList(filterFieldsToShow());
 		Collections.sort(fieldsToShow, new JAFieldDescriptionComparator());
 		return fieldsToShow;

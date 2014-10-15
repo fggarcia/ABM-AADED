@@ -16,9 +16,11 @@ import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
 public class JARecordTable<T> implements JAViewRecordTable<T> {
 
 	private JTable table;
-	
+
 	private List<JAFieldDescription> fields;
-	
+
+	private  volatile JARecordTableModel<T> model;
+
 	public JARecordTable(JTable table) {
 		this.table = table;
 	}
@@ -26,12 +28,14 @@ public class JARecordTable<T> implements JAViewRecordTable<T> {
 	public void refresh(List<T> items) {
 		checkArgument(fields != null, "fields cannot be null");
 		checkArgument(items != null, "items cannot be null");
-		table.setModel(new JARecordTableModel<T>(fields, items));
+
+		model = new JARecordTableModel<T>(fields, items);
+		table.setModel(model);
 	}
 
 	public void render(JAViewContainer container) {
 		JScrollPane panel = new JScrollPane(table);
-		container.addMember(Box.createRigidArea(new Dimension(0, 20)));
+		container.addMember(Box.createRigidArea(new Dimension(0, 10)));
 		container.addMember(panel);
 	}
 
@@ -40,6 +44,7 @@ public class JARecordTable<T> implements JAViewRecordTable<T> {
 	}
 
 	public T getSelectedItem() {
-		return (T) JARecordTableModel.class.cast(table.getModel()).getItem(table.getSelectedRow());
+		int rowSelected = table.getSelectedRow();
+		return (rowSelected != -1) ? (model.getItem(rowSelected)) : null;
 	}
 }

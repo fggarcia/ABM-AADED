@@ -1,10 +1,11 @@
 package ar.edu.utn.aadeed.view.panel.builder;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import ar.edu.utn.aadeed.session.JAFields;
+import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
+import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
 import ar.edu.utn.aadeed.view.table.builder.JAViewRecordTableBuilder;
 
 public class JAMainPagePanelBuilder {
@@ -37,7 +38,7 @@ public class JAMainPagePanelBuilder {
 		return this;
 	}
 	
-	public <T> JAMainPagePanel<T> build(JAViewModule viewModule, Class<T> representationFor, JAFields fields) {
+	public <T> JAMainPagePanel<T> build(JAViewModule viewModule, JASession<T> session) {
 		
 		checkArgument(tableBuilder != null, "tableBuilder cannot be null");
 		checkArgument(searchPanelBuilder != null, "searchPanelBuilder cannot be null");
@@ -45,16 +46,16 @@ public class JAMainPagePanelBuilder {
         checkArgument(containerBuilder != null, "containerBuilder cannot be null");
 		
 		checkArgument(viewModule != null, "viewModule cannot be null");
-		checkArgument(representationFor != null, "representationFor cannot be null");
-		checkArgument(fields != null, "fields cannot be null");
+		checkArgument(session != null, "session cannot be null");
 		
+		JAViewRecordTable<T> table = tableBuilder.<T>build();
 		JAMainPagePanel<T> mainPagePanel = new JAMainPagePanel<T>();
-		mainPagePanel.setContainer(containerBuilder.build());
-		mainPagePanel.setFields(fields);
-		mainPagePanel.setRepresentationFor(representationFor);
+		
+		mainPagePanel.setMainContainer(containerBuilder.build());
+		mainPagePanel.setSession(session);
 		mainPagePanel.setSearchPanel(searchPanelBuilder.<T>build(mainPagePanel));
         mainPagePanel.setOperationPanel(operationPanelBuilder.<T>build(mainPagePanel));
-		mainPagePanel.setTable(tableBuilder.<T>build());
+		mainPagePanel.setTable(table);
 		mainPagePanel.setViewModule(viewModule);
 		
 		return mainPagePanel;

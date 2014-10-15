@@ -7,6 +7,7 @@ import java.util.List;
 import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
+import ar.edu.utn.aadeed.view.panel.builder.JAAddPagePanelBuilder;
 import ar.edu.utn.aadeed.view.panel.builder.JAMainPagePanelBuilder;
 
 import com.google.common.base.Strings;
@@ -22,6 +23,8 @@ public class JAViewModuleBuilder {
 	
 	private JAMainPagePanelBuilder mainPagePanelBuilder;
 	
+	private JAAddPagePanelBuilder addPagePanelBuilder;
+	
 	public JAViewModuleBuilder(JASessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -33,6 +36,11 @@ public class JAViewModuleBuilder {
 	
 	public JAViewModuleBuilder withMainPagePanelBuilder(JAMainPagePanelBuilder mainPagePanelBuilder) {
 		this.mainPagePanelBuilder = mainPagePanelBuilder;
+		return this;
+	}
+	
+	public JAViewModuleBuilder withAddPagePanelBuilder(JAAddPagePanelBuilder addPagePanelBuilder) {
+		this.addPagePanelBuilder = addPagePanelBuilder;
 		return this;
 	}
 	
@@ -51,8 +59,9 @@ public class JAViewModuleBuilder {
 
 		checkArgument(!Strings.isNullOrEmpty(name), "name is mandatory");
 		checkArgument(mainPagePanelBuilder != null, "mainPagePanel is mandatory");
+		checkArgument(addPagePanelBuilder != null, "addPagePanelBuilder is mandatory");
 		
-		JAViewModule viewModule = new JAViewModule(name, mainPagePanelBuilder);
+		JAViewModule viewModule = new JAViewModule(name, mainPagePanelBuilder, addPagePanelBuilder);
 		for (JAViewComponent viewComponent : viewComponents) {
 			viewModule.addViewComponent(viewComponent);
 		}

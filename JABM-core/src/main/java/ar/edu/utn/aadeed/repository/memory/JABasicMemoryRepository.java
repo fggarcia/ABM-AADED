@@ -24,25 +24,26 @@ public class JABasicMemoryRepository<T> implements JARepository<T> {
 	private Set<T> livingObjects = Sets.newConcurrentHashSet();
 	
 	public boolean add(T newObject) {
+		Log.info(String.format("Adding: %s", newObject));
 		return livingObjects.add(newObject);
 	}
 
 	public boolean remove(T oldObject) {
+		Log.info(String.format("Removing: %s", oldObject));
 		return livingObjects.remove(oldObject);
 	}
 
 	public boolean update(T oldObject, T newObject) {
+		Log.info(String.format("Updating: %s With: %s", oldObject, newObject));
 		return (remove(oldObject)) ? add(newObject) : false;
 	}
 
-	public List<T> search(List<JAFilter> filters) {
-		List<T> result = Lists.newArrayList();
-		for (T object : livingObjects) {
-			if (filter(object, filters)) {
-				result.add(object);
+	public List<T> search(final List<JAFilter> filters) {
+		return Lists.newArrayList(Iterables.filter(livingObjects, new Predicate<T>() {
+			public boolean apply(T object) {
+				return filter(object, filters);
 			}
-		}
-		return result;
+		}));
 	}
 
 	public int release() {
@@ -52,7 +53,6 @@ public class JABasicMemoryRepository<T> implements JARepository<T> {
 	}
 
 	private boolean filter(final T object, List<JAFilter> filters) {
-		
 		return Iterables.all(filters, new Predicate<JAFilter>() {
 			public boolean apply(JAFilter filter) {
 				return filter(object, filter);
@@ -60,19 +60,15 @@ public class JABasicMemoryRepository<T> implements JARepository<T> {
 		});
 	}
 
-	private boolean filter(T object, JAFilter filter) {
-		
+	private boolean filter(T item, JAFilter filter) {
 		try {
-			
-			Field field = object.getClass().getDeclaredField(filter.getFieldName());
+			Field field = item.getClass().getDeclaredField(filter.getFieldName());
 			field.setAccessible(true);
-			return doEquals(field.get(object), filter.getValue());
-			
+			return doEquals(field.get(item), filter.getValue());
 		} catch (Exception e) {
-			Log.error(String.format("Could not filter field %s in class %s", filter.getFieldName(), object.getClass().getName()));
+			Log.error(String.format("Could not filter field %s in class %s", filter.getFieldName(), item.getClass().getName()));
+			return false;
 		}
-		
-		return false;
 	}
 	
 	//TODO See how we can refactor this...
