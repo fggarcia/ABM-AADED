@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ar.edu.utn.aadeed.model.JAFilter;
-import ar.edu.utn.aadeed.repository.FilteringStrategy;
+import ar.edu.utn.aadeed.repository.JAFilteringStrategy;
 import ar.edu.utn.aadeed.repository.JARepository;
 
 import com.google.common.base.Predicate;
@@ -63,7 +63,7 @@ public class JABasicMemoryRepository<T> implements JARepository<T> {
 		try {
 			Field field = item.getClass().getDeclaredField(filter.getFieldName());
 			field.setAccessible(true);
-			return FilteringStrategy.doEquals(field.get(item), filter.getValue());
+			return JAFilteringStrategy.doEquals(field.get(item), filter.getValue());
 		} catch (Exception e) {
 			Log.error(String.format("Could not filter field %s in class %s", filter.getFieldName(), item.getClass().getName()));
 			return false;

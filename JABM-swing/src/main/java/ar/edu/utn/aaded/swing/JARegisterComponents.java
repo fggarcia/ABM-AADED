@@ -15,6 +15,7 @@ import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
 import ar.edu.utn.aadeed.view.panel.builder.JAAddPagePanelBuilder;
 import ar.edu.utn.aadeed.view.panel.builder.JAMainPagePanelBuilder;
+import ar.edu.utn.aadeed.view.panel.builder.JAUpdatePagePanelBuilder;
 
 import com.google.common.base.Function;
 
@@ -36,11 +37,15 @@ public final class JARegisterComponents {
         
         JAAddPagePanelBuilder addPagePanelBuilder = new JAAddPagePanelBuilder()
         	.withContainerBuilder(new JAPopupContainerBuilder());
+        
+        JAUpdatePagePanelBuilder updatePagePanelBuilder = new JAUpdatePagePanelBuilder()
+    	.withContainerBuilder(new JAPopupContainerBuilder());
 
         JASessionFactory.getInstance().getViewModuleBuilder()
                 .addViewComponent(new JATextBoxComponent())
                 .withMainPagePanelBuilder(mainPagePanelBuilder)
                 .withAddPagePanelBuilder(addPagePanelBuilder)
+                .withUpdatePagePanelBuilder(updatePagePanelBuilder)
                 .withName("SwingModule").register();
     }
 }

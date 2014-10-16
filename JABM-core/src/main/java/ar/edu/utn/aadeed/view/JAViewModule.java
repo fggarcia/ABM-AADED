@@ -8,6 +8,7 @@ import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
 import ar.edu.utn.aadeed.view.panel.builder.JAAddPagePanelBuilder;
 import ar.edu.utn.aadeed.view.panel.builder.JAMainPagePanelBuilder;
+import ar.edu.utn.aadeed.view.panel.builder.JAUpdatePagePanelBuilder;
 
 import com.google.common.collect.Maps;
 
@@ -21,10 +22,13 @@ public class JAViewModule {
 	
 	private JAAddPagePanelBuilder addPagePanelBuilder;
 	
-	public JAViewModule(String name, JAMainPagePanelBuilder mainPagePanelBuilder, JAAddPagePanelBuilder addPagePanelBuilder) {
+	private JAUpdatePagePanelBuilder updatePagePanelBuilder;
+	
+	public JAViewModule(String name, JAMainPagePanelBuilder mainPagePanelBuilder, JAAddPagePanelBuilder addPagePanelBuilder, JAUpdatePagePanelBuilder updatePagePanelBuilder) {
 		this.name = name;
 		this.mainPagePanelBuilder = mainPagePanelBuilder;
 		this.addPagePanelBuilder = addPagePanelBuilder;
+		this.updatePagePanelBuilder = updatePagePanelBuilder;
 	}
 	
 	public void addViewComponent(JAViewComponent viewComponent) {
@@ -46,5 +50,9 @@ public class JAViewModule {
 	
 	public JAAddPagePanelBuilder getAddPagePanelBuilder() {
 		return addPagePanelBuilder;
+	}
+	
+	public JAUpdatePagePanelBuilder getUpdatePagePanelBuilder() {
+		return updatePagePanelBuilder;
 	}
 }

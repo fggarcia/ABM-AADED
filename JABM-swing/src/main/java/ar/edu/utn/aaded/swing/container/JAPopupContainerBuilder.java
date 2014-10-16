@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
@@ -13,16 +15,18 @@ public class JAPopupContainerBuilder implements JAViewContainerBuilder {
 
 	public JAViewContainer build() {
 
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 4));
-
+		JPanel panel = new JPanel(new GridLayout(0, 4), false);
+		
+		Border margin = new EmptyBorder(10, 10, 10, 80);
+		panel.setBorder(margin);
+		
 		return new JAPopupContainer(panel);
 	}
 
 	private static class JAPopupContainer implements JAViewContainer {
 
 		private JPanel panel;
-
+		
 		public JAPopupContainer(JPanel panel) {
 			this.panel = panel;
 		}

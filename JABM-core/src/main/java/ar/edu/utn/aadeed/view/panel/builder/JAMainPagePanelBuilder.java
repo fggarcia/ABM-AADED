@@ -1,8 +1,6 @@
 package ar.edu.utn.aadeed.view.panel.builder;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import ar.edu.utn.aadeed.session.JASession;
-import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.JAViewSession;
 import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;

@@ -1,10 +1,12 @@
 package ar.edu.utn.aadeed.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.view.panel.JAAddPagePanel;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ar.edu.utn.aadeed.view.panel.JAUpdatePagePanel;
 
 public class JAViewSession<T> {
 
@@ -25,8 +27,13 @@ public class JAViewSession<T> {
 	}
 	
 	public void renderAddPanel() {
-		JAAddPagePanel<T> addPagePanel = viewModule.getAddPagePanelBuilder().build(viewModule, session);
+		JAAddPagePanel<T> addPagePanel = viewModule.getAddPagePanelBuilder().build(this);
 		addPagePanel.render();
+	}
+	
+	public void renderUpdatePanel(T item) {
+		JAUpdatePagePanel<T> updatePagePanel = viewModule.getUpdatePagePanelBuilder().build(this);
+		updatePagePanel.render(item);
 	}
 
     public JASession<T> getSession() {

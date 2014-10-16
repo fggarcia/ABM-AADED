@@ -10,7 +10,6 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import ar.edu.utn.aadeed.session.JASessionFactory;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 import ar.edu.utn.aadeed.view.panel.JAViewOperationPanel;
@@ -41,11 +40,16 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
             addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             addButton.addActionListener(getAddActionListener());
             
+            JButton updateButton = new JButton("Update");
+            updateButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            updateButton.addActionListener(getUpdateActionListener());
+            
             this.containerPanel.add(deleteButton);
             this.containerPanel.add(addButton);
+            this.containerPanel.add(updateButton);
         }
 
-        public void render(JAViewContainer container) {
+		public void render(JAViewContainer container) {
             container.addMember(Box.createRigidArea(new Dimension(0, 10)));
             container.addMember(containerPanel);
             container.addMember(Box.createRigidArea(new Dimension(0, 10)));
@@ -70,6 +74,17 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
     			}
     		};
         }
+        
+        private ActionListener getUpdateActionListener() {
+        	return new ActionListener() {
+    			public void actionPerformed(ActionEvent ae) {
+       				T item = mainPagePanel.getSelectedItem();
+    				if (item != null) {
+    					mainPagePanel.getViewSession().renderUpdatePanel(item);
+    				}
+    			}
+    		};
+		}
 
         private JPanel createContainerPanel() {
             JPanel panel = new JPanel();

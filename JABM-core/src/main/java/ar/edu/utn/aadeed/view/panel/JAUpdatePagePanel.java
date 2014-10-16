@@ -11,31 +11,31 @@ import ar.edu.utn.aadeed.view.JAViewSession;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
-public class JAAddPagePanel<T> {
+public class JAUpdatePagePanel<T> {
 
-	static final Logger Log = LoggerFactory.getLogger(JAAddPagePanel.class);
+	static final Logger Log = LoggerFactory.getLogger(JAUpdatePagePanel.class);
 	
 	private JAViewContainer mainContainer;
 	
 	private JAViewSession<T> viewSession;
 	
-	public void render() {
+	public void render(T item) {
 		
 		checkArgument(viewSession != null, "viewSession cannot be null");
 		checkArgument(mainContainer != null, "mainContainer cannot be null");
 
-		renderFields();
+		renderFields(item);
 		
         mainContainer.render();
 	}
 	
-	private void renderFields() {
+	private void renderFields(T item) {
 		for (JAFieldDescription field : viewSession.getSession().getFields().findFieldsToShow()) {
-			renderFieldDescription(field);
+			renderFieldDescription(field, item);
 		}
 	}
 	
-	private void renderFieldDescription(JAFieldDescription field) {
+	private void renderFieldDescription(JAFieldDescription field, T item) {
 		
 		JAViewDescription viewDescription = field.getView();
 		JAViewComponent viewComponent = viewSession.getViewModule().findComponent(viewDescription.getType());
@@ -43,7 +43,7 @@ public class JAAddPagePanel<T> {
 		if (viewComponent != null) {
 			
 			Log.info(String.format("Rendering field %s with type %s", field.getName(), viewDescription.getType()));
-			viewComponent.render(field, mainContainer);
+			viewComponent.render(item, field, mainContainer);
 		}
 	}
 	
