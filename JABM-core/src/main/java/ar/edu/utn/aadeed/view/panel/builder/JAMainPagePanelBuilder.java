@@ -3,6 +3,7 @@ package ar.edu.utn.aadeed.view.panel.builder;
 import static com.google.common.base.Preconditions.checkArgument;
 import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.view.JAViewModule;
+import ar.edu.utn.aadeed.view.JAViewSession;
 import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
@@ -38,26 +39,24 @@ public class JAMainPagePanelBuilder {
 		return this;
 	}
 	
-	public <T> JAMainPagePanel<T> build(JAViewModule viewModule, JASession<T> session) {
+	public <T> JAMainPagePanel<T> build(JAViewSession<T> viewSession) {
 		
 		checkArgument(tableBuilder != null, "tableBuilder cannot be null");
 		checkArgument(searchPanelBuilder != null, "searchPanelBuilder cannot be null");
         checkArgument(operationPanelBuilder != null, "operationPanelBuilder cannot be null");
         checkArgument(containerBuilder != null, "containerBuilder cannot be null");
 		
-		checkArgument(viewModule != null, "viewModule cannot be null");
-		checkArgument(session != null, "session cannot be null");
+		checkArgument(viewSession != null, "viewSession cannot be null");
 		
 		JAViewRecordTable<T> table = tableBuilder.<T>build();
 		JAMainPagePanel<T> mainPagePanel = new JAMainPagePanel<T>();
 		
 		mainPagePanel.setMainContainer(containerBuilder.build());
-		mainPagePanel.setSession(session);
+		mainPagePanel.setViewSession(viewSession);
 		mainPagePanel.setSearchPanel(searchPanelBuilder.<T>build(mainPagePanel));
         mainPagePanel.setOperationPanel(operationPanelBuilder.<T>build(mainPagePanel));
 		mainPagePanel.setTable(table);
-		mainPagePanel.setViewModule(viewModule);
-		
+
 		return mainPagePanel;
 	}
 }
