@@ -21,7 +21,7 @@ public class JAAddPagePanelBuilder {
 		checkArgument(viewSession != null, "viewSession cannot be null");
 		
 		JAAddPagePanel<T> addPagePanel = new JAAddPagePanel<T>();
-		addPagePanel.setMainContainer(containerBuilder.build());
+		addPagePanel.setMainContainer(containerBuilder.build(viewSession));
 		addPagePanel.setViewSession(viewSession);
 		
 		return addPagePanel;

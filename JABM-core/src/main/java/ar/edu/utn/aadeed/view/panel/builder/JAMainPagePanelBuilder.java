@@ -49,7 +49,7 @@ public class JAMainPagePanelBuilder {
 		JAViewRecordTable<T> table = tableBuilder.<T>build();
 		JAMainPagePanel<T> mainPagePanel = new JAMainPagePanel<T>();
 		
-		mainPagePanel.setMainContainer(containerBuilder.build());
+		mainPagePanel.setMainContainer(containerBuilder.build(viewSession));
 		mainPagePanel.setViewSession(viewSession);
 		mainPagePanel.setSearchPanel(searchPanelBuilder.<T>build(mainPagePanel));
         mainPagePanel.setOperationPanel(operationPanelBuilder.<T>build(mainPagePanel));

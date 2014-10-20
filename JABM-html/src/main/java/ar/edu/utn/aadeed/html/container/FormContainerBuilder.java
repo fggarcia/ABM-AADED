@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.PrintWriter;
 
+import ar.edu.utn.aadeed.view.component.JAMember;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 public class FormContainerBuilder {
@@ -39,6 +40,11 @@ public class FormContainerBuilder {
 		public void render() {
 			writer.println(sb.toString());
 			writer.flush();
+		}
+
+		public void addMember(JAMember member) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

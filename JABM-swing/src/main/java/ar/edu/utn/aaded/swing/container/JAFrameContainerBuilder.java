@@ -1,14 +1,21 @@
 package ar.edu.utn.aaded.swing.container;
 
 import static com.google.common.base.Preconditions.checkArgument;
+
+import java.awt.Container;
+import java.awt.LayoutManager;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+
+import org.apache.commons.lang.NotImplementedException;
+
+import ar.edu.utn.aadeed.view.JAViewSession;
+import ar.edu.utn.aadeed.view.component.JAMember;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
 
-import javax.swing.*;
-
 import com.google.common.base.Function;
-
-import java.awt.*;
 
 public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 
@@ -19,7 +26,7 @@ public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 		return this;
 	}
 
-	public JAViewContainer build() {
+	public <T> JAViewContainer build(JAViewSession<T> viewSession) {
 
 		checkArgument(layout != null, "layout cannot be null");
 
@@ -50,6 +57,10 @@ public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 			frame.setResizable(false);
 			frame.pack();
 			frame.setVisible(true);
+		}
+
+		public void addMember(JAMember member) {
+			throw new NotImplementedException();
 		}
 	}
 }

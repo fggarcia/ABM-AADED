@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ar.edu.utn.aadeed.model.JAFieldDescription;
-import ar.edu.utn.aadeed.model.JAViewDescription;
 import ar.edu.utn.aadeed.view.JAViewSession;
-import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 public class JAAddPagePanel<T> {
@@ -31,19 +29,7 @@ public class JAAddPagePanel<T> {
 	
 	private void renderFields() {
 		for (JAFieldDescription field : viewSession.getSession().getFields().findFieldsToShow()) {
-			renderFieldDescription(field);
-		}
-	}
-	
-	private void renderFieldDescription(JAFieldDescription field) {
-		
-		JAViewDescription viewDescription = field.getView();
-		JAViewComponent viewComponent = viewSession.getViewModule().findComponent(viewDescription.getType());
-		
-		if (viewComponent != null) {
-			
-			Log.info(String.format("Rendering field %s with type %s", field.getName(), viewDescription.getType()));
-			viewComponent.render(field, mainContainer);
+			viewSession.renderField(field, mainContainer);
 		}
 	}
 	

@@ -1,10 +1,10 @@
 package ar.edu.utn.aaded.swing.table;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 
 public class JARecordTableModel<T> extends AbstractTableModel {
@@ -31,7 +31,7 @@ public class JARecordTableModel<T> extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		String fieldName = fields.get(columnIndex).getName();
 		T item = getItem(rowIndex);
-		return getFieldValue(fieldName, item);
+		return JAReflections.getFieldValue(item, fieldName);
 	}
 
 	@Override
@@ -46,17 +46,5 @@ public class JARecordTableModel<T> extends AbstractTableModel {
 
 	public T getItem(int row) {
 		return items.get(row);
-	}
-
-	private Object getFieldValue(String fieldName, T item) {
-		try {
-			Class<?> clazz = item.getClass();
-			Field field = clazz.getDeclaredField(fieldName);
-			field.setAccessible(true);
-			return field.get(item);
-		} catch (Exception e) {
-			String errorMsg = String.format("Could not get %s value", fieldName);
-			throw new RuntimeException(errorMsg, e);
-		}
 	}
 }

@@ -1,8 +1,10 @@
 package ar.edu.utn.aadeed.session;
 
+import java.util.Map;
+
+import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.repository.JARepository;
 import ar.edu.utn.aadeed.session.builder.JAFiltersBuilder;
-import ar.edu.utn.aadeed.view.builder.JAViewSessionBuilder;
 
 public class JASession<T> {
 
@@ -34,6 +36,22 @@ public class JASession<T> {
 		return this.repository.release();
 	}
 	
+	public T createItem(Map<String, Object> values) {
+		try {
+			
+			T instance = representationFor.newInstance();
+			
+			for (String fieldName : values.keySet()) {
+				JAReflections.setFieldValue(instance, fieldName, values.get(fieldName));
+			}
+			
+			return instance;
+		
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public Class<T> getRepresentationFor() {
 		return representationFor;
 	}
@@ -42,10 +60,6 @@ public class JASession<T> {
 		return fields;
 	}
 	
-	public JAViewSessionBuilder<T> getViewSessionBuilder() {
-		return new JAViewSessionBuilder<T>().withSession(this);
-	}
-
 	public JAFiltersBuilder<T> getFiltersBuilder() {
 		return new JAFiltersBuilder<T>(fields, repository);
 	}

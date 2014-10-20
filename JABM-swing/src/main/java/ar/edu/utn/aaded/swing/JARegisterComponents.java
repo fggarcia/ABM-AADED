@@ -36,10 +36,10 @@ public final class JARegisterComponents {
             .withOperationPanelBuilder(new JAOperationPanelBuilder());
         
         JAAddPagePanelBuilder addPagePanelBuilder = new JAAddPagePanelBuilder()
-        	.withContainerBuilder(new JAPopupContainerBuilder());
+        	.withContainerBuilder(new JAPopupContainerBuilder().withTitle("Add Item"));
         
         JAUpdatePagePanelBuilder updatePagePanelBuilder = new JAUpdatePagePanelBuilder()
-    	.withContainerBuilder(new JAPopupContainerBuilder());
+    	.withContainerBuilder(new JAPopupContainerBuilder().withTitle("Update Item"));
 
         JASessionFactory.getInstance().getViewModuleBuilder()
                 .addViewComponent(new JATextBoxComponent())

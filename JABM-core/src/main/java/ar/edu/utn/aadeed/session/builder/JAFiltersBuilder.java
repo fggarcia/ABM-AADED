@@ -31,20 +31,18 @@ public class JAFiltersBuilder<T> {
 
 	public JAFiltersBuilder<T> add(String fieldName, Object value) {
 		
-		checkArgument(!Strings.isNullOrEmpty(fieldName), "fieldName cannot be null or empty");
-		checkArgument(value != null, "value cannot be null");
+		if (value != null) {
 		
-		checkFieldName(fieldName);
-		
-		filters.add(new JAFilter(fieldName, convertFieldValue(fieldName, value)));
+			checkArgument(!Strings.isNullOrEmpty(fieldName), "fieldName cannot be null or empty");
+			
+			checkFieldName(fieldName);
+			
+			filters.add(new JAFilter(availableFieldFilters.get(fieldName), convertFieldValue(fieldName, value)));
+		}
 		
 		return this;
 	}
 	
-	public boolean isValidSearchField(String name) {
-		return availableFieldFilters.containsKey(name);
-	}
-
 	public List<T> search() {
 		return this.repository.search(filters);
 	}
@@ -53,6 +51,10 @@ public class JAFiltersBuilder<T> {
 		if (!isValidSearchField(fieldName)) {
 			throw new IllegalArgumentException(String.format("Field %s is not allowed to be a filter", fieldName));
 		}
+	}
+	
+	private boolean isValidSearchField(String name) {
+		return availableFieldFilters.containsKey(name);
 	}
 	
 	private Object convertFieldValue(String fieldName, Object value) {

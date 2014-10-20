@@ -34,7 +34,6 @@ public class JAFieldDescription {
 		if (hasView()) {
 
 			String viewLabel = view.getLabel();
-
 			if (!Strings.isNullOrEmpty(viewLabel)) {
 				return StringUtils.capitalize(viewLabel);
 			}

@@ -26,6 +26,8 @@ public class Hotel {
 	@JAView(order = 3, type = TEXT_BOX)
 	@JADescriptor(filter = true)
 	private String hotelType;
+	
+	public Hotel() { }
 
 	public Hotel(Long id, String name, String address, String hotelType) {
 		this.id = id;

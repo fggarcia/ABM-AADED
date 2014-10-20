@@ -3,6 +3,7 @@ package ar.edu.utn.aadeed.html.component;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
+import ar.edu.utn.aadeed.view.container.JAContainer;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 public class TextBoxComponent implements JAViewComponent {
@@ -23,9 +24,20 @@ public class TextBoxComponent implements JAViewComponent {
 		if (size > 0) sb.append(String.format("maxlength=\"%s\" ", size));
 		sb.append(">");
 		
-		container.addMember(sb.toString());
+//		container.addMember(sb.toString());
 	}
 
 	public void render(Object object, JAFieldDescription field, JAViewContainer container) {
+	}
+
+	public void render(JAFieldDescription field, JAContainer container) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void render(Object object, JAFieldDescription field,
+			JAContainer container) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -5,7 +5,6 @@ import ar.edu.utn.aadeed.domain.Hotel;
 import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.session.JASessionFactory;
 
-
 public class App
 {
     public static void main(String args[]) throws ClassNotFoundException {

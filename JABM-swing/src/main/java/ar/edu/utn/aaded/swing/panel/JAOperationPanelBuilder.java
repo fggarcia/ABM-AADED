@@ -49,7 +49,7 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
             this.containerPanel.add(updateButton);
         }
 
-		public void render(JAViewContainer container) {
+		public void renderIn(JAViewContainer container) {
             container.addMember(Box.createRigidArea(new Dimension(0, 10)));
             container.addMember(containerPanel);
             container.addMember(Box.createRigidArea(new Dimension(0, 10)));
@@ -60,7 +60,7 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
     			public void actionPerformed(ActionEvent ae) {
     				T item = mainPagePanel.getSelectedItem();
     				if (item != null) {
-    					mainPagePanel.getSession().remove(item);
+    					mainPagePanel.getViewSession().getSession().remove(item);
     					mainPagePanel.refreshTable();
     				}
     			}

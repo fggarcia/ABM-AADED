@@ -1,19 +1,16 @@
 package ar.edu.utn.aadeed.view.panel;
 
-import ar.edu.utn.aadeed.model.JAFieldDescription;
-import ar.edu.utn.aadeed.model.JAViewDescription;
-import ar.edu.utn.aadeed.session.JAFields;
-import ar.edu.utn.aadeed.session.JASession;
-import ar.edu.utn.aadeed.session.builder.JAFiltersBuilder;
-import ar.edu.utn.aadeed.view.JAViewSession;
-import ar.edu.utn.aadeed.view.component.JAViewComponent;
-import ar.edu.utn.aadeed.view.container.JAViewContainer;
-import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
-import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import ar.edu.utn.aadeed.model.JAFieldDescription;
+import ar.edu.utn.aadeed.session.JAFields;
+import ar.edu.utn.aadeed.session.builder.JAFiltersBuilder;
+import ar.edu.utn.aadeed.view.JAViewSession;
+import ar.edu.utn.aadeed.view.container.JAViewContainer;
+import ar.edu.utn.aadeed.view.table.JAViewRecordTable;
+
+import com.google.common.collect.Lists;
 
 public class JAMainPagePanel<T> {
 
@@ -31,19 +28,13 @@ public class JAMainPagePanel<T> {
 	
 	public void render() {
 		
-		checkArgument(viewSession != null, "viewSession cannot be null");
-		checkArgument(table != null, "table cannot be null");
-		checkArgument(searchPanel != null, "searchPanel cannot be null");
-        checkArgument(operationPanel != null, "operationPanel cannot be null");
-		checkArgument(mainContainer != null, "mainContainer cannot be null");
-
 		renderSearchFieldFilters();
 		
 		table.setColumns(Lists.newArrayList(getFields().findFieldsToShow()));
 		table.refresh(getFiltersBuilder().search());
 		table.render(mainContainer);
 
-        operationPanel.render(mainContainer);
+        operationPanel.renderIn(mainContainer);
 
         mainContainer.render();
 	}
@@ -53,7 +44,7 @@ public class JAMainPagePanel<T> {
 	}
 	
 	public void refreshTable() {
-		table.refresh(searchPanel.findFiltersBuilder().search());
+		table.refresh(searchPanel.getFiltersBuilder().search());
 	}
 	
 	public T getSelectedItem() {
@@ -61,38 +52,20 @@ public class JAMainPagePanel<T> {
 	}
 	
 	private void renderSearchFieldFilters() {
-		
 		for (JAFieldDescription field : getFields().findAvailableFilters()) {
-			renderFieldDescription(field);
+			viewSession.renderField(field, searchPanel);
 		}
-		
-		searchPanel.render(mainContainer);
+		searchPanel.renderIn(mainContainer);
+	}
+	
+	public JAFields getFields() {
+		return viewSession.getFields();
 	}
 
-    private JAFields getFields() {
-        return viewSession.getSession().getFields();
-    }
-
-    private void renderFieldDescription(JAFieldDescription field) {
-		
-		JAViewDescription viewDescription = field.getView();
-		JAViewComponent viewComponent = viewSession.getViewModule().findComponent(viewDescription.getType());
-		
-		if (viewComponent != null) {
-			
-			Log.info(String.format("Rendering field %s with type %s", field.getName(), viewDescription.getType()));
-			viewComponent.render(field, searchPanel);
-		}
+	public JAViewSession<T> getViewSession() {
+		return viewSession;
 	}
-
-    public JASession<T> getSession() {
-        return viewSession.getSession();
-    }
-
-    public JAViewSession<T> getViewSession() {
-        return viewSession;
-    }
-
+	
     public void setTable(JAViewRecordTable<T> table) {
 		this.table = table;
 	}

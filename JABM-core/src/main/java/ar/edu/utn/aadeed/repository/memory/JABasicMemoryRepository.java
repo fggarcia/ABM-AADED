@@ -1,14 +1,16 @@
 package ar.edu.utn.aadeed.repository.memory;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ar.edu.utn.aadeed.JAReflections;
+import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAFilter;
 import ar.edu.utn.aadeed.repository.JAFilteringStrategy;
+import ar.edu.utn.aadeed.repository.JAFilteringStrategy.JAEqualStrategy;
 import ar.edu.utn.aadeed.repository.JARepository;
 
 import com.google.common.base.Predicate;
@@ -60,13 +62,11 @@ public class JABasicMemoryRepository<T> implements JARepository<T> {
 	}
 
 	private boolean filter(T item, JAFilter filter) {
-		try {
-			Field field = item.getClass().getDeclaredField(filter.getFieldName());
-			field.setAccessible(true);
-			return JAFilteringStrategy.doEquals(field.get(item), filter.getValue());
-		} catch (Exception e) {
-			Log.error(String.format("Could not filter field %s in class %s", filter.getFieldName(), item.getClass().getName()));
-			return false;
-		}
+		
+		JAFieldDescription field = filter.getField();
+
+		JAEqualStrategy strategy = JAFilteringStrategy.findStrategy(field.getClazz());
+		
+		return strategy.doEquals(JAReflections.getFieldValue(item, field.getName()), filter.getValue());
 	}
 }

@@ -8,7 +8,6 @@ import ar.edu.utn.aadeed.parser.JASessionParser;
 import ar.edu.utn.aadeed.view.JAViewModule;
 import ar.edu.utn.aadeed.view.JAViewSession;
 import ar.edu.utn.aadeed.view.builder.JAViewModuleBuilder;
-import ar.edu.utn.aadeed.view.builder.JAViewSessionBuilder;
 
 import com.google.common.collect.Maps;
 
@@ -37,27 +36,25 @@ public final class JASessionFactory {
 		return instance;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <T> JASession<T> getSession(Class<T> clazz) {
-		checkArgument(clazz != null, "clazz cannot be null");
-		JASession<T> session = (JASession<T>) this.sessions.get(clazz);
-		return (session == null) ? (createSession(clazz)) : session;
-	}
-
 	public <T> JAViewSession<T> getViewSession(Class<T> clazz) {
 		checkArgument(clazz != null, "clazz cannot be null");
 		checkArgument(viewModule != null, "Please, register a view module first");
-		JAViewSessionBuilder<T> builder = getSession(clazz).getViewSessionBuilder();
-		return builder.withViewModule(viewModule).build();
+		return new JAViewSession<T>(viewModule, getSession(clazz));
 	}
 
 	public void registerViewModule(JAViewModule viewModule) {
-		checkArgument(viewModule != null, "viewModule cannot be null");
 		this.viewModule = viewModule;
 	}
 
 	public JAViewModuleBuilder getViewModuleBuilder() {
 		return new JAViewModuleBuilder(this);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> JASession<T> getSession(Class<T> clazz) {
+		checkArgument(clazz != null, "clazz cannot be null");
+		JASession<T> session = (JASession<T>) this.sessions.get(clazz);
+		return (session == null) ? (createSession(clazz)) : session;
 	}
 
 	private <T> JASession<T> createSession(Class<T> clazz) {

@@ -1,10 +1,10 @@
 package ar.edu.utn.aaded.swing.panel;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -16,14 +16,14 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import ar.edu.utn.aaded.swing.JAComponentUtils;
 import ar.edu.utn.aadeed.session.builder.JAFiltersBuilder;
+import ar.edu.utn.aadeed.view.component.JAMember;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 import ar.edu.utn.aadeed.view.panel.JAViewSearchPanel;
 import ar.edu.utn.aadeed.view.panel.builder.JAViewSearchPanelBuilder;
 
-import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 
@@ -37,8 +37,10 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 		
 		private JPanel fieldsPanel;
 		
+		private List<JAMember> members = Lists.newArrayList();
+		
 		private JAMainPagePanel<T> mainPagePanel;
-
+		
 		public JASearchPanel(JAMainPagePanel<T> mainPagePanel) {
 		
 			this.mainPagePanel = mainPagePanel;
@@ -49,35 +51,33 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 			this.containerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		}
 
-		public void render(JAViewContainer container) {
+		public void renderIn(JAViewContainer container) {
 			container.addMember(Box.createRigidArea(new Dimension(0, 20)));
 			container.addMember(containerPanel);
 		}
 
-		public void addMember(Object member) {
-			JComponent component = JComponent.class.cast(member);
+		public void addMember(JAMember member) {
+			
+			JComponent component = JComponent.class.cast(member.getComponent());
 			component.addKeyListener(createKeyListener());
+
+			members.add(member);
 			fieldsPanel.add(component);
 		}
-
-		public void render() {
-			containerPanel.setVisible(true);
+		
+		public void addMember(Object member) {
+			JComponent component = JComponent.class.cast(member);
+			fieldsPanel.add(component);
 		}
-
-		public JAFiltersBuilder<T> findFiltersBuilder() {
+		
+		public JAFiltersBuilder<T> getFiltersBuilder() {
 			
 			JAFiltersBuilder<T> filtersBuilder = mainPagePanel.getFiltersBuilder();
 			
-			for (Component component : fieldsPanel.getComponents()) {
+			for (JAMember member : members) {
 
-				String name = component.getName();
-				if (filtersBuilder.isValidSearchField(name)) {
-					
-					String value = JAComponentUtils.getValue(component);
-					if (!Strings.isNullOrEmpty(value)) {
-						filtersBuilder.add(name, value);
-					}
-				}
+				String name = member.getField().getName();
+				filtersBuilder.add(name, member.getValue());
 			}
 			
 			return filtersBuilder;
