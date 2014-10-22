@@ -70,9 +70,10 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
         private ActionListener getAddActionListener() {
         	return new ActionListener() {
     			public void actionPerformed(ActionEvent ae) {
-                    T newItem = mainPagePanel.getViewSession().renderAddPanel();
 
-                    if (newItem != null){
+                    T newItem = mainPagePanel.getViewSession().renderAddPanel();
+                    if (newItem != null) {
+
                         mainPagePanel.getViewSession().getSession().add(newItem);
                         mainPagePanel.refreshTable();
                     }
@@ -88,6 +89,7 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
 
                         T newItem = mainPagePanel.getViewSession().renderUpdatePanel(item);
                         if (newItem != null) {
+
                             mainPagePanel.getViewSession().getSession().update(item, newItem);
                             mainPagePanel.refreshTable();
                         }
