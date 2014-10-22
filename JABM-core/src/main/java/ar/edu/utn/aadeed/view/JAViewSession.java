@@ -31,14 +31,14 @@ public class JAViewSession<T> {
 		mainPage.render();
 	}
 
-	public void renderAddPanel() {
+	public T renderAddPanel() {
 		JAAddPagePanel<T> addPagePanel = viewModule.getAddPagePanelBuilder().build(this);
-		addPagePanel.render();
+		return addPagePanel.render();
 	}
 
-	public void renderUpdatePanel(T item) {
+	public T renderUpdatePanel(T item) {
 		JAUpdatePagePanel<T> updatePagePanel = viewModule.getUpdatePagePanelBuilder().build(this);
-		updatePagePanel.render(item);
+		return updatePagePanel.render(item);
 	}
 
 	public void renderField(JAFieldDescription field, JAContainer container) {

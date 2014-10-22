@@ -13,18 +13,18 @@ public class JAAddPagePanel<T> {
 
 	static final Logger Log = LoggerFactory.getLogger(JAAddPagePanel.class);
 	
-	private JAViewContainer mainContainer;
+	private JAViewContainer<T> mainContainer;
 	
 	private JAViewSession<T> viewSession;
 	
-	public void render() {
+	public T render() {
 		
 		checkArgument(viewSession != null, "viewSession cannot be null");
 		checkArgument(mainContainer != null, "mainContainer cannot be null");
 
 		renderFields();
-		
-        mainContainer.render();
+
+		return mainContainer.renderAndReturn();
 	}
 	
 	private void renderFields() {

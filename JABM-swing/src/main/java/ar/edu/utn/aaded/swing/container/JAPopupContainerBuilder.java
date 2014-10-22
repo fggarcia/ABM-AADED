@@ -19,6 +19,7 @@ import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.beanutils.ConvertUtils;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class JAPopupContainerBuilder implements JAViewContainerBuilder {
 	
@@ -61,12 +62,18 @@ public class JAPopupContainerBuilder implements JAViewContainerBuilder {
 		}
 
 		public void render() {
+			throw new NotImplementedException();
+		}
+
+		public T renderAndReturn() {
 			int result = JOptionPane.showConfirmDialog(null, panel, title, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 			if (JOptionPane.YES_OPTION == result) {
 				JASession<T> session = viewSession.getSession();
 				T newInstance = session.createItem(getValuesForMembers());
-				System.out.println(newInstance);
+				return newInstance;
 			}
+
+			return null;
 		}
 		
 		public void addMember(JAMember member) {

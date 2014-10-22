@@ -40,7 +40,7 @@ public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 		return new JAFrameContainer(frame);
 	}
 
-	private static class JAFrameContainer implements JAViewContainer {
+	private static class JAFrameContainer<T> implements JAViewContainer {
 
 		private JFrame frame;
 
@@ -57,6 +57,10 @@ public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 			frame.setResizable(false);
 			frame.pack();
 			frame.setVisible(true);
+		}
+
+		public T renderAndReturn() {
+			throw new NotImplementedException();
 		}
 
 		public void addMember(JAMember member) {

@@ -70,7 +70,12 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
         private ActionListener getAddActionListener() {
         	return new ActionListener() {
     			public void actionPerformed(ActionEvent ae) {
-                    mainPagePanel.getViewSession().renderAddPanel();
+                    T newItem = mainPagePanel.getViewSession().renderAddPanel();
+
+                    if (newItem != null){
+                        mainPagePanel.getViewSession().getSession().add(newItem);
+                        mainPagePanel.refreshTable();
+                    }
     			}
     		};
         }
@@ -80,7 +85,13 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
     			public void actionPerformed(ActionEvent ae) {
        				T item = mainPagePanel.getSelectedItem();
     				if (item != null) {
-    					mainPagePanel.getViewSession().renderUpdatePanel(item);
+
+                        T newItem = mainPagePanel.getViewSession().renderUpdatePanel(item);
+                        if (newItem != null) {
+                            mainPagePanel.getViewSession().getSession().update(item, newItem);
+                            mainPagePanel.refreshTable();
+                        }
+
     				}
     			}
     		};
