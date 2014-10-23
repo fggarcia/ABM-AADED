@@ -1,7 +1,8 @@
 package ar.edu.utn.aaded.swing.panel;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
@@ -59,7 +60,13 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 		public void addMember(JAMember member) {
 			
 			JComponent component = JComponent.class.cast(member.getComponent());
-			component.addKeyListener(createKeyListener());
+
+			if (component instanceof ItemSelectable){
+				ItemSelectable.class.cast(component).addItemListener(createItemChangeLister());
+			}
+			else{
+				component.addKeyListener(createKeyListener());
+			}
 
 			members.add(member);
 			fieldsPanel.add(component);
@@ -92,6 +99,17 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 				
 				public void keyReleased(KeyEvent ke) {
 					mainPagePanel.refreshTable();
+				}
+			};
+		}
+
+		private ItemListener createItemChangeLister(){
+			return new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if (e.getStateChange() == ItemEvent.SELECTED) {
+						mainPagePanel.refreshTable();
+					}
 				}
 			};
 		}
