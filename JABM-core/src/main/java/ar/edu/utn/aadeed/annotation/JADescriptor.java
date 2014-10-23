@@ -14,4 +14,7 @@ public @interface JADescriptor {
     boolean editable() default true;
     
     boolean filter() default false;
+    
+    String regex() default "";
+    
 }

@@ -18,6 +18,8 @@ public class JAFieldDescription {
 	private boolean editable;
 
 	private boolean filter;
+	
+	private String regularExpression;
 
 	public JAFieldDescription(String name, Class<?> clazz, JAViewDescription view) {
 		this.name = name;
@@ -76,6 +78,14 @@ public class JAFieldDescription {
 
 	public JAViewDescription getView() {
 		return view;
+	}
+	
+	public String getRegularExpression() {
+		return regularExpression;
+	}
+	
+	public void setRegularExpression(String regularExpression) {
+		this.regularExpression = regularExpression;
 	}
 
 	@Override
