@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 
+import ar.edu.utn.aaded.swing.base.JARegexTextField;
 import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.view.component.JAMember;
@@ -24,16 +25,15 @@ public class JATextBoxComponent implements JAViewComponent {
 	public void render(JAFieldDescription field, JAContainer container) {
     	
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
-        JTextField textField = new JTextField(15);
         
         container.addMember(fieldLabel);
-        container.addMember(new JATextBoxMember(field, textField));
+        container.addMember(new JATextBoxMember(field, createTextField(field)));
     }
 
 	public void render(Object object, JAFieldDescription field, JAContainer container) {
 
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
-        JTextField textField = new JTextField(15);
+        JTextField textField = createTextField(field);
         
         Object itemValue = JAReflections.getFieldValue(object, field.getName());
         String stringItemValue = MoreObjects.firstNonNull(itemValue, "").toString();
@@ -43,6 +43,20 @@ public class JATextBoxComponent implements JAViewComponent {
         container.addMember(fieldLabel);
         container.addMember(new JATextBoxMember(field, textField));
     }
+	
+	private JTextField createTextField(JAFieldDescription field) {
+
+		if (StringUtils.isBlank(field.getRegularExpression())) {
+        
+			return new JTextField(15);
+
+		} else {
+			
+        	JTextField textField = new JARegexTextField(15);
+        	((JARegexTextField) textField).setRegexFilter(field.getRegularExpression());
+        	return textField;
+        }
+	}
     
     public static class JATextBoxMember implements JAMember {
     	

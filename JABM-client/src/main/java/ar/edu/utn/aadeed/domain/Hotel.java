@@ -21,7 +21,7 @@ public class Hotel {
 	private Long id;
 
 	@JAView(order = 1, type = TEXT_BOX)
-	@JADescriptor(filter = true)
+	@JADescriptor(filter = true, regex = "\\d+")
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)

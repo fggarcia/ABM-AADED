@@ -105,7 +105,7 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 
 		private ItemListener createItemChangeLister(){
 			return new ItemListener() {
-				@Override
+				
 				public void itemStateChanged(ItemEvent e) {
 					if (e.getStateChange() == ItemEvent.SELECTED) {
 						mainPagePanel.refreshTable();
