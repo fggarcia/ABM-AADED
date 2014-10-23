@@ -3,6 +3,7 @@ package ar.edu.utn.aaded.swing.component;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 
 import ar.edu.utn.aadeed.JAReflections;
@@ -11,6 +12,8 @@ import ar.edu.utn.aadeed.view.component.JAMember;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
 import ar.edu.utn.aadeed.view.container.JAContainer;
+
+import com.google.common.base.MoreObjects;
 
 public class JATextBoxComponent implements JAViewComponent {
 
@@ -32,8 +35,10 @@ public class JATextBoxComponent implements JAViewComponent {
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
         JTextField textField = new JTextField(15);
         
-        String itemValue = JAReflections.getFieldValue(object, field.getName()).toString();
-        textField.setText(itemValue);
+        Object itemValue = JAReflections.getFieldValue(object, field.getName());
+        String stringItemValue = MoreObjects.firstNonNull(itemValue, "").toString();
+        
+        textField.setText(stringItemValue);
         
         container.addMember(fieldLabel);
         container.addMember(new JATextBoxMember(field, textField));
@@ -60,7 +65,7 @@ public class JATextBoxComponent implements JAViewComponent {
 
 		public Object getValue() {
 			String value = textField.getText();
-			return (StringUtils.isBlank(value)) ? null : value;
+			return (StringUtils.isBlank(value)) ? null : ConvertUtils.convert(value, field.getClazz());
 		}
     }
 }

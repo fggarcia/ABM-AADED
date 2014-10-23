@@ -33,7 +33,7 @@ public class JAUpdatePagePanel<T> {
 		}
 	}
 	
-	public void setMainContainer(JAViewContainer mainContainer) {
+	public void setMainContainer(JAViewContainer<T> mainContainer) {
 		this.mainContainer = mainContainer;
 	}
 

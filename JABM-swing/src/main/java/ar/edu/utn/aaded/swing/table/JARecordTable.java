@@ -33,7 +33,7 @@ public class JARecordTable<T> implements JAViewRecordTable<T> {
 		table.setModel(model);
 	}
 
-	public void render(JAViewContainer container) {
+	public void render(JAViewContainer<T> container) {
 		JScrollPane panel = new JScrollPane(table);
 		container.addMember(Box.createRigidArea(new Dimension(0, 10)));
 		container.addMember(panel);

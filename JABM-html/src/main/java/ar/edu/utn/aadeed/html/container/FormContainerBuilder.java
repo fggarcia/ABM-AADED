@@ -4,9 +4,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.PrintWriter;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import ar.edu.utn.aadeed.view.component.JAMember;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class FormContainerBuilder {
 
@@ -17,12 +18,12 @@ public class FormContainerBuilder {
 		return this;
 	}
 	
-	public JAViewContainer build() {
+	public <T> JAViewContainer<T> build() {
 		checkArgument(writer != null, "writer cannot be null");
-		return new FormContainer(writer);
+		return new FormContainer<T>(writer);
 	}
 
-	public static class FormContainer<T> implements JAViewContainer {
+	public static class FormContainer<T> implements JAViewContainer<T> {
 
 		private PrintWriter writer;
 		

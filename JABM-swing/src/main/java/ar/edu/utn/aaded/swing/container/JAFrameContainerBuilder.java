@@ -26,7 +26,7 @@ public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 		return this;
 	}
 
-	public <T> JAViewContainer build(JAViewSession<T> viewSession) {
+	public <T> JAViewContainer<T> build(JAViewSession<T> viewSession) {
 
 		checkArgument(layout != null, "layout cannot be null");
 
@@ -37,10 +37,10 @@ public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 		Container container = frame.getContentPane();
 		container.setLayout(layout.apply(frame));
 
-		return new JAFrameContainer(frame);
+		return new JAFrameContainer<T>(frame);
 	}
 
-	private static class JAFrameContainer<T> implements JAViewContainer {
+	private static class JAFrameContainer<T> implements JAViewContainer<T> {
 
 		private JFrame frame;
 

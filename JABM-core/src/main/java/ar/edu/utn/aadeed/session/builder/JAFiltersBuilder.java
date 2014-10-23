@@ -5,8 +5,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.ConvertUtils;
-
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAFilter;
 import ar.edu.utn.aadeed.repository.JARepository;
@@ -37,7 +35,7 @@ public class JAFiltersBuilder<T> {
 			
 			checkFieldName(fieldName);
 			
-			filters.add(new JAFilter(availableFieldFilters.get(fieldName), convertFieldValue(fieldName, value)));
+			filters.add(new JAFilter(availableFieldFilters.get(fieldName), value));
 		}
 		
 		return this;
@@ -55,10 +53,6 @@ public class JAFiltersBuilder<T> {
 	
 	private boolean isValidSearchField(String name) {
 		return availableFieldFilters.containsKey(name);
-	}
-	
-	private Object convertFieldValue(String fieldName, Object value) {
-		return ConvertUtils.convert(value, availableFieldFilters.get(fieldName).getClazz());
 	}
 	
 	private void setAvailableFieldFilters(Iterable<JAFieldDescription> fields) {

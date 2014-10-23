@@ -6,13 +6,21 @@ import ar.edu.utn.aadeed.view.component.JAMember;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
 import ar.edu.utn.aadeed.view.container.JAContainer;
+
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
 import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
+
 import java.util.List;
 
 public class JASelectItemComponent implements JAViewComponent {
+	
+	private static final String EMPTY_OPTION = "";
 
 	public JAViewType getViewType() {
         return JAViewType.SELECT_ITEM;
@@ -23,28 +31,37 @@ public class JASelectItemComponent implements JAViewComponent {
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
         container.addMember(fieldLabel);
 
-		JComboBox jComboBox = new JComboBox(getEnumValues(field.getClazz()).toArray());
-		jComboBox.setSelectedItem("");
+		JComboBox<String> jComboBox = createComboBox(field);
+		jComboBox.setSelectedItem(EMPTY_OPTION);
 		container.addMember(new JATextBoxMember(field, jComboBox));
     }
 
 	public void render(Object object, JAFieldDescription field, JAContainer container) {
 
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
-
-        String itemValue = JAReflections.getFieldValue(object, field.getName()).toString();
         container.addMember(fieldLabel);
+        
+        Object itemValue = JAReflections.getFieldValue(object, field.getName());
+        String stringItemValue = MoreObjects.firstNonNull(itemValue, EMPTY_OPTION).toString();
 
-		JComboBox jComboBox = new JComboBox(getEnumValues(field.getClazz()).toArray());
-		jComboBox.setSelectedItem(itemValue);
+        JComboBox<String> jComboBox = createComboBox(field);
+		jComboBox.setSelectedItem(stringItemValue);
+		
 		container.addMember(new JATextBoxMember(field, jComboBox));
     }
 
+	private JComboBox<String> createComboBox(JAFieldDescription field) {
+		
+		List<Object> values = getEnumValues(field.getClazz());
+		
+		return new JComboBox<String>(values.toArray(new String[values.size()]));
+	}
+	
 	private List<Object> getEnumValues(Class<?> clazz) {
 
 		List<Object> values = Lists.newArrayList();
 
-		values.add("");
+		values.add(EMPTY_OPTION);
 
 		for (Object value : clazz.getEnumConstants()){
 			values.add(value.toString());
@@ -57,11 +74,11 @@ public class JASelectItemComponent implements JAViewComponent {
     	
     	private JAFieldDescription field;
     	
-    	private JComboBox textField;
+    	private JComboBox<String> comboBox;
     	
-		public JATextBoxMember(JAFieldDescription field, JComboBox textField) {
+		public JATextBoxMember(JAFieldDescription field, JComboBox<String> comboBox) {
 			this.field = field;
-			this.textField = textField;
+			this.comboBox = comboBox;
 		}
 
 		public JAFieldDescription getField() {
@@ -69,12 +86,23 @@ public class JASelectItemComponent implements JAViewComponent {
 		}
 
 		public Object getComponent() {
-			return textField;
+			return comboBox;
 		}
 
 		public Object getValue() {
-			String value = textField.getSelectedItem().toString();
-			return (StringUtils.isBlank(value)) ? null : value;
+			String value = comboBox.getSelectedItem().toString();
+			return (StringUtils.isBlank(value)) ? null : findEnum(value);
+		}
+		
+		private Object findEnum(final String value) {
+			
+			Object[] enums = field.getClazz().getEnumConstants();
+			
+			return Iterables.find(Lists.newArrayList(enums), new Predicate<Object>() {
+				public boolean apply(Object input) {
+					return Enum.class.cast(input).name().equals(value);
+				}
+			});
 		}
     }
 }

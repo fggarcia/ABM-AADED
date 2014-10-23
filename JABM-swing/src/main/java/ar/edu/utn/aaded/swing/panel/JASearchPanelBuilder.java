@@ -51,7 +51,7 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 			this.containerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		}
 
-		public void renderIn(JAViewContainer container) {
+		public void renderIn(JAViewContainer<T> container) {
 			container.addMember(Box.createRigidArea(new Dimension(0, 20)));
 			container.addMember(containerPanel);
 		}

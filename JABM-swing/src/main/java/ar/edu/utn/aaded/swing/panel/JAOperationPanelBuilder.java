@@ -49,7 +49,7 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
             this.containerPanel.add(updateButton);
         }
 
-		public void renderIn(JAViewContainer container) {
+		public void renderIn(JAViewContainer<T> container) {
             container.addMember(Box.createRigidArea(new Dimension(0, 10)));
             container.addMember(containerPanel);
             container.addMember(Box.createRigidArea(new Dimension(0, 10)));

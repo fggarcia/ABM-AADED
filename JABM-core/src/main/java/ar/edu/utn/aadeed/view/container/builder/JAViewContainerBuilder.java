@@ -5,6 +5,6 @@ import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 public interface JAViewContainerBuilder {
 
-	public <T> JAViewContainer build(JAViewSession<T> viewSession);
+	public <T> JAViewContainer<T> build(JAViewSession<T> viewSession);
 	
 }

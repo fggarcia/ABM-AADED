@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.view.JAViewSession;
 import ar.edu.utn.aadeed.view.component.JAMember;
@@ -18,8 +20,6 @@ import ar.edu.utn.aadeed.view.container.builder.JAViewContainerBuilder;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.beanutils.ConvertUtils;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class JAPopupContainerBuilder implements JAViewContainerBuilder {
 	
@@ -30,7 +30,7 @@ public class JAPopupContainerBuilder implements JAViewContainerBuilder {
 		return this;
 	}
 	
-	public <T> JAViewContainer build(JAViewSession<T> viewSession) {
+	public <T> JAViewContainer<T> build(JAViewSession<T> viewSession) {
 
 		JPanel panel = new JPanel(new GridLayout(0, 4), false);
 		
@@ -40,7 +40,7 @@ public class JAPopupContainerBuilder implements JAViewContainerBuilder {
 		return new JAPopupContainer<T>(title, panel, viewSession);
 	}
 
-	private static class JAPopupContainer<T> implements JAViewContainer {
+	private static class JAPopupContainer<T> implements JAViewContainer<T> {
 
 		private JPanel panel;
 		
@@ -87,7 +87,7 @@ public class JAPopupContainerBuilder implements JAViewContainerBuilder {
 			Map<String, Object> values = Maps.newHashMap();
 			
 			for (JAMember member : members) {
-				values.put(member.getField().getName(), ConvertUtils.convert(member.getValue(), member.getField().getClazz()));
+				values.put(member.getField().getName(), member.getValue());
 			}
 			
 			return values;

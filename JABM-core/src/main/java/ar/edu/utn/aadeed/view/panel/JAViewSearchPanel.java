@@ -6,7 +6,7 @@ import ar.edu.utn.aadeed.view.container.JAViewContainer;
 
 public interface JAViewSearchPanel<T> extends JAContainer {
 
-	public void renderIn(JAViewContainer container);
+	public void renderIn(JAViewContainer<T> container);
 	
 	public JAFiltersBuilder<T> getFiltersBuilder();
 	

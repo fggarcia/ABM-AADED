@@ -22,7 +22,7 @@ public class JAMainPagePanel<T> {
 
     private JAViewOperationPanel<T> operationPanel;
 	
-	private JAViewContainer mainContainer;
+	private JAViewContainer<T> mainContainer;
 	
 	private JAViewSession<T> viewSession;
 	
@@ -78,7 +78,7 @@ public class JAMainPagePanel<T> {
         this.operationPanel = operationPanel;
     }
 
-	public void setMainContainer(JAViewContainer mainContainer) {
+	public void setMainContainer(JAViewContainer<T> mainContainer) {
 		this.mainContainer = mainContainer;
 	}
 

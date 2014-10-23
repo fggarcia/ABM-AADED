@@ -9,7 +9,7 @@ public interface JAViewRecordTable<T> {
 
 	public void refresh(List<T> items);
 
-	public void render(JAViewContainer container);
+	public void render(JAViewContainer<T> container);
 
 	public void setColumns(List<JAFieldDescription> fields);
 	
