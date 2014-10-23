@@ -53,7 +53,7 @@ public class JAMainPagePanel<T> {
 	
 	private void renderSearchFieldFilters() {
 		for (JAFieldDescription field : getFields().findAvailableFilters()) {
-			viewSession.renderField(field, searchPanel);
+			viewSession.renderFieldForSearch(field, searchPanel);
 		}
 		searchPanel.renderIn(mainContainer);
 	}

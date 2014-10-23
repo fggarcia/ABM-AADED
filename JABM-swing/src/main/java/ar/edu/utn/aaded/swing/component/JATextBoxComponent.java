@@ -21,7 +21,7 @@ public class JATextBoxComponent implements JAViewComponent {
         return JAViewType.TEXT_BOX;
     }
 
-	public void render(JAFieldDescription field, JAContainer container) {
+	public void renderForSearch(JAFieldDescription field, JAContainer container) {
     	
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
         JTextField textField = new JTextField(15);
@@ -30,7 +30,11 @@ public class JATextBoxComponent implements JAViewComponent {
         container.addMember(new JATextBoxMember(field, textField));
     }
 
-	public void render(Object object, JAFieldDescription field, JAContainer container) {
+	public void renderForAdd(JAFieldDescription field, JAContainer container) {
+		this.renderForSearch(field, container);
+	}
+
+	public void renderForUpdate(Object object, JAFieldDescription field, JAContainer container) {
 
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
         JTextField textField = new JTextField(15);

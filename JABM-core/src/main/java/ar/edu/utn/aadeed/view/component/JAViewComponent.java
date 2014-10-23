@@ -7,8 +7,9 @@ public interface JAViewComponent {
 	
 	public JAViewType getViewType();
 
-	public void render(JAFieldDescription field, JAContainer container);
+	public void renderForSearch(JAFieldDescription field, JAContainer container);
 	
-	public void render(Object object, JAFieldDescription field, JAContainer container);
+	public void renderForUpdate(Object object, JAFieldDescription field, JAContainer container);
 
+	public void renderForAdd(JAFieldDescription field, JAContainer container);
 }

@@ -1,5 +1,6 @@
 package ar.edu.utn.aadeed.domain;
 
+import static ar.edu.utn.aadeed.view.component.JAViewType.CHECK_BOX;
 import static ar.edu.utn.aadeed.view.component.JAViewType.SELECT_ITEM;
 import static ar.edu.utn.aadeed.view.component.JAViewType.TEXT_BOX;
 import ar.edu.utn.aadeed.annotation.JADescriptor;
@@ -31,14 +32,19 @@ public class Hotel {
 	@JAView(order = 3, type = SELECT_ITEM)
 	@JADescriptor(filter = true)
 	private Type hotelType;
+
+	@JAView(order = 5, type = CHECK_BOX)
+	@JADescriptor(filter = true)
+	private Boolean preferred;
 	
 	public Hotel() { }
 
-	public Hotel(Long id, String name, String address, Type hotelType) {
+	public Hotel(Long id, String name, String address, Type hotelType, Boolean preferred) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.hotelType = hotelType;
+		this.preferred = preferred;
 	}
 
 	public Long getId() {
@@ -73,8 +79,16 @@ public class Hotel {
 		this.hotelType = hotelType;
 	}
 
+	public Boolean getPreferred() {
+		return preferred;
+	}
+
+	public void setPreferred(Boolean preferred) {
+		this.preferred = preferred;
+	}
+
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(this).add("id", id).add("name", name).add("address", address).add("hotelType", hotelType).toString();
+		return MoreObjects.toStringHelper(this).add("id", id).add("name", name).add("address", address).add("hotelType", hotelType).add("preferred", preferred).toString();
 	}
 }

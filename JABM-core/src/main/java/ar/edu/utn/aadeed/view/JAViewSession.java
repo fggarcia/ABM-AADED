@@ -41,23 +41,33 @@ public class JAViewSession<T> {
 		return updatePagePanel.render(item);
 	}
 
-	public void renderField(JAFieldDescription field, JAContainer container) {
+	public void renderFieldForSearch(JAFieldDescription field, JAContainer container) {
 
 		JAViewComponent viewComponent = findViewComponent(field);
 		if (viewComponent != null) {
 			
 			Log.info(String.format("Rendering field %s with type %s", field.getName(), field.getView().getType()));
-			viewComponent.render(field, container);
+			viewComponent.renderForSearch(field, container);
+		}
+	}
+
+	public void renderFieldForAdd(JAFieldDescription field, JAContainer container) {
+
+		JAViewComponent viewComponent = findViewComponent(field);
+		if (viewComponent != null) {
+
+			Log.info(String.format("Rendering field %s with type %s", field.getName(), field.getView().getType()));
+			viewComponent.renderForAdd(field, container);
 		}
 	}
 	
-	public void renderField(T item, JAFieldDescription field, JAContainer container) {
+	public void renderFieldForUpdate(T item, JAFieldDescription field, JAContainer container) {
 
 		JAViewComponent viewComponent = findViewComponent(field);
 		if (viewComponent != null) {
 			
 			Log.info(String.format("Rendering field %s with type %s", field.getName(), field.getView().getType()));
-			viewComponent.render(item, field, container);
+			viewComponent.renderForUpdate(item, field, container);
 		}
 	}
 	

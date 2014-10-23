@@ -29,7 +29,7 @@ public class JAUpdatePagePanel<T> {
 	
 	private void renderFields(T item) {
 		for (JAFieldDescription field : viewSession.getSession().getFields().findFieldsToShow()) {
-			viewSession.renderField(item, field, mainContainer);
+			viewSession.renderFieldForUpdate(item, field, mainContainer);
 		}
 	}
 	

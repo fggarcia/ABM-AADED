@@ -12,8 +12,8 @@ public class App
         Class.forName(JARegisterComponents.class.getName());
         
         JASession<Hotel> hotelSession = JASessionFactory.getInstance().getSession(Hotel.class);
-        hotelSession.add(new Hotel(567L, "Churma", "Billinghurst 897", Hotel.Type.HOTEL));
-        hotelSession.add(new Hotel(666L, "Independiente", "Gaona 987", Hotel.Type.APPARTMENT));
+        hotelSession.add(new Hotel(567L, "Churma", "Billinghurst 897", Hotel.Type.HOTEL, true));
+        hotelSession.add(new Hotel(666L, "Independiente", "Gaona 987", Hotel.Type.APPARTMENT, false));
 
         JASessionFactory.getInstance().getViewSession(Hotel.class).renderMainPagePanel();
     }
