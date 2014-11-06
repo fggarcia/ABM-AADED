@@ -4,6 +4,7 @@ import ar.edu.utn.aaded.swing.JARegisterComponents;
 import ar.edu.utn.aadeed.domain.Hotel;
 import ar.edu.utn.aadeed.session.JASession;
 import ar.edu.utn.aadeed.session.JASessionFactory;
+import ar.edu.utn.aadeed.utils.DateUtils;
 
 import java.util.Date;
 
@@ -14,8 +15,8 @@ public class App
         Class.forName(JARegisterComponents.class.getName());
         
         JASession<Hotel> hotelSession = JASessionFactory.getInstance().getSession(Hotel.class);
-        hotelSession.add(new Hotel(567L, "Churma", "Billinghurst 897", Hotel.Type.HOTEL, true, new Date()));
-        hotelSession.add(new Hotel(666L, "Independiente", "Gaona 987", Hotel.Type.APPARTMENT, false, new Date()));
+        hotelSession.add(new Hotel(567L, "Churma", "Billinghurst 897", Hotel.Type.HOTEL, true, DateUtils.truncate(new Date())));
+        hotelSession.add(new Hotel(666L, "Independiente", "Gaona 987", Hotel.Type.APPARTMENT, false, DateUtils.truncate(new Date())));
 
         JASessionFactory.getInstance().getViewSession(Hotel.class).renderMainPagePanel();
     }

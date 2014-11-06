@@ -2,19 +2,15 @@ package ar.edu.utn.aaded.swing.component;
 
 import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
+import ar.edu.utn.aadeed.utils.DateUtils;
 import ar.edu.utn.aadeed.view.component.JAMember;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
 import ar.edu.utn.aadeed.view.container.JAContainer;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import java.util.Date;
-import java.util.List;
 
 public class JADateComponent implements JAViewComponent {
 
@@ -44,7 +40,7 @@ public class JADateComponent implements JAViewComponent {
 		Object itemValue = JAReflections.getFieldValue(object, field.getName());
 
 		JXDatePicker jCalendar = new JXDatePicker();
-		jCalendar.setDate(((Date) itemValue));
+		jCalendar.setDate(DateUtils.truncate((Date) itemValue));
 		
 		container.addMember(new JADateMember(field, jCalendar));
     }
@@ -69,7 +65,11 @@ public class JADateComponent implements JAViewComponent {
 		}
 
 		public Object getValue() {
-			return jCalendar.getDate();
+			Date value = jCalendar.getDate();
+			if (value != null) {
+				return DateUtils.truncate(jCalendar.getDate());
+			}
+			return null;
 		}
     }
 }

@@ -5,6 +5,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -25,6 +27,7 @@ import ar.edu.utn.aadeed.view.panel.JAViewSearchPanel;
 import ar.edu.utn.aadeed.view.panel.builder.JAViewSearchPanelBuilder;
 
 import com.google.common.collect.Lists;
+import org.jdesktop.swingx.JXDatePicker;
 
 public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 
@@ -64,6 +67,10 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 			if (component instanceof ItemSelectable){
 				ItemSelectable.class.cast(component).addItemListener(createItemChangeLister());
 			}
+			else if (component instanceof JXDatePicker){
+				JXDatePicker.class.cast(component)
+						.addPropertyChangeListener(createPropertyChangeListener());
+			}
 			else{
 				component.addKeyListener(createKeyListener());
 			}
@@ -88,6 +95,15 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 			}
 			
 			return filtersBuilder;
+		}
+
+		private PropertyChangeListener createPropertyChangeListener() {
+			return new PropertyChangeListener() {
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					mainPagePanel.refreshTable();
+				}
+			};
 		}
 		
 		private KeyListener createKeyListener() {
