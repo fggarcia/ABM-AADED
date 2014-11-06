@@ -1,14 +1,15 @@
 package ar.edu.utn.aadeed.domain;
 
-import static ar.edu.utn.aadeed.view.component.JAViewType.CHECK_BOX;
-import static ar.edu.utn.aadeed.view.component.JAViewType.SELECT_ITEM;
-import static ar.edu.utn.aadeed.view.component.JAViewType.TEXT_BOX;
 import ar.edu.utn.aadeed.annotation.JADescriptor;
 import ar.edu.utn.aadeed.annotation.JAEntity;
 import ar.edu.utn.aadeed.annotation.JAView;
 import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
 
 import com.google.common.base.MoreObjects;
+
+import java.util.Date;
+
+import static ar.edu.utn.aadeed.view.component.JAViewType.*;
 
 @JAEntity(repositoryFactory = JAMemoryRepositoryFactory.class)
 public class Hotel {
@@ -36,15 +37,21 @@ public class Hotel {
 	@JAView(order = 5, type = CHECK_BOX)
 	@JADescriptor(filter = true)
 	private Boolean preferred;
+
+	@JAView(order = 6, type = DATE_TIME_PICKER)
+	@JADescriptor(filter = true)
+	private Date creation;
 	
 	public Hotel() { }
 
-	public Hotel(Long id, String name, String address, Type hotelType, Boolean preferred) {
+	public Hotel(Long id, String name, String address, Type hotelType, Boolean preferred,
+				 Date creation) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.hotelType = hotelType;
 		this.preferred = preferred;
+		this.creation = creation;
 	}
 
 	public Long getId() {
@@ -87,8 +94,17 @@ public class Hotel {
 		this.preferred = preferred;
 	}
 
+	public Date getCreation() {
+		return creation;
+	}
+
+	public void setCreation(Date creation) {
+		this.creation = creation;
+	}
+
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(this).add("id", id).add("name", name).add("address", address).add("hotelType", hotelType).add("preferred", preferred).toString();
+		return MoreObjects.toStringHelper(this).add("id", id).add("name", name).add("address", address)
+				.add("hotelType", hotelType).add("preferred", preferred).add("creation", creation).toString();
 	}
 }

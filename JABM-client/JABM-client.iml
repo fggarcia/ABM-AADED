@@ -23,6 +23,9 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.5" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="module" module-name="JABM-swing" />
+    <orderEntry type="library" name="Maven: org.swinglabs:swingx:1.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.jhlabs:filters:2.0.235" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs:swing-worker:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-server:7.6.16.v20140903" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:javax.servlet:2.5.0.v201103041518" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-continuation:7.6.16.v20140903" level="project" />
@@ -33,4 +36,3 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:7.6.16.v20140903" level="project" />
   </component>
 </module>
-
