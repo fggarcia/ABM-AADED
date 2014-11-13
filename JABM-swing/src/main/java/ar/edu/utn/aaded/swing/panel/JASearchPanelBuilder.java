@@ -66,12 +66,9 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 
 			if (component instanceof ItemSelectable){
 				ItemSelectable.class.cast(component).addItemListener(createItemChangeLister());
-			}
-			else if (component instanceof JXDatePicker){
-				JXDatePicker.class.cast(component)
-						.addPropertyChangeListener(createPropertyChangeListener());
-			}
-			else{
+			} else if (component instanceof JXDatePicker){
+				JXDatePicker.class.cast(component).addPropertyChangeListener(createPropertyChangeListener());
+			} else{
 				component.addKeyListener(createKeyListener());
 			}
 
@@ -99,7 +96,7 @@ public class JASearchPanelBuilder implements JAViewSearchPanelBuilder {
 
 		private PropertyChangeListener createPropertyChangeListener() {
 			return new PropertyChangeListener() {
-				@Override
+				
 				public void propertyChange(PropertyChangeEvent evt) {
 					mainPagePanel.refreshTable();
 				}

@@ -57,7 +57,7 @@ public class JACheckBoxComponent implements JAViewComponent {
 		container.addMember(new JACheckBoxMember(field, jCheckBox));
     }
 
-	private void addCheckBoxOptions(JComboBox jComboBox) {
+	private void addCheckBoxOptions(JComboBox<String> jComboBox) {
 		for (Object option : getBooleanValues()){
 			jComboBox.addItem(option.toString());
 		}

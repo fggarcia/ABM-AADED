@@ -66,8 +66,10 @@ public class JAPopupContainerBuilder implements JAViewContainerBuilder {
 		}
 
 		public T renderAndReturn() {
+			
 			int result = JOptionPane.showConfirmDialog(null, panel, title, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 			if (JOptionPane.YES_OPTION == result) {
+			
 				JASession<T> session = viewSession.getSession();
 				T newInstance = session.createItem(getValuesForMembers());
 				return newInstance;
@@ -85,7 +87,6 @@ public class JAPopupContainerBuilder implements JAViewContainerBuilder {
 		private Map<String, Object> getValuesForMembers() {
 			
 			Map<String, Object> values = Maps.newHashMap();
-			
 			for (JAMember member : members) {
 				values.put(member.getField().getName(), member.getValue());
 			}

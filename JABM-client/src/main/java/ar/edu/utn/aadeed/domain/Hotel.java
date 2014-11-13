@@ -44,8 +44,7 @@ public class Hotel {
 	
 	public Hotel() { }
 
-	public Hotel(Long id, String name, String address, Type hotelType, Boolean preferred,
-				 Date creation) {
+	public Hotel(Long id, String name, String address, Type hotelType, Boolean preferred, Date creation) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
