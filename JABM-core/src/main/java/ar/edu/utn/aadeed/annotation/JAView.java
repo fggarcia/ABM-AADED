@@ -17,6 +17,4 @@ public @interface JAView {
     
     JAViewType type();
     
-    int size() default -1;
-
 }

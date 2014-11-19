@@ -10,8 +10,6 @@ public class JAViewDescription {
 
 	private int order;
 	
-	private int size;
-	
 	public JAViewDescription(JAViewType type) {
 		this.type = type;
 	}
@@ -31,15 +29,7 @@ public class JAViewDescription {
 	public void setOrder(Integer order) {
 		this.order = order;
 	}
-
-	public Integer getSize() {
-		return size;
-	}
-
-	public void setSize(Integer size) {
-		this.size = size;
-	}
-
+	
 	public JAViewType getType() {
 		return type;
 	}

@@ -21,7 +21,6 @@ public class JAViewDescriptionsParser {
 		JAViewDescription viewDescription = new JAViewDescription(view.type());
 		viewDescription.setLabel(view.label());
 		viewDescription.setOrder(view.order());
-		viewDescription.setSize(view.size());
 		return viewDescription;
 	}
 }

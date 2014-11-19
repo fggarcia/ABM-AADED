@@ -18,8 +18,8 @@ public class Hotel {
 		HOTEL, APPARTMENT;
 	}
 
-	@JAView(order = 2, label = "Identificador", type = TEXT_BOX, size = 10)
-	@JADescriptor(required = true, editable = false, filter = true)
+	@JAView(order = 2, label = "Identificador", type = TEXT_BOX)
+	@JADescriptor(required = true, editable = false, filter = true, size = 10)
 	private Long id;
 
 	@JAView(order = 1, type = TEXT_BOX)
