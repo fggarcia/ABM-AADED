@@ -10,6 +10,10 @@ public class JAViewDescription {
 
 	private int order;
 	
+	private String regularExpression;
+	
+	private int size;
+	
 	public JAViewDescription(JAViewType type) {
 		this.type = type;
 	}
@@ -28,6 +32,22 @@ public class JAViewDescription {
 
 	public void setOrder(Integer order) {
 		this.order = order;
+	}
+	
+	public String getRegularExpression() {
+		return regularExpression;
+	}
+	
+	public void setRegularExpression(String regularExpression) {
+		this.regularExpression = regularExpression;
+	}
+	
+	public int getSize() {
+		return size;
+	}
+	
+	public void setSize(int size) {
+		this.size = size;
 	}
 	
 	public JAViewType getType() {

@@ -97,7 +97,7 @@ public class JACheckBoxComponent implements JAViewComponent {
 			return (StringUtils.isBlank(value)) ? null : findBoolean(value);
 		}
 		
-		private Object findBoolean(final String value) {
+		private Boolean findBoolean(final String value) {
 			return Boolean.valueOf(value);
 		}
     }

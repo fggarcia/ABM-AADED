@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import java.util.Collections;
 import java.util.List;
 
+import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.comparator.JAFieldDescriptionComparator;
 
@@ -33,6 +34,21 @@ public class JAFields {
 		return fieldsToShow;
 	}
 	
+	public void validateInput(final Object newItem) {
+		
+		for (JAFieldDescription field : fieldDescriptions) {
+			
+			final Object value = JAReflections.getFieldValue(newItem, field.getName());
+			
+			validateRequired(field, value);
+			
+		}
+	}
+
+	public void validateInput(final Object oldItem, final Object newItem) {
+		this.validateInput(newItem);
+	}
+	
 	private Iterable<JAFieldDescription> filterAvailableFilters() {
 		return Iterables.filter(fieldDescriptions, new Predicate<JAFieldDescription>() {
 			public boolean apply(JAFieldDescription input) {
@@ -47,5 +63,12 @@ public class JAFields {
 				return input.hasView();
 			}
 		});
+	}
+	
+	private static void validateRequired(final JAFieldDescription field, final Object value) {
+		
+		if (field.isRequired() && value == null) {
+			
+		}
 	}
 }

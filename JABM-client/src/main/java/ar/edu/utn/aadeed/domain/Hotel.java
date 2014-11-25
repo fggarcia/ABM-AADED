@@ -18,12 +18,12 @@ public class Hotel {
 		HOTEL, APPARTMENT;
 	}
 
-	@JAView(order = 2, label = "Identificador", type = TEXT_BOX)
-	@JADescriptor(required = true, editable = false, filter = true, size = 10)
+	@JAView(order = 2, label = "Identificador", type = TEXT_BOX, size = 10)
+	@JADescriptor(required = true, editable = false, filter = true)
 	private Long id;
 
 	@JAView(order = 1, type = TEXT_BOX)
-	@JADescriptor(filter = true, regex = "\\d+")
+	@JADescriptor(filter = true, required = true)
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)

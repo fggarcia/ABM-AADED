@@ -19,10 +19,6 @@ public class JAFieldDescription {
 
 	private boolean filter;
 	
-	private String regularExpression;
-	
-	private int size;
-
 	public JAFieldDescription(String name, Class<?> clazz, JAViewDescription view) {
 		this.name = name;
 		this.clazz = clazz;
@@ -45,7 +41,7 @@ public class JAFieldDescription {
 
 		return StringUtils.capitalize(name);
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -82,22 +78,6 @@ public class JAFieldDescription {
 		return view;
 	}
 	
-	public String getRegularExpression() {
-		return regularExpression;
-	}
-	
-	public void setRegularExpression(String regularExpression) {
-		this.regularExpression = regularExpression;
-	}
-	
-	public int getSize() {
-		return size;
-	}
-	
-	public void setSize(int size) {
-		this.size = size;
-	}
-
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this).add("name", name).toString();

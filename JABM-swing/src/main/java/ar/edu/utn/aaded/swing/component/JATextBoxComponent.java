@@ -49,15 +49,16 @@ public class JATextBoxComponent implements JAViewComponent {
     }
 	
 	private JTextField createTextField(JAFieldDescription field) {
-
-		if (StringUtils.isBlank(field.getRegularExpression())) {
+		
+		final String regularExpression = field.getView().getRegularExpression();
+		if (StringUtils.isBlank(regularExpression)) {
         
 			return new JTextField(15);
 
 		} else {
 			
         	JTextField textField = new JARegexTextField(15);
-        	((JARegexTextField) textField).setRegexFilter(field.getRegularExpression());
+        	((JARegexTextField) textField).setRegexFilter(regularExpression);
         	return textField;
         }
 	}

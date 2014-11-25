@@ -25,12 +25,16 @@ public final class JAFilteringStrategy {
 		
 		Strategies.put(String.class, new JAEqualStrategy() {
 			public boolean doEquals(Object memory, Object input) {
-				return StringUtils.containsIgnoreCase(memory.toString(), input.toString());
+				return validateNull(memory, input) && StringUtils.containsIgnoreCase(memory.toString(), input.toString());
 			}
 		});
 	}
 
 	public static JAEqualStrategy findStrategy(Class<?> clazz) {
 		return (Strategies.containsKey(clazz)) ? Strategies.get(clazz) : DefaultStrategy;
+	}
+	
+	private static boolean validateNull(Object memory, Object input) {
+		return !((memory == null && input != null) || (memory != null && input == null));
 	}
 }

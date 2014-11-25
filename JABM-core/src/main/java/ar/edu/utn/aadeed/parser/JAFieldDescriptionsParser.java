@@ -39,8 +39,6 @@ public class JAFieldDescriptionsParser {
 			fieldDescription.setEditable(descriptor.editable());
 			fieldDescription.setFilter(descriptor.filter());
 			fieldDescription.setRequired(descriptor.required());
-			fieldDescription.setSize(descriptor.size());
-			fieldDescription.setRegularExpression(descriptor.regex());
 
 			fieldDescriptions.add(fieldDescription);
 		}
