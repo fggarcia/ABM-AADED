@@ -14,7 +14,7 @@ public enum JAViewType {
 		this.javaTypes = javaTypes;
 	}
 
-	public Class<?>[] getJavaTypes() {
+	public Class<?>[] getCompatibleJavaTypes() {
 		return javaTypes;
 	}
 }
