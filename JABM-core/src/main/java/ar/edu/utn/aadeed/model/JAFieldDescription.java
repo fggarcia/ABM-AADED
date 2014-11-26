@@ -80,6 +80,8 @@ public class JAFieldDescription {
 	
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(this).add("name", name).toString();
+		return MoreObjects.toStringHelper(this)
+				.add("name", name).add("required", required)
+				.add("editable", editable).add("filter", filter).toString();
 	}
 }

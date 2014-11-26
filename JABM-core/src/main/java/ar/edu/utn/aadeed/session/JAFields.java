@@ -5,7 +5,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
+
 import ar.edu.utn.aadeed.JAReflections;
+import ar.edu.utn.aadeed.exception.JARuntimeException;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.comparator.JAFieldDescriptionComparator;
 
@@ -41,14 +44,21 @@ public class JAFields {
 			final Object value = JAReflections.getFieldValue(newItem, field.getName());
 			
 			validateRequired(field, value);
-			
 		}
 	}
 
 	public void validateInput(final Object oldItem, final Object newItem) {
-		this.validateInput(newItem);
+		
+		for (JAFieldDescription field : fieldDescriptions) {
+			
+			final Object newItemvalue = JAReflections.getFieldValue(newItem, field.getName());
+			
+			validateRequired(field, newItemvalue);
+			
+			validateEditable(field, oldItem, newItemvalue);
+		}
 	}
-	
+
 	private Iterable<JAFieldDescription> filterAvailableFilters() {
 		return Iterables.filter(fieldDescriptions, new Predicate<JAFieldDescription>() {
 			public boolean apply(JAFieldDescription input) {
@@ -65,10 +75,25 @@ public class JAFields {
 		});
 	}
 	
+	private static void validateEditable(final JAFieldDescription field, final Object oldItem, final Object newItemvalue) {
+		
+		if (!field.isEditable()) {
+			
+			final Object oldItemvalue = JAReflections.getFieldValue(oldItem, field.getName());
+			if (!ObjectUtils.equals(newItemvalue, oldItemvalue)) {
+				
+				final String errorMsg = String.format("Field '%s' is not editable", field.getName());
+				throw new JARuntimeException(errorMsg);
+			}
+		}
+	}
+	
 	private static void validateRequired(final JAFieldDescription field, final Object value) {
 		
 		if (field.isRequired() && value == null) {
-			
+
+			final String errorMsg = String.format("Value for field '%s' is required", field.getName());
+			throw new JARuntimeException(errorMsg);
 		}
 	}
 }

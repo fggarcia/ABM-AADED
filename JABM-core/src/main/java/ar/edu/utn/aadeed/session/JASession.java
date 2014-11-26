@@ -3,6 +3,7 @@ package ar.edu.utn.aadeed.session;
 import java.util.Map;
 
 import ar.edu.utn.aadeed.JAReflections;
+import ar.edu.utn.aadeed.exception.JARuntimeException;
 import ar.edu.utn.aadeed.repository.JARepository;
 import ar.edu.utn.aadeed.session.builder.JAFiltersBuilder;
 
@@ -21,14 +22,21 @@ public class JASession<T> {
 	}
 
 	public boolean add(T newObject) {
+		
+		fields.validateInput(newObject);
+		
 		return this.repository.add(newObject);
 	}
 
 	public boolean remove(T oldObject) {
+		
 		return this.repository.remove(oldObject);
 	}
 
 	public boolean update(T oldObject, T newObject) {
+		
+		fields.validateInput(oldObject, newObject);
+		
 		return this.repository.update(oldObject, newObject);
 	}
 
@@ -48,7 +56,7 @@ public class JASession<T> {
 			return instance;
 		
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new JARuntimeException("Cannot create item", e);
 		}
 	}
 	

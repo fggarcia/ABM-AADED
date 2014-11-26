@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import ar.edu.utn.aadeed.exception.JARuntimeException;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 import ar.edu.utn.aadeed.view.panel.JAViewOperationPanel;
@@ -58,10 +60,17 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
         private ActionListener getDeleteActionListener() {
         	return new ActionListener() {
     			public void actionPerformed(ActionEvent ae) {
+    				
     				T item = mainPagePanel.getSelectedItem();
     				if (item != null) {
-    					mainPagePanel.getViewSession().getSession().remove(item);
-    					mainPagePanel.refreshTable();
+    					
+    					try {
+	    					mainPagePanel.getViewSession().getSession().remove(item);
+	    					mainPagePanel.refreshTable();
+	    					
+                       	} catch (JARuntimeException re) {
+                    		showErrorDialog(re.getMessage());
+                    	}
     				}
     			}
     		};
@@ -74,8 +83,14 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
                     T newItem = mainPagePanel.getViewSession().renderAddPanel();
                     if (newItem != null) {
 
-                        mainPagePanel.getViewSession().getSession().add(newItem);
-                        mainPagePanel.refreshTable();
+                    	try {
+                    	
+                    		mainPagePanel.getViewSession().getSession().add(newItem);
+                    		mainPagePanel.refreshTable();
+                    		
+                       	} catch (JARuntimeException re) {
+                    		showErrorDialog(re.getMessage());
+                    	}
                     }
     			}
     		};
@@ -84,20 +99,31 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
         private ActionListener getUpdateActionListener() {
         	return new ActionListener() {
     			public void actionPerformed(ActionEvent ae) {
+    				
        				T item = mainPagePanel.getSelectedItem();
     				if (item != null) {
 
                         T newItem = mainPagePanel.getViewSession().renderUpdatePanel(item);
                         if (newItem != null) {
 
-                            mainPagePanel.getViewSession().getSession().update(item, newItem);
-                            mainPagePanel.refreshTable();
+                        	try {
+                        		
+                        		mainPagePanel.getViewSession().getSession().update(item, newItem);
+                                mainPagePanel.refreshTable();
+                        	
+                        	} catch (JARuntimeException re) {
+                        		showErrorDialog(re.getMessage());
+                        	}
                         }
-
     				}
     			}
     		};
 		}
+        
+        private void showErrorDialog(final String errorMsg) {
+        	
+        	JOptionPane.showMessageDialog(null, errorMsg, "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         private JPanel createContainerPanel() {
             JPanel panel = new JPanel();

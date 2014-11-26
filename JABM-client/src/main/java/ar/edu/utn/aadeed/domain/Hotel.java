@@ -23,7 +23,7 @@ public class Hotel {
 	private Long id;
 
 	@JAView(order = 1, type = TEXT_BOX)
-	@JADescriptor(filter = true, required = true)
+	@JADescriptor(filter = true, required = true, editable = false)
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)
