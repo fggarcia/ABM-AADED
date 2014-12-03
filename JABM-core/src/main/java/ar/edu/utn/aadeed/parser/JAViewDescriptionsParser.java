@@ -31,9 +31,7 @@ public class JAViewDescriptionsParser {
 		JAViewDescription viewDescription = new JAViewDescription(view.type());
 		viewDescription.setLabel(view.label());
 		viewDescription.setOrder(view.order());
-		viewDescription.setSize(view.size());
-		viewDescription.setRegularExpression(view.regex());
-		
+
 		return viewDescription;
 	}
 	

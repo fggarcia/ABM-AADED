@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ObjectUtils;
 
@@ -15,6 +16,7 @@ import ar.edu.utn.aadeed.model.comparator.JAFieldDescriptionComparator;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 
 public class JAFields {
 
@@ -44,6 +46,10 @@ public class JAFields {
 			final Object value = JAReflections.getFieldValue(newItem, field.getName());
 			
 			validateRequired(field, value);
+
+			validateMaxSize(field, value);
+
+			validateRegex(field, value);
 		}
 	}
 
@@ -51,11 +57,15 @@ public class JAFields {
 		
 		for (JAFieldDescription field : fieldDescriptions) {
 			
-			final Object newItemvalue = JAReflections.getFieldValue(newItem, field.getName());
+			final Object newItemValue = JAReflections.getFieldValue(newItem, field.getName());
 			
-			validateRequired(field, newItemvalue);
+			validateRequired(field, newItemValue);
 			
-			validateEditable(field, oldItem, newItemvalue);
+			validateEditable(field, oldItem, newItemValue);
+
+			validateMaxSize(field, newItemValue);
+
+			validateRegex(field, newItemValue);
 		}
 	}
 
@@ -93,6 +103,26 @@ public class JAFields {
 		if (field.isRequired() && value == null) {
 
 			final String errorMsg = String.format("Value for field '%s' is required", field.getName());
+			throw new JARuntimeException(errorMsg);
+		}
+	}
+
+	private static void validateMaxSize(final JAFieldDescription field, final Object value) {
+
+		final int maxSize = field.getSize();
+		if (maxSize != -1 && value != null && value.toString().length() > maxSize) {
+
+			final String errorMsg = String.format("Value length for field '%s' cannot exceed %d characters : '%s'", field.getName(), maxSize, value);
+			throw new JARuntimeException(errorMsg);
+		}
+	}
+
+	private static void validateRegex(final JAFieldDescription field, final Object value) {
+
+		final String regex = field.getRegularExpression();
+		if (StringUtils.isNotBlank(regex) && value != null && !value.toString().matches(regex)) {
+
+			final String errorMsg = String.format("Value for field '%s' did not match regex '%s' : '%s'", field.getName(), regex, value);
 			throw new JARuntimeException(errorMsg);
 		}
 	}

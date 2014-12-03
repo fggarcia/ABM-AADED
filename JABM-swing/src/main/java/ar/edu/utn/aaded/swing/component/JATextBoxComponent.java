@@ -50,7 +50,7 @@ public class JATextBoxComponent implements JAViewComponent {
 	
 	private JTextField createTextField(JAFieldDescription field) {
 		
-		final String regularExpression = field.getView().getRegularExpression();
+		final String regularExpression = field.getRegularExpression();
 		if (StringUtils.isBlank(regularExpression)) {
         
 			return new JTextField(15);

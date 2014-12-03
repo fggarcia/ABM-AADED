@@ -15,10 +15,6 @@ public @interface JAView {
 
     String label() default "";
     
-    String regex() default "";
-    
-    int size() default -1;
-    
     JAViewType type();
     
 }

@@ -19,12 +19,12 @@ public class Hotel {
 		HOTEL, APPARTMENT;
 	}
 
-	@JAView(order = 2, label = "Identificador", type = TEXT_BOX, size = 10)
+	@JAView(order = 2, label = "Identificador", type = TEXT_BOX)
 	@JADescriptor(required = true, editable = false, filter = true)
 	private Long id;
 	
 	@JAView(order = 1, type = TEXT_BOX)
-	@JADescriptor(filter = true, required = true, editable = false)
+	@JADescriptor(filter = true, size = 25, required = true, editable = true, regex = ".{2,18}")
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)
@@ -43,7 +43,7 @@ public class Hotel {
 	@JADescriptor(filter = true)
 	private Date creation;
 	
-	@JAView(order = 7, label = "Rating", type = TEXT_BOX, size = 10)
+	@JAView(order = 7, label = "Rating", type = TEXT_BOX)
 	@JADescriptor(required = false, editable = true, filter = true)
 	private BigDecimal rate;
 	
