@@ -7,6 +7,7 @@ import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
 
 import com.google.common.base.MoreObjects;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import static ar.edu.utn.aadeed.view.component.JAViewType.*;
@@ -19,9 +20,9 @@ public class Hotel {
 	}
 
 	@JAView(order = 2, label = "Identificador", type = TEXT_BOX, size = 10)
-	@JADescriptor(required = true, editable = true, filter = true)
+	@JADescriptor(required = true, editable = false, filter = true)
 	private Long id;
-
+	
 	@JAView(order = 1, type = TEXT_BOX)
 	@JADescriptor(filter = true, required = true, editable = false)
 	private String name;
@@ -41,6 +42,10 @@ public class Hotel {
 	@JAView(order = 6, type = DATE_TIME_PICKER)
 	@JADescriptor(filter = true)
 	private Date creation;
+	
+	@JAView(order = 7, label = "Rating", type = TEXT_BOX, size = 10)
+	@JADescriptor(required = false, editable = true, filter = true)
+	private BigDecimal rate;
 	
 	public Hotel() { }
 
@@ -100,10 +105,18 @@ public class Hotel {
 	public void setCreation(Date creation) {
 		this.creation = creation;
 	}
-
+	
+	public BigDecimal getRate() {
+		return rate;
+	}
+	
+	public void setRate(BigDecimal rate) {
+		this.rate = rate;
+	}
+	
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this).add("id", id).add("name", name).add("address", address)
-				.add("hotelType", hotelType).add("preferred", preferred).add("creation", creation).toString();
+				.add("hotelType", hotelType).add("preferred", preferred).add("creation", creation).add("rate", rate).toString();
 	}
 }

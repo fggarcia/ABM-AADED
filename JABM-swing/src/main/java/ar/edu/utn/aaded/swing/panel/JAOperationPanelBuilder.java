@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import ar.edu.utn.aadeed.exception.JARuntimeException;
 import ar.edu.utn.aadeed.view.container.JAViewContainer;
 import ar.edu.utn.aadeed.view.panel.JAMainPagePanel;
 import ar.edu.utn.aadeed.view.panel.JAViewOperationPanel;
@@ -68,7 +67,7 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
 	    					mainPagePanel.getViewSession().getSession().remove(item);
 	    					mainPagePanel.refreshTable();
 	    					
-                       	} catch (JARuntimeException re) {
+                       	} catch (Exception re) {
                     		showErrorDialog(re.getMessage());
                     	}
     				}
@@ -80,17 +79,16 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
         	return new ActionListener() {
     			public void actionPerformed(ActionEvent ae) {
 
-                    T newItem = mainPagePanel.getViewSession().renderAddPanel();
-                    if (newItem != null) {
+    				try {
+    				
+	                    T newItem = mainPagePanel.getViewSession().renderAddPanel();
+	                    if (newItem != null) {
+	                   		mainPagePanel.getViewSession().getSession().add(newItem);
+	                   		mainPagePanel.refreshTable();
+	                    }
 
-                    	try {
-                    	
-                    		mainPagePanel.getViewSession().getSession().add(newItem);
-                    		mainPagePanel.refreshTable();
-                    		
-                       	} catch (JARuntimeException re) {
-                    		showErrorDialog(re.getMessage());
-                    	}
+    				} catch (Exception re) {
+                    	showErrorDialog(re.getMessage());
                     }
     			}
     		};
@@ -103,17 +101,16 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
        				T item = mainPagePanel.getSelectedItem();
     				if (item != null) {
 
-                        T newItem = mainPagePanel.getViewSession().renderUpdatePanel(item);
-                        if (newItem != null) {
-
-                        	try {
-                        		
+    					try {
+    						
+    						T newItem = mainPagePanel.getViewSession().renderUpdatePanel(item);
+    						if (newItem != null) {
                         		mainPagePanel.getViewSession().getSession().update(item, newItem);
                                 mainPagePanel.refreshTable();
+    						}
                         	
-                        	} catch (JARuntimeException re) {
+                        } catch (Exception re) {
                         		showErrorDialog(re.getMessage());
-                        	}
                         }
     				}
     			}
