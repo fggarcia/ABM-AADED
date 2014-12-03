@@ -43,6 +43,7 @@ public class JATextBoxComponent implements JAViewComponent {
         String stringItemValue = MoreObjects.firstNonNull(itemValue, "").toString();
         
         textField.setText(stringItemValue);
+		textField.setEnabled(field.isEditable());
         
         container.addMember(fieldLabel);
         container.addMember(new JATextBoxMember(field, textField));

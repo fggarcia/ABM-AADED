@@ -53,6 +53,7 @@ public class JACheckBoxComponent implements JAViewComponent {
 		JCheckBox jCheckBox = new JCheckBox();
 
 		jCheckBox.setSelected(Boolean.valueOf(stringItemValue));
+		jCheckBox.setEnabled(field.isEditable());
 
 		container.addMember(new JACheckBoxMember(field, jCheckBox));
     }

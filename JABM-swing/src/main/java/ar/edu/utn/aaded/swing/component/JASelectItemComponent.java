@@ -50,6 +50,7 @@ public class JASelectItemComponent implements JAViewComponent {
 
         JComboBox<String> jComboBox = createComboBox(field);
 		jComboBox.setSelectedItem(stringItemValue);
+		jComboBox.setEnabled(field.isEditable());
 		
 		container.addMember(new JASelectItemMember(field, jComboBox));
     }
