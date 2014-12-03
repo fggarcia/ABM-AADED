@@ -37,7 +37,7 @@ public class Hotel {
 	@JAView(order = 5, type = CHECK_BOX)
 	@JADescriptor(filter = true)
 	private Boolean preferred;
-
+	
 	@JAView(order = 6, type = DATE_TIME_PICKER)
 	@JADescriptor(filter = true)
 	private Date creation;

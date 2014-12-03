@@ -2,7 +2,6 @@ package ar.edu.utn.aadeed.parser;
 
 import java.lang.reflect.Field;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -42,13 +41,13 @@ public class JAViewDescriptionsParser {
 		
 		final Class<?> declaredType = field.getType();
 		
-		Optional<Class<?>> opResult = Iterables.tryFind(Lists.newArrayList(viewType.getCompatibleJavaTypes()), new Predicate<Class<?>>() {
+		final Boolean anyType = Iterables.any(Lists.newArrayList(viewType.getCompatibleJavaTypes()), new Predicate<Class<?>>() {
 			public boolean apply(Class<?> input) {
 				return input.isAssignableFrom(declaredType);
 			}
 		});
 		
-		if (!opResult.isPresent()) {
+		if (!anyType) {
 			final String errorMsg = String.format("Class type '%s' is not compatible with view type '%s'", declaredType, viewType);
 			throw new JARuntimeException(errorMsg);
 		}

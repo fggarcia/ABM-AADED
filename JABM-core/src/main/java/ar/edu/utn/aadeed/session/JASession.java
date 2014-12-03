@@ -22,21 +22,16 @@ public class JASession<T> {
 	}
 
 	public boolean add(T newObject) {
-		
 		fields.validateInput(newObject);
-		
 		return this.repository.add(newObject);
 	}
 
 	public boolean remove(T oldObject) {
-		
 		return this.repository.remove(oldObject);
 	}
 
 	public boolean update(T oldObject, T newObject) {
-		
 		fields.validateInput(oldObject, newObject);
-		
 		return this.repository.update(oldObject, newObject);
 	}
 
@@ -48,7 +43,6 @@ public class JASession<T> {
 		try {
 			
 			T instance = representationFor.newInstance();
-			
 			for (String fieldName : values.keySet()) {
 				JAReflections.setFieldValue(instance, fieldName, values.get(fieldName));
 			}
