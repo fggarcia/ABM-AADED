@@ -5,14 +5,17 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import ar.edu.utn.aadeed.exception.JARuntimeException;
-import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 
 import ar.edu.utn.aadeed.annotation.JADescriptor;
+import ar.edu.utn.aadeed.annotation.JAValidator;
+import ar.edu.utn.aadeed.exception.JARuntimeException;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.JAViewDescription;
 import ar.edu.utn.aadeed.session.JAFields;
-import org.apache.commons.lang.StringUtils;
+import ar.edu.utn.aadeed.validator.JAOperationValidator;
+
+import com.google.common.collect.Lists;
 
 public class JAFieldDescriptionsParser {
 
@@ -40,23 +43,37 @@ public class JAFieldDescriptionsParser {
 			JAViewDescription viewDescription = viewDescriptionsParser.build(field);
 
 			final Class<?> clazzType = field.getType();
+			final boolean isStringTypeCompatible = String.class.isAssignableFrom(clazzType);
 			
-			JAFieldDescription fieldDescription = new JAFieldDescription(field.getName(), field.getType(), viewDescription);
+			final JAFieldDescription fieldDescription = new JAFieldDescription(field.getName(), clazzType, viewDescription);
 			fieldDescription.setEditable(descriptor.editable());
 			fieldDescription.setFilter(descriptor.filter());
 			fieldDescription.setRequired(descriptor.required());
 
-			final boolean isStringTypeCompatible = String.class.isAssignableFrom(clazzType);
-
 			validateMaxLength(isStringTypeCompatible, descriptor.maxLength());
-
 			fieldDescription.setMaxLength(descriptor.maxLength());
 
 			validateRegex(isStringTypeCompatible, descriptor.regex());
-
 			fieldDescription.setRegularExpression(descriptor.regex());
+			
+			addValidators(descriptor, fieldDescription);
 
 			fieldDescriptions.add(fieldDescription);
+		}
+	}
+
+	private void addValidators(final JADescriptor descriptor, final JAFieldDescription fieldDescription) {
+		for (JAValidator validator : descriptor.validators()) {
+			fieldDescription.addValidator(validator.operation(), createValidator(validator.validator()));
+		}
+	}
+
+	private JAOperationValidator<?> createValidator(final Class<? extends JAOperationValidator<?>> validator) {
+		try {
+			return validator.newInstance();
+		} catch (Exception e) {
+			final String errorMsg = String.format("Could not create validator '%s'", validator.getName());
+			throw new JARuntimeException(errorMsg);
 		}
 	}
 

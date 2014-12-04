@@ -1,9 +1,17 @@
 package ar.edu.utn.aadeed.model;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
+
+import ar.edu.utn.aadeed.validator.JAOperation;
+import ar.edu.utn.aadeed.validator.JAOperationValidator;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 
 public class JAFieldDescription {
 
@@ -22,6 +30,8 @@ public class JAFieldDescription {
 	private int maxLength;
 
 	private String regularExpression;
+	
+	private Map<JAOperation, JAOperationValidator<?>> validators = Maps.newHashMap();
 
 	public JAFieldDescription(String name, Class<?> clazz, JAViewDescription view) {
 		this.name = name;
@@ -46,10 +56,16 @@ public class JAFieldDescription {
 		return StringUtils.capitalize(name);
 	}
 	
+	public void addValidator(final JAOperation operation, final JAOperationValidator<?> validator) {
+		checkArgument(operation != null, "operation cannot be null");
+		checkArgument(validator != null, "validator cannot be null");
+		this.validators.put(operation, validator);
+	}
+	
 	public String getName() {
 		return name;
 	}
-
+	
 	public boolean isRequired() {
 		return required;
 	}

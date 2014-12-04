@@ -1,16 +1,22 @@
 package ar.edu.utn.aadeed.domain;
 
-import ar.edu.utn.aadeed.annotation.JADescriptor;
-import ar.edu.utn.aadeed.annotation.JAEntity;
-import ar.edu.utn.aadeed.annotation.JAView;
-import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
-
-import com.google.common.base.MoreObjects;
+import static ar.edu.utn.aadeed.view.component.JAViewType.CHECK_BOX;
+import static ar.edu.utn.aadeed.view.component.JAViewType.DATE_TIME_PICKER;
+import static ar.edu.utn.aadeed.view.component.JAViewType.SELECT_ITEM;
+import static ar.edu.utn.aadeed.view.component.JAViewType.TEXT_BOX;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-import static ar.edu.utn.aadeed.view.component.JAViewType.*;
+import ar.edu.utn.aadeed.annotation.JADescriptor;
+import ar.edu.utn.aadeed.annotation.JAEntity;
+import ar.edu.utn.aadeed.annotation.JAValidator;
+import ar.edu.utn.aadeed.annotation.JAView;
+import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
+import ar.edu.utn.aadeed.validator.JAOperation;
+import ar.edu.utn.aadeed.validator.JATestValidator;
+
+import com.google.common.base.MoreObjects;
 
 @JAEntity(repositoryFactory = JAMemoryRepositoryFactory.class)
 public class Hotel {
@@ -24,7 +30,8 @@ public class Hotel {
 	private Long id;
 	
 	@JAView(order = 1, type = TEXT_BOX)
-	@JADescriptor(filter = true, maxLength = 16, required = true, editable = true, regex = ".{2,18}")
+	@JADescriptor(filter = true, maxLength = 16, required = true, editable = true, regex = ".{2,18}", 
+		validators = { @JAValidator(operation = JAOperation.DELETE, validator = JATestValidator.class) })
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)
