@@ -26,6 +26,7 @@ public class JADateComponent implements JAViewComponent {
         container.addMember(fieldLabel);
 
 		JXDatePicker jCalendar = new JXDatePicker();
+		jCalendar.getEditor().setEditable(false);
 
 		container.addMember(new JADateMember(field, jCalendar));
     }
@@ -44,6 +45,7 @@ public class JADateComponent implements JAViewComponent {
 		JXDatePicker jCalendar = new JXDatePicker();
 		jCalendar.setDate(JADateUtils.truncate((Date) itemValue));
 		jCalendar.setEnabled(field.isEditable());
+		jCalendar.getEditor().setEditable(false);
 		
 		container.addMember(new JADateMember(field, jCalendar));
     }

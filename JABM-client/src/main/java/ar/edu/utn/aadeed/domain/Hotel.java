@@ -40,11 +40,11 @@ public class Hotel {
 	private Boolean preferred;
 	
 	@JAView(order = 6, type = DATE_TIME_PICKER)
-	@JADescriptor(filter = true, editable = false)
+	@JADescriptor(filter = true, editable = true)
 	private Date creation;
 	
 	@JAView(order = 7, label = "Rating", type = TEXT_BOX)
-	@JADescriptor(required = false, editable = false, filter = true)
+	@JADescriptor(required = false, editable = true, filter = true)
 	private BigDecimal rate;
 	
 	public Hotel() { }
