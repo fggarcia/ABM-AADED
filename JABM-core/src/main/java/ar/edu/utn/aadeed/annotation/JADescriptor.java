@@ -15,7 +15,7 @@ public @interface JADescriptor {
     
     boolean filter() default false;
 
-    int size() default -1;
-
+    int maxLength() default -1;
+    
     String regex() default "";
 }

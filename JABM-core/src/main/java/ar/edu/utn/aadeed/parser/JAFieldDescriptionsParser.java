@@ -48,9 +48,9 @@ public class JAFieldDescriptionsParser {
 
 			final boolean isStringTypeCompatible = String.class.isAssignableFrom(clazzType);
 
-			validateSize(isStringTypeCompatible, descriptor.size());
+			validateMaxLength(isStringTypeCompatible, descriptor.maxLength());
 
-			fieldDescription.setSize(descriptor.size());
+			fieldDescription.setMaxLength(descriptor.maxLength());
 
 			validateRegex(isStringTypeCompatible, descriptor.regex());
 
@@ -73,14 +73,14 @@ public class JAFieldDescriptionsParser {
         }
 	}
 
-	private void validateSize(boolean isStringTypeCompatible, int size) {
+	private void validateMaxLength(boolean isStringTypeCompatible, int maxLength) {
 
-		if (size < 0 && size != -1){
-            throw new JARuntimeException("Size value must be greater than Zero");
+		if (maxLength < 0 && maxLength != -1){
+            throw new JARuntimeException("Length value must be greater than Zero");
         }
 
-		if (size != -1 && !isStringTypeCompatible) {
-            throw new JARuntimeException("size feature only applies for String values");
+		if (maxLength != -1 && !isStringTypeCompatible) {
+            throw new JARuntimeException("maxLength feature only applies for String values");
         }
 	}
 }

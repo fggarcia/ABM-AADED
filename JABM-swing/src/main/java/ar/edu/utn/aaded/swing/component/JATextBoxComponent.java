@@ -27,7 +27,7 @@ public class JATextBoxComponent implements JAViewComponent {
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
         
         container.addMember(fieldLabel);
-        container.addMember(new JATextBoxMember(field, createTextField(field)));
+        container.addMember(new JATextBoxMember(field, new JARegexTextField(field, 15)));
     }
 
 	public void renderForAdd(JAFieldDescription field, JAContainer container) {
@@ -37,7 +37,7 @@ public class JATextBoxComponent implements JAViewComponent {
 	public void renderForUpdate(Object object, JAFieldDescription field, JAContainer container) {
 
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
-        JTextField textField = createTextField(field);
+        JTextField textField = new JARegexTextField(field, 15);
         
         Object itemValue = JAReflections.getFieldValue(object, field.getName());
         String stringItemValue = MoreObjects.firstNonNull(itemValue, "").toString();
@@ -49,21 +49,6 @@ public class JATextBoxComponent implements JAViewComponent {
         container.addMember(new JATextBoxMember(field, textField));
     }
 	
-	private JTextField createTextField(JAFieldDescription field) {
-		
-		final String regularExpression = field.getRegularExpression();
-		if (StringUtils.isBlank(regularExpression)) {
-        
-			return new JTextField(15);
-
-		} else {
-			
-        	JTextField textField = new JARegexTextField(15);
-        	((JARegexTextField) textField).setRegexFilter(regularExpression);
-        	return textField;
-        }
-	}
-    
     public static class JATextBoxMember implements JAMember {
     	
     	private JAFieldDescription field;

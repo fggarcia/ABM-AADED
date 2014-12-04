@@ -19,7 +19,7 @@ public class JAFieldDescription {
 
 	private boolean filter;
 
-	private int size;
+	private int maxLength;
 
 	private String regularExpression;
 
@@ -82,12 +82,12 @@ public class JAFieldDescription {
 		return view;
 	}
 
-	public int getSize() {
-		return size;
+	public int getMaxLength() {
+		return maxLength;
 	}
-
-	public void setSize(int size) {
-		this.size = size;
+	
+	public void setMaxLength(int maxLength) {
+		this.maxLength = maxLength;
 	}
 
 	public String getRegularExpression() {

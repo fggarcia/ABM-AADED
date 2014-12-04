@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ObjectUtils;
 
@@ -47,7 +46,7 @@ public class JAFields {
 			
 			validateRequired(field, value);
 
-			validateMaxSize(field, value);
+			validateMaxLength(field, value);
 
 			validateRegex(field, value);
 		}
@@ -63,7 +62,7 @@ public class JAFields {
 			
 			validateEditable(field, oldItem, newItemValue);
 
-			validateMaxSize(field, newItemValue);
+			validateMaxLength(field, newItemValue);
 
 			validateRegex(field, newItemValue);
 		}
@@ -107,12 +106,12 @@ public class JAFields {
 		}
 	}
 
-	private static void validateMaxSize(final JAFieldDescription field, final Object value) {
+	private static void validateMaxLength(final JAFieldDescription field, final Object value) {
 
-		final int maxSize = field.getSize();
-		if (maxSize != -1 && value != null && value.toString().length() > maxSize) {
+		final int maxLength = field.getMaxLength();
+		if (maxLength != -1 && value != null && value.toString().length() > maxLength) {
 
-			final String errorMsg = String.format("Value length for field '%s' cannot exceed %d characters : '%s'", field.getName(), maxSize, value);
+			final String errorMsg = String.format("Value length for field '%s' cannot exceed %d characters : '%s'", field.getName(), maxLength, value);
 			throw new JARuntimeException(errorMsg);
 		}
 	}

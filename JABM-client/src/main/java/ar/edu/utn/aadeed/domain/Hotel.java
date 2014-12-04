@@ -24,27 +24,27 @@ public class Hotel {
 	private Long id;
 	
 	@JAView(order = 1, type = TEXT_BOX)
-	@JADescriptor(filter = true, size = 25, required = true, editable = false, regex = ".{2,18}")
+	@JADescriptor(filter = true, maxLength = 16, required = true, editable = true, regex = ".{2,18}")
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)
-	@JADescriptor(filter = false)
+	@JADescriptor(filter = false, editable = true, maxLength = 22)
 	private String address;
 	
 	@JAView(order = 3, type = SELECT_ITEM)
-	@JADescriptor(filter = true)
+	@JADescriptor(filter = true, editable = false)
 	private Type hotelType;
 
 	@JAView(order = 5, type = CHECK_BOX)
-	@JADescriptor(filter = true)
+	@JADescriptor(filter = true, editable = false)
 	private Boolean preferred;
 	
 	@JAView(order = 6, type = DATE_TIME_PICKER)
-	@JADescriptor(filter = true)
+	@JADescriptor(filter = true, editable = false)
 	private Date creation;
 	
 	@JAView(order = 7, label = "Rating", type = TEXT_BOX)
-	@JADescriptor(required = false, editable = true, filter = true)
+	@JADescriptor(required = false, editable = false, filter = true)
 	private BigDecimal rate;
 	
 	public Hotel() { }
