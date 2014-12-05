@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import ar.edu.utn.aaded.swing.component.JACheckBoxComponent;
 import ar.edu.utn.aaded.swing.component.JADateComponent;
+import ar.edu.utn.aaded.swing.component.JAImageComponent;
 import ar.edu.utn.aaded.swing.component.JASelectItemComponent;
 import ar.edu.utn.aaded.swing.component.JATextBoxComponent;
 import ar.edu.utn.aaded.swing.container.JAFrameContainerBuilder;
@@ -49,6 +50,7 @@ public final class JARegisterComponents {
                 .addViewComponent(new JASelectItemComponent())
                 .addViewComponent(new JACheckBoxComponent())
                 .addViewComponent(new JADateComponent())
+                .addViewComponent(new JAImageComponent())
                 .withMainPagePanelBuilder(mainPagePanelBuilder)
                 .withAddPagePanelBuilder(addPagePanelBuilder)
                 .withUpdatePagePanelBuilder(updatePagePanelBuilder)

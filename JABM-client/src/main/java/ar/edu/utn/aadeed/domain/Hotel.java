@@ -14,6 +14,7 @@ import ar.edu.utn.aadeed.annotation.JAValidator;
 import ar.edu.utn.aadeed.annotation.JAView;
 import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
 import ar.edu.utn.aadeed.validator.JATestValidator;
+import ar.edu.utn.aadeed.view.component.JAViewType;
 
 import com.google.common.base.MoreObjects;
 
@@ -54,6 +55,10 @@ public class Hotel {
 	@JAView(order = 7, label = "Rating", type = TEXT_BOX)
 	@JADescriptor(required = false, editable = true, filter = true)
 	private BigDecimal rate;
+	
+	@JAView(order = 8, type = JAViewType.IMAGE)
+	@JADescriptor(required = false, editable = true, filter = true)
+	private byte[] image;
 	
 	public Hotel() { }
 
@@ -120,6 +125,14 @@ public class Hotel {
 	
 	public void setRate(BigDecimal rate) {
 		this.rate = rate;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+	
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	
 	@Override

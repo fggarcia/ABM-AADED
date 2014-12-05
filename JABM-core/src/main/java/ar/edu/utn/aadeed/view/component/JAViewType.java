@@ -6,7 +6,8 @@ public enum JAViewType {
 
 	CHECK_BOX(Boolean.class), TEXT_BOX(String.class, Number.class), 
 	DATE_TIME_PICKER(Date.class),
-	SELECT_ITEM(Enum.class);
+	SELECT_ITEM(Enum.class),
+	IMAGE(byte[].class);
 
 	private Class<?>[] javaTypes;
 

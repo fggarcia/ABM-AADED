@@ -2,12 +2,17 @@ package ar.edu.utn.aadeed.session;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.exception.JARuntimeException;
 import ar.edu.utn.aadeed.repository.JARepository;
 import ar.edu.utn.aadeed.session.builder.JAFiltersBuilder;
 
 public class JASession<T> {
+	
+	static final Logger Log = LoggerFactory.getLogger(JASession.class);
 
 	private JARepository<T> repository;
 	
@@ -51,6 +56,7 @@ public class JASession<T> {
 			return instance;
 		
 		} catch (Exception e) {
+			Log.error("Cannot create item", e);
 			throw new JARuntimeException("Cannot create item", e);
 		}
 	}
