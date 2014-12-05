@@ -21,7 +21,7 @@ public class JAFieldDescriptionsParser {
 
 	private final JAViewDescriptionsParser viewDescriptionsParser = new JAViewDescriptionsParser();
 	
-	public <T> JAFields build(Class<T> clazz) {
+	public <T> JAFields<T> build(Class<T> clazz) {
 
 		List<JAFieldDescription> fieldDescriptions = Lists.newArrayList();
 		
@@ -31,7 +31,7 @@ public class JAFieldDescriptionsParser {
 			buildField(field, fieldDescriptions);
 		}
 		
-		return new JAFields(fieldDescriptions);
+		return new JAFields<T>(fieldDescriptions);
 	}
 
 	private void buildField(Field field, List<JAFieldDescription> fieldDescriptions) {
@@ -64,11 +64,11 @@ public class JAFieldDescriptionsParser {
 
 	private void addValidators(final JADescriptor descriptor, final JAFieldDescription fieldDescription) {
 		for (JAValidator validator : descriptor.validators()) {
-			fieldDescription.addValidator(validator.operation(), createValidator(validator.validator()));
+			fieldDescription.addValidator(createValidator(validator.validator()));
 		}
 	}
 
-	private JAOperationValidator<?> createValidator(final Class<? extends JAOperationValidator<?>> validator) {
+	private JAOperationValidator createValidator(final Class<? extends JAOperationValidator> validator) {
 		try {
 			return validator.newInstance();
 		} catch (Exception e) {

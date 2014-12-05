@@ -1,8 +1,11 @@
 package ar.edu.utn.aadeed.validator;
 
-public class JATestValidator implements JAOperationValidator<String> {
+import ar.edu.utn.aadeed.exception.JAException;
 
-	public boolean validate(final String value) {
-		return false;
+public class JATestValidator extends JAOperationValidator {
+
+	@Override
+	public void validateOnDelete(final Object value) throws JAException {
+		throw new JAException("Test");
 	}
 }

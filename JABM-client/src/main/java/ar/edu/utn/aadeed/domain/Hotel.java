@@ -13,7 +13,6 @@ import ar.edu.utn.aadeed.annotation.JAEntity;
 import ar.edu.utn.aadeed.annotation.JAValidator;
 import ar.edu.utn.aadeed.annotation.JAView;
 import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
-import ar.edu.utn.aadeed.validator.JAOperation;
 import ar.edu.utn.aadeed.validator.JATestValidator;
 
 import com.google.common.base.MoreObjects;
@@ -31,7 +30,9 @@ public class Hotel {
 	
 	@JAView(order = 1, type = TEXT_BOX)
 	@JADescriptor(filter = true, maxLength = 16, required = true, editable = true, regex = ".{2,18}", 
-		validators = { @JAValidator(operation = JAOperation.DELETE, validator = JATestValidator.class) })
+		validators = { 
+			@JAValidator(validator = JATestValidator.class) 
+		})
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)

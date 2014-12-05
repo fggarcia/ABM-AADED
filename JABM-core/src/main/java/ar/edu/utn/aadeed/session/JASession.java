@@ -11,27 +11,28 @@ public class JASession<T> {
 
 	private JARepository<T> repository;
 	
-	private JAFields fields;
+	private JAFields<T> fields;
 
 	private Class<T> representationFor;
 	
-	public JASession(JARepository<T> repository, JAFields fields, Class<T> representationFor) {
+	public JASession(JARepository<T> repository, JAFields<T> fields, Class<T> representationFor) {
 		this.repository = repository;
 		this.fields = fields;
 		this.representationFor = representationFor;
 	}
 
 	public boolean add(T newObject) {
-		fields.validateInput(newObject);
+		fields.validateInputToAdd(newObject);
 		return this.repository.add(newObject);
 	}
 
 	public boolean remove(T oldObject) {
+		fields.validateInputToDelete(oldObject);
 		return this.repository.remove(oldObject);
 	}
 
 	public boolean update(T oldObject, T newObject) {
-		fields.validateInput(oldObject, newObject);
+		fields.validateInputToUpdate(oldObject, newObject);
 		return this.repository.update(oldObject, newObject);
 	}
 
@@ -58,7 +59,7 @@ public class JASession<T> {
 		return representationFor;
 	}
 	
-	public JAFields getFields() {
+	public JAFields<T> getFields() {
 		return fields;
 	}
 	

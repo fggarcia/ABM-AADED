@@ -58,7 +58,7 @@ public class JAMainPagePanel<T> {
 		searchPanel.renderIn(mainContainer);
 	}
 	
-	public JAFields getFields() {
+	public JAFields<T> getFields() {
 		return viewSession.getFields();
 	}
 

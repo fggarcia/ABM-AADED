@@ -80,7 +80,7 @@ public class JAViewSession<T> {
 		return session;
 	}
 	
-	public JAFields getFields() {
+	public JAFields<T> getFields() {
 		return getSession().getFields();
 	}
 }

@@ -22,7 +22,7 @@ public class JAFiltersBuilder<T> {
 
 	private List<JAFilter> filters = Lists.newArrayList();
 
-	public JAFiltersBuilder(JAFields fields, JARepository<T> repository) {
+	public JAFiltersBuilder(JAFields<T> fields, JARepository<T> repository) {
 		this.repository = repository;
 		this.setAvailableFieldFilters(fields.findAvailableFilters());
 	}

@@ -16,7 +16,7 @@ public class JASessionParser {
 		checkEntityAnnotationPresence(clazz);
 
 		JARepository<T> repository = repositoryParser.build(clazz);
-		JAFields fields = fieldDescriptionsParser.build(clazz);
+		JAFields<T> fields = fieldDescriptionsParser.build(clazz);
 
 		return new JASession<T>(repository, fields, clazz);
 	}

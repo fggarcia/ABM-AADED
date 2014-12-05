@@ -6,18 +6,20 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 
 import ar.edu.utn.aadeed.JAReflections;
+import ar.edu.utn.aadeed.exception.JAException;
 import ar.edu.utn.aadeed.exception.JARuntimeException;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.model.comparator.JAFieldDescriptionComparator;
+import ar.edu.utn.aadeed.validator.JAOperationValidator;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
 
-public class JAFields {
+public class JAFields<T> {
 
 	private List<JAFieldDescription> fieldDescriptions = Lists.newArrayList();
 	
@@ -38,7 +40,7 @@ public class JAFields {
 		return fieldsToShow;
 	}
 	
-	public void validateInput(final Object newItem) {
+	public void validateInputToAdd(final T newItem) {
 		
 		for (JAFieldDescription field : fieldDescriptions) {
 			
@@ -49,22 +51,38 @@ public class JAFields {
 			validateMaxLength(field, value);
 
 			validateRegex(field, value);
+			
+			tryValidatorsOnAdd(field, value);
+		}
+	}
+	
+	public void validateInputToDelete(final T oldItem) {
+		
+		for (JAFieldDescription field : fieldDescriptions) {
+			
+			final Object value = JAReflections.getFieldValue(oldItem, field.getName());
+			
+			tryValidatorsOnDelete(field, value);
 		}
 	}
 
-	public void validateInput(final Object oldItem, final Object newItem) {
+	public void validateInputToUpdate(final T oldItem, final T newItem) {
 		
 		for (JAFieldDescription field : fieldDescriptions) {
 			
 			final Object newItemValue = JAReflections.getFieldValue(newItem, field.getName());
 			
+			final Object oldItemValue = JAReflections.getFieldValue(oldItem, field.getName());
+			
 			validateRequired(field, newItemValue);
 			
-			validateEditable(field, oldItem, newItemValue);
+			validateEditable(field, oldItemValue, newItemValue);
 
 			validateMaxLength(field, newItemValue);
 
 			validateRegex(field, newItemValue);
+			
+			tryValidatorsOnUpdate(field, oldItemValue, newItemValue);
 		}
 	}
 
@@ -84,11 +102,10 @@ public class JAFields {
 		});
 	}
 	
-	private static void validateEditable(final JAFieldDescription field, final Object oldItem, final Object newItemvalue) {
+	private void validateEditable(final JAFieldDescription field, final Object oldItemvalue, final Object newItemvalue) {
 		
 		if (!field.isEditable()) {
 			
-			final Object oldItemvalue = JAReflections.getFieldValue(oldItem, field.getName());
 			if (!ObjectUtils.equals(newItemvalue, oldItemvalue)) {
 				
 				final String errorMsg = String.format("Field '%s' is not editable", field.getName());
@@ -97,7 +114,7 @@ public class JAFields {
 		}
 	}
 	
-	private static void validateRequired(final JAFieldDescription field, final Object value) {
+	private void validateRequired(final JAFieldDescription field, final Object value) {
 		
 		if (field.isRequired() && value == null) {
 
@@ -106,7 +123,7 @@ public class JAFields {
 		}
 	}
 
-	private static void validateMaxLength(final JAFieldDescription field, final Object value) {
+	private void validateMaxLength(final JAFieldDescription field, final Object value) {
 
 		final int maxLength = field.getMaxLength();
 		if (maxLength != -1 && value != null && value.toString().length() > maxLength) {
@@ -116,13 +133,46 @@ public class JAFields {
 		}
 	}
 
-	private static void validateRegex(final JAFieldDescription field, final Object value) {
+	private void validateRegex(final JAFieldDescription field, final Object value) {
 
 		final String regex = field.getRegularExpression();
 		if (StringUtils.isNotBlank(regex) && value != null && !value.toString().matches(regex)) {
 
 			final String errorMsg = String.format("Value for field '%s' did not match regex '%s' : '%s'", field.getName(), regex, value);
 			throw new JARuntimeException(errorMsg);
+		}
+	}
+	
+	private void tryValidatorsOnDelete(final JAFieldDescription field, final Object value) {
+		
+		for (JAOperationValidator validator : field.getValidators()) {
+			try {
+				validator.validateOnDelete(value);
+			} catch (JAException e) {
+				throw new JARuntimeException(e.getMessage());
+			}
+		}
+	}
+	
+	private void tryValidatorsOnAdd(final JAFieldDescription field, final Object value) {
+		
+		for (JAOperationValidator validator : field.getValidators()) {
+			try {
+				validator.validateOnAdd(value);
+			} catch (JAException e) {
+				throw new JARuntimeException(e.getMessage());
+			}
+		}
+	}
+	
+	private void tryValidatorsOnUpdate(final JAFieldDescription field, final Object oldValue, final Object newValue) {
+		
+		for (JAOperationValidator validator : field.getValidators()) {
+			try {
+				validator.validateOnUpdate(oldValue, newValue);
+			} catch (JAException e) {
+				throw new JARuntimeException(e.getMessage());
+			}
 		}
 	}
 }
