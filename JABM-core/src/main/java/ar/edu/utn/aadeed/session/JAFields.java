@@ -40,20 +40,42 @@ public class JAFields<T> {
 		return fieldsToShow;
 	}
 	
+	public JAFieldDescription findByName(final String fieldName) {
+		return Iterables.find(fieldDescriptions, new Predicate<JAFieldDescription>() {
+			public boolean apply(JAFieldDescription input) {
+				return input.getName().equals(fieldName);
+			}
+		}, null);
+	}
+	
 	public void validateInputToAdd(final T newItem) {
 		
 		for (JAFieldDescription field : fieldDescriptions) {
 			
 			final Object value = JAReflections.getFieldValue(newItem, field.getName());
 			
-			validateRequired(field, value);
-
-			validateMaxLength(field, value);
-
-			validateRegex(field, value);
-			
-			tryValidatorsOnAdd(field, value);
+			validateInputToAdd(field, value);
 		}
+	}
+	
+	public void validateInputToAdd(final String fieldName, final Object value) {
+		
+		final JAFieldDescription field = findByName(fieldName);
+		
+		if (field != null) {
+			validateInputToAdd(field, value);
+		}
+	}
+	
+	private void validateInputToAdd(final JAFieldDescription field, final Object value) {
+		
+		validateRequired(field, value);
+
+		validateMaxLength(field, value);
+
+		validateRegex(field, value);
+			
+		tryValidatorsOnAdd(field, value);
 	}
 	
 	public void validateInputToDelete(final T oldItem) {
@@ -74,16 +96,30 @@ public class JAFields<T> {
 			
 			final Object oldItemValue = JAReflections.getFieldValue(oldItem, field.getName());
 			
-			validateRequired(field, newItemValue);
-			
-			validateEditable(field, oldItemValue, newItemValue);
-
-			validateMaxLength(field, newItemValue);
-
-			validateRegex(field, newItemValue);
-			
-			tryValidatorsOnUpdate(field, oldItemValue, newItemValue);
+			validateInputToUpdate(field, oldItemValue, newItemValue);
 		}
+	}
+	
+	public void validateInputToUpdate(final String fieldName, final Object oldItemValue, final Object newItemValue) {
+		
+		final JAFieldDescription field = findByName(fieldName);
+		
+		if (field != null) {
+			validateInputToUpdate(field, oldItemValue, newItemValue);
+		}
+	}
+	
+	private void validateInputToUpdate(final JAFieldDescription field, final Object oldItemValue, final Object newItemValue) {
+		
+		validateRequired(field, newItemValue);
+			
+		validateEditable(field, oldItemValue, newItemValue);
+
+		validateMaxLength(field, newItemValue);
+
+		validateRegex(field, newItemValue);
+			
+		tryValidatorsOnUpdate(field, oldItemValue, newItemValue);
 	}
 
 	private Iterable<JAFieldDescription> filterAvailableFilters() {

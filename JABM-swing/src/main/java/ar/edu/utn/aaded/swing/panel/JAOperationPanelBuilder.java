@@ -64,6 +64,7 @@ public class JAOperationPanelBuilder implements JAViewOperationPanelBuilder {
     				if (item != null) {
     					
     					try {
+    						
 	    					mainPagePanel.getViewSession().getSession().remove(item);
 	    					mainPagePanel.refreshTable();
 	    					
