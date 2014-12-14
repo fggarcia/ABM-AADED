@@ -1,13 +1,12 @@
 package ar.edu.utn.aaded.swing.component;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.List;
 
 import javax.swing.JComboBox;
 
 import org.apache.commons.lang.StringUtils;
 
+import ar.edu.utn.aaded.swing.base.JAComponentUtils;
 import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.view.component.JAMember;
@@ -96,24 +95,7 @@ public class JASelectItemComponent implements JAViewComponent {
     		
     		final JASelectItemMember selectItemMember = new JASelectItemMember(field, comboBox);
     		
-    		comboBox.addFocusListener(new FocusListener() {
-				
-				public void focusGained(final FocusEvent fe) {
-					// Not needed
-				}
-				
-				public void focusLost(final FocusEvent fe) {
-					final boolean check = !fe.isTemporary() && comboBox.isEnabled() && comboBox.isEditable();
-					if (check) {
-						try {
-							field.validateInputToUpdate(originalValue, selectItemMember.getValue());
-							JAComponentUtils.removeErrorStatus(comboBox);
-						} catch (Exception e) {
-							JAComponentUtils.setErrorStatus(comboBox, e);
-						}
-					}
-				}
-			});
+    		comboBox.addFocusListener(JAComponentUtils.createFocusListenerForUpdateAction(field, selectItemMember, comboBox, originalValue));
     		
     		return selectItemMember;
     	}
@@ -122,24 +104,7 @@ public class JASelectItemComponent implements JAViewComponent {
     		
     		final JASelectItemMember selectItemMember = new JASelectItemMember(field, comboBox);
     		
-    		comboBox.addFocusListener(new FocusListener() {
-				
-				public void focusGained(final FocusEvent fe) {
-					// Not needed
-				}
-				
-				public void focusLost(final FocusEvent fe) {
-					final boolean check = !fe.isTemporary() && comboBox.isEnabled() && comboBox.isEditable();
-					if (check) {
-						try {
-							field.validateInputToAdd(selectItemMember.getValue());
-							JAComponentUtils.removeErrorStatus(comboBox);
-						} catch (Exception e) {
-							JAComponentUtils.setErrorStatus(comboBox, e);
-						}
-					}
-				}
-			});
+    		comboBox.addFocusListener(JAComponentUtils.createFocusListenerForAddAction(field, selectItemMember, comboBox));
     		
     		return selectItemMember;
     	}

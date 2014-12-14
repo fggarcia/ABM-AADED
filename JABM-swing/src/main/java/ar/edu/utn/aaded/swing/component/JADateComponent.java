@@ -1,11 +1,10 @@
 package ar.edu.utn.aaded.swing.component;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.Date;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import ar.edu.utn.aaded.swing.base.JAComponentUtils;
 import ar.edu.utn.aadeed.JADateUtils;
 import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
@@ -68,24 +67,7 @@ public class JADateComponent implements JAViewComponent {
     		
     		final JADateMember dateMember = new JADateMember(field, jCalendar);
     		
-    		jCalendar.addFocusListener(new FocusListener() {
-				
-				public void focusGained(final FocusEvent fe) {
-					// Not needed
-				}
-				
-				public void focusLost(final FocusEvent fe) {
-					final boolean check = !fe.isTemporary() && jCalendar.isEnabled() && jCalendar.isEditable();
-					if (check) {
-						try {
-							field.validateInputToUpdate(originalValue, dateMember.getValue());
-							JAComponentUtils.removeErrorStatus(jCalendar);
-						} catch (Exception e) {
-							JAComponentUtils.setErrorStatus(jCalendar, e);
-						}
-					}
-				}
-			});
+    		jCalendar.addFocusListener(JAComponentUtils.createFocusListenerForUpdateAction(field, dateMember, jCalendar, originalValue));
     		
     		return dateMember;
     	}
@@ -94,24 +76,7 @@ public class JADateComponent implements JAViewComponent {
     		
     		final JADateMember dateMember = new JADateMember(field, jCalendar);
     		
-    		jCalendar.addFocusListener(new FocusListener() {
-				
-				public void focusGained(final FocusEvent fe) {
-					// Not needed
-				}
-				
-				public void focusLost(final FocusEvent fe) {
-					final boolean check = !fe.isTemporary() && jCalendar.isEnabled() && jCalendar.isEditable();
-					if (check) {
-						try {
-							field.validateInputToAdd(dateMember.getValue());
-							JAComponentUtils.removeErrorStatus(jCalendar);
-						} catch (Exception e) {
-							JAComponentUtils.setErrorStatus(jCalendar, e);
-						}
-					}
-				}
-			});
+    		jCalendar.addFocusListener(JAComponentUtils.createFocusListenerForAddAction(field, dateMember, jCalendar));
     		
     		return dateMember;
     	}

@@ -1,7 +1,5 @@
 package ar.edu.utn.aaded.swing.component;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.List;
 
 import javax.swing.JCheckBox;
@@ -9,6 +7,7 @@ import javax.swing.JComboBox;
 
 import org.apache.commons.lang.StringUtils;
 
+import ar.edu.utn.aaded.swing.base.JAComponentUtils;
 import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.view.component.JAMember;
@@ -35,6 +34,7 @@ public class JACheckBoxComponent implements JAViewComponent {
 		jComboBox.addItem(EMPTY_OPTION);
 		jComboBox.setSelectedItem(EMPTY_OPTION);
 		addCheckBoxOptions(jComboBox);
+		
 		container.addMember(JAComboBoxMember.getInstanceForSearchAction(field, jComboBox));
     }
 
@@ -120,24 +120,7 @@ public class JACheckBoxComponent implements JAViewComponent {
     		
     		final JACheckBoxMember checkBoxMember = new JACheckBoxMember(field, jCheckBox);
     		
-    		jCheckBox.addFocusListener(new FocusListener() {
-				
-				public void focusGained(final FocusEvent fe) {
-					// Not needed
-				}
-				
-				public void focusLost(final FocusEvent fe) {
-					final boolean check = !fe.isTemporary() && jCheckBox.isEnabled();
-					if (check) {
-						try {
-							field.validateInputToAdd(checkBoxMember.getValue());
-							JAComponentUtils.removeErrorStatus(jCheckBox);
-						} catch (Exception e) {
-							JAComponentUtils.setErrorStatus(jCheckBox, e);
-						}
-					}
-				}
-			});
+    		jCheckBox.addFocusListener(JAComponentUtils.createFocusListenerForAddAction(field, checkBoxMember, jCheckBox));
     		
     		return checkBoxMember;
     	}
@@ -146,24 +129,7 @@ public class JACheckBoxComponent implements JAViewComponent {
     		
     		final JACheckBoxMember checkBoxMember = new JACheckBoxMember(field, jCheckBox);
     		
-    		jCheckBox.addFocusListener(new FocusListener() {
-				
-				public void focusGained(final FocusEvent fe) {
-					// Not needed
-				}
-				
-				public void focusLost(final FocusEvent fe) {
-					final boolean check = !fe.isTemporary() && jCheckBox.isEnabled();
-					if (check) {
-						try {
-							field.validateInputToUpdate(originalValue, checkBoxMember.getValue());
-							JAComponentUtils.removeErrorStatus(jCheckBox);
-						} catch (Exception e) {
-							JAComponentUtils.setErrorStatus(jCheckBox, e);
-						}
-					}
-				}
-			});
+    		jCheckBox.addFocusListener(JAComponentUtils.createFocusListenerForUpdateAction(field, checkBoxMember, jCheckBox, originalValue));
     		
     		return checkBoxMember;
     	}

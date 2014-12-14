@@ -1,13 +1,11 @@
 package ar.edu.utn.aaded.swing.component;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-
 import javax.swing.JTextField;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 
+import ar.edu.utn.aaded.swing.base.JAComponentUtils;
 import ar.edu.utn.aaded.swing.base.JACustomTextField;
 import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
@@ -63,24 +61,7 @@ public class JATextBoxComponent implements JAViewComponent {
     		
     		final JATextBoxMember textBoxMember = new JATextBoxMember(field, textField);
     		
-    		textField.addFocusListener(new FocusListener() {
-				
-				public void focusGained(final FocusEvent fe) {
-					// Not needed
-				}
-				
-				public void focusLost(final FocusEvent fe) {
-					final boolean check = !fe.isTemporary() && textField.isEnabled() && textField.isEditable();
-					if (check) {
-						try {
-							field.validateInputToUpdate(originalValue, textBoxMember.getValue());
-							JAComponentUtils.removeErrorStatus(textField);
-						} catch (Exception e) {
-							JAComponentUtils.setErrorStatus(textField, e);
-						}
-					}
-				}
-			});
+    		textField.addFocusListener(JAComponentUtils.createFocusListenerForUpdateAction(field, textBoxMember, textField, originalValue));
     		
     		return textBoxMember;
     	}
@@ -89,24 +70,7 @@ public class JATextBoxComponent implements JAViewComponent {
     		
     		final JATextBoxMember textBoxMember = new JATextBoxMember(field, textField);
     		
-    		textField.addFocusListener(new FocusListener() {
-				
-				public void focusGained(final FocusEvent fe) {
-					// Not needed
-				}
-				
-				public void focusLost(final FocusEvent fe) {
-					final boolean check = !fe.isTemporary() && textField.isEnabled() && textField.isEditable();
-					if (check) {
-						try {
-							field.validateInputToAdd(textBoxMember.getValue());
-							JAComponentUtils.removeErrorStatus(textField);
-						} catch (Exception e) {
-							JAComponentUtils.setErrorStatus(textField, e);
-						}
-					}
-				}
-			});
+    		textField.addFocusListener(JAComponentUtils.createFocusListenerForAddAction(field, textBoxMember, textField));
     		
     		return textBoxMember;
     	}
