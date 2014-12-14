@@ -11,20 +11,19 @@ import org.apache.commons.lang.StringUtils;
 
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 
-public class JARegexTextField extends JTextField {
+public class JACustomTextField extends JTextField {
  
 	private static final long serialVersionUID = 1L;
 	
 	protected int maxLength = -1;
-    protected String regexCheck = ".*";
     protected JAFieldDescription field;
  
-    public JARegexTextField(final JAFieldDescription field) {
+    public JACustomTextField(final JAFieldDescription field) {
         super();
         setField(field);
     }
      
-    public JARegexTextField(final JAFieldDescription field, final int cols) {
+    public JACustomTextField(final JAFieldDescription field, final int cols) {
         super(cols);
         setField(field);
     }
@@ -42,14 +41,6 @@ public class JARegexTextField extends JTextField {
         maxLength = max;
     }
      
-    public String getRegexFilter() {
-        return String.valueOf(regexCheck);
-    }
- 
-    public void setRegexFilter(String regex) {
-        regexCheck = regex;
-    }
-    
     public JAFieldDescription getField() {
 		return field;
 	}
@@ -57,16 +48,8 @@ public class JARegexTextField extends JTextField {
     public void setField(final JAFieldDescription field) {
 		this.field = field;
 		setMaximumLength(field.getMaxLength());
-		updateRegex();
 	}
     
-    private void updateRegex() {
-		final String regularExpression = field.getRegularExpression();
-		if (StringUtils.isNotBlank(regularExpression)) {
-        	setRegexFilter(regularExpression);
-        }
-    }
- 
     private final class RegexDocument extends PlainDocument {
 
     	private static final long serialVersionUID = 1L;
@@ -76,7 +59,7 @@ public class JARegexTextField extends JTextField {
 			
 			final String proposedRemove = getText(0, offs) + getText(offs + len, getLength() - offs - len);
 			
-			if(proposedRemove.matches(regexCheck) && validateInput(proposedRemove)) {
+			if(validateInput(proposedRemove)) {
 				super.remove(offs, len);
             }
 		}
@@ -92,13 +75,13 @@ public class JARegexTextField extends JTextField {
  
             if (maxLength < 0) {
             	
-                if(proposedInsert.matches(regexCheck) && validateInput(proposedInsert)) {
+                if(validateInput(proposedInsert)) {
                 	super.insertString(offs, str, a);
                 }
                 
             } else {
                 
-            	if(offs < maxLength && offs >= 0 && proposedInsert.matches(regexCheck) && getLength() + str.length() <= maxLength && validateInput(proposedInsert)) {
+            	if(offs < maxLength && offs >= 0 && getLength() + str.length() <= maxLength && validateInput(proposedInsert)) {
                 	super.insertString(offs, str, a);
                 }
             	

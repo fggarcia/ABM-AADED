@@ -30,7 +30,7 @@ public class Hotel {
 	private Long id;
 	
 	@JAView(order = 1, type = TEXT_BOX)
-	@JADescriptor(filter = true, maxLength = 16, required = true, editable = true, regex = ".{2,18}", 
+	@JADescriptor(filter = true, required = true, editable = true, regex = ".{2,18}", 
 		validators = { 
 			@JAValidator(validator = JATestValidator.class) 
 		})
@@ -53,7 +53,7 @@ public class Hotel {
 	private Date creation;
 	
 	@JAView(order = 7, label = "Rating", type = TEXT_BOX)
-	@JADescriptor(required = false, editable = true, filter = true)
+	@JADescriptor(required = false, editable = false, filter = true)
 	private BigDecimal rate;
 	
 	@JAView(order = 8, type = JAViewType.IMAGE)
