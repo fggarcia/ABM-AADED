@@ -1,5 +1,11 @@
 package ar.edu.utn.aaded.swing.component;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.Date;
+
+import org.jdesktop.swingx.JXDatePicker;
+
 import ar.edu.utn.aadeed.JADateUtils;
 import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
@@ -7,12 +13,6 @@ import ar.edu.utn.aadeed.view.component.JAMember;
 import ar.edu.utn.aadeed.view.component.JAViewComponent;
 import ar.edu.utn.aadeed.view.component.JAViewType;
 import ar.edu.utn.aadeed.view.container.JAContainer;
-
-import org.jdesktop.swingx.JXDatePicker;
-
-import javax.swing.*;
-
-import java.util.Date;
 
 public class JADateComponent implements JAViewComponent {
 
@@ -22,24 +22,28 @@ public class JADateComponent implements JAViewComponent {
 
 	public void renderForSearch(JAFieldDescription field, JAContainer container) {
     	
-        JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
-        container.addMember(fieldLabel);
-
+		JAComponentUtils.addFieldLabel(field, container);
+		
 		JXDatePicker jCalendar = new JXDatePicker();
 		jCalendar.getEditor().setEditable(false);
 
-		container.addMember(new JADateMember(field, jCalendar));
+		container.addMember(JADateMember.getInstanceForSearchAction(field, jCalendar));
     }
 
 	public void renderForAdd(JAFieldDescription field, JAContainer container) {
-		this.renderForSearch(field, container);
+		
+		JAComponentUtils.addFieldLabel(field, container);
+		
+		JXDatePicker jCalendar = new JXDatePicker();
+		jCalendar.getEditor().setEditable(false);
+
+		container.addMember(JADateMember.getInstanceForAddAction(field, jCalendar));
 	}
 
 	public void renderForUpdate(Object object, JAFieldDescription field, JAContainer container) {
 
-        JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
-        container.addMember(fieldLabel);
-
+		JAComponentUtils.addFieldLabel(field, container);
+		
 		Object itemValue = JAReflections.getFieldValue(object, field.getName());
 
 		JXDatePicker jCalendar = new JXDatePicker();
@@ -47,16 +51,72 @@ public class JADateComponent implements JAViewComponent {
 		jCalendar.setEnabled(field.isEditable());
 		jCalendar.getEditor().setEditable(false);
 		
-		container.addMember(new JADateMember(field, jCalendar));
+		container.addMember(JADateMember.getInstanceForUpdateAction(field, jCalendar, itemValue));
     }
 
-    public static class JADateMember implements JAMember {
+	private static class JADateMember implements JAMember {
     	
     	private JAFieldDescription field;
     	
     	private JXDatePicker jCalendar;
     	
-		public JADateMember(JAFieldDescription field, JXDatePicker jCalendar) {
+    	public static JADateMember getInstanceForSearchAction(final JAFieldDescription field, final JXDatePicker jCalendar) {
+    		return new JADateMember(field, jCalendar);
+    	}
+    	
+    	public static JADateMember getInstanceForUpdateAction(final JAFieldDescription field, final JXDatePicker jCalendar, final Object originalValue) {
+    		
+    		final JADateMember dateMember = new JADateMember(field, jCalendar);
+    		
+    		jCalendar.addFocusListener(new FocusListener() {
+				
+				public void focusGained(final FocusEvent fe) {
+					// Not needed
+				}
+				
+				public void focusLost(final FocusEvent fe) {
+					final boolean check = !fe.isTemporary() && jCalendar.isEnabled() && jCalendar.isEditable();
+					if (check) {
+						try {
+							field.validateInputToUpdate(originalValue, dateMember.getValue());
+							JAComponentUtils.removeErrorStatus(jCalendar);
+						} catch (Exception e) {
+							JAComponentUtils.setErrorStatus(jCalendar, e);
+						}
+					}
+				}
+			});
+    		
+    		return dateMember;
+    	}
+    	
+    	public static JADateMember getInstanceForAddAction(final JAFieldDescription field, final JXDatePicker jCalendar) {
+    		
+    		final JADateMember dateMember = new JADateMember(field, jCalendar);
+    		
+    		jCalendar.addFocusListener(new FocusListener() {
+				
+				public void focusGained(final FocusEvent fe) {
+					// Not needed
+				}
+				
+				public void focusLost(final FocusEvent fe) {
+					final boolean check = !fe.isTemporary() && jCalendar.isEnabled() && jCalendar.isEditable();
+					if (check) {
+						try {
+							field.validateInputToAdd(dateMember.getValue());
+							JAComponentUtils.removeErrorStatus(jCalendar);
+						} catch (Exception e) {
+							JAComponentUtils.setErrorStatus(jCalendar, e);
+						}
+					}
+				}
+			});
+    		
+    		return dateMember;
+    	}
+    	
+		private JADateMember(JAFieldDescription field, JXDatePicker jCalendar) {
 			this.field = field;
 			this.jCalendar = jCalendar;
 		}
