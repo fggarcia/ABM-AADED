@@ -1,5 +1,13 @@
 package ar.edu.utn.aaded.swing.component;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.List;
+
+import javax.swing.JComboBox;
+
+import org.apache.commons.lang.StringUtils;
+
 import ar.edu.utn.aadeed.JAReflections;
 import ar.edu.utn.aadeed.model.JAFieldDescription;
 import ar.edu.utn.aadeed.view.component.JAMember;
@@ -12,12 +20,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import org.apache.commons.lang.StringUtils;
-
-import javax.swing.*;
-
-import java.util.List;
-
 public class JASelectItemComponent implements JAViewComponent {
 	
 	private static final String EMPTY_OPTION = "";
@@ -27,24 +29,29 @@ public class JASelectItemComponent implements JAViewComponent {
     }
 
 	public void renderForSearch(JAFieldDescription field, JAContainer container) {
-    	
-        JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
-        container.addMember(fieldLabel);
+
+		JAComponentUtils.addFieldLabel(field, container);
 
 		JComboBox<String> jComboBox = createComboBox(field);
 		jComboBox.setSelectedItem(EMPTY_OPTION);
-		container.addMember(new JASelectItemMember(field, jComboBox));
+		
+		container.addMember(JASelectItemMember.getInstanceForSearchAction(field, jComboBox));
     }
 
 	public void renderForAdd(JAFieldDescription field, JAContainer container) {
-		this.renderForSearch(field, container);
+		
+		JAComponentUtils.addFieldLabel(field, container);
+
+		JComboBox<String> jComboBox = createComboBox(field);
+		jComboBox.setSelectedItem(EMPTY_OPTION);
+		
+		container.addMember(JASelectItemMember.getInstanceForAddAction(field, jComboBox));
 	}
 
 	public void renderForUpdate(Object object, JAFieldDescription field, JAContainer container) {
 
-        JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
-        container.addMember(fieldLabel);
-        
+		JAComponentUtils.addFieldLabel(field, container);
+		
         Object itemValue = JAReflections.getFieldValue(object, field.getName());
         String stringItemValue = MoreObjects.firstNonNull(itemValue, EMPTY_OPTION).toString();
 
@@ -52,7 +59,7 @@ public class JASelectItemComponent implements JAViewComponent {
 		jComboBox.setSelectedItem(stringItemValue);
 		jComboBox.setEnabled(field.isEditable());
 		
-		container.addMember(new JASelectItemMember(field, jComboBox));
+		container.addMember(JASelectItemMember.getInstanceForUpdateAction(field, jComboBox, itemValue));
     }
 
 	private JComboBox<String> createComboBox(JAFieldDescription field) {
@@ -75,13 +82,69 @@ public class JASelectItemComponent implements JAViewComponent {
 		return values;
 	}
     
-    public static class JASelectItemMember implements JAMember {
+    private static class JASelectItemMember implements JAMember {
     	
     	private JAFieldDescription field;
     	
     	private JComboBox<String> comboBox;
     	
-		public JASelectItemMember(JAFieldDescription field, JComboBox<String> comboBox) {
+    	public static JASelectItemMember getInstanceForSearchAction(final JAFieldDescription field, final JComboBox<String> comboBox) {
+    		return new JASelectItemMember(field, comboBox);
+    	}
+    	
+    	public static JASelectItemMember getInstanceForUpdateAction(final JAFieldDescription field, final JComboBox<String> comboBox, final Object originalValue) {
+    		
+    		final JASelectItemMember selectItemMember = new JASelectItemMember(field, comboBox);
+    		
+    		comboBox.addFocusListener(new FocusListener() {
+				
+				public void focusGained(final FocusEvent fe) {
+					// Not needed
+				}
+				
+				public void focusLost(final FocusEvent fe) {
+					final boolean check = !fe.isTemporary() && comboBox.isEnabled() && comboBox.isEditable();
+					if (check) {
+						try {
+							field.validateInputToUpdate(originalValue, selectItemMember.getValue());
+							JAComponentUtils.removeErrorStatus(comboBox);
+						} catch (Exception e) {
+							JAComponentUtils.setErrorStatus(comboBox, e);
+						}
+					}
+				}
+			});
+    		
+    		return selectItemMember;
+    	}
+    	
+    	public static JASelectItemMember getInstanceForAddAction(final JAFieldDescription field, final JComboBox<String> comboBox) {
+    		
+    		final JASelectItemMember selectItemMember = new JASelectItemMember(field, comboBox);
+    		
+    		comboBox.addFocusListener(new FocusListener() {
+				
+				public void focusGained(final FocusEvent fe) {
+					// Not needed
+				}
+				
+				public void focusLost(final FocusEvent fe) {
+					final boolean check = !fe.isTemporary() && comboBox.isEnabled() && comboBox.isEditable();
+					if (check) {
+						try {
+							field.validateInputToAdd(selectItemMember.getValue());
+							JAComponentUtils.removeErrorStatus(comboBox);
+						} catch (Exception e) {
+							JAComponentUtils.setErrorStatus(comboBox, e);
+						}
+					}
+				}
+			});
+    		
+    		return selectItemMember;
+    	}
+    	
+    	private JASelectItemMember(JAFieldDescription field, JComboBox<String> comboBox) {
 			this.field = field;
 			this.comboBox = comboBox;
 		}

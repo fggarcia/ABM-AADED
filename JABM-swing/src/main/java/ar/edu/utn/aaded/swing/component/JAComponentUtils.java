@@ -23,7 +23,6 @@ public class JAComponentUtils {
 	}
 	
 	public static void addFieldLabel(final JAFieldDescription field, final JAContainer container) {
-		
         JLabel fieldLabel = new JLabel(field.getLabel() + ":", JLabel.RIGHT);
         container.addMember(fieldLabel);
 	}

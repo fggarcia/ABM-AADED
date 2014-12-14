@@ -41,7 +41,7 @@ public class Hotel {
 	private String address;
 	
 	@JAView(order = 3, type = SELECT_ITEM)
-	@JADescriptor(filter = true, editable = false)
+	@JADescriptor(filter = true, editable = true)
 	private Type hotelType;
 
 	@JAView(order = 5, type = CHECK_BOX)
