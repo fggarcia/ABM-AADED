@@ -13,7 +13,7 @@ import ar.edu.utn.aadeed.annotation.JAEntity;
 import ar.edu.utn.aadeed.annotation.JAValidator;
 import ar.edu.utn.aadeed.annotation.JAView;
 import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
-import ar.edu.utn.aadeed.validator.JATestValidator;
+import ar.edu.utn.aadeed.validator.JACityValidator;
 import ar.edu.utn.aadeed.view.component.JAViewType;
 
 import com.google.common.base.MoreObjects;
@@ -30,10 +30,7 @@ public class Hotel {
 	private Long id;
 	
 	@JAView(order = 1, type = TEXT_BOX)
-	@JADescriptor(filter = true, required = true, editable = true, regex = ".{2,18}", 
-		validators = { 
-			@JAValidator(validator = JATestValidator.class) 
-		})
+	@JADescriptor(filter = true, required = true, editable = true, regex = ".{2,18}")
 	private String name;
 
 	@JAView(order = 4, type = TEXT_BOX)
@@ -59,16 +56,25 @@ public class Hotel {
 	@JAView(order = 8, type = JAViewType.IMAGE)
 	@JADescriptor(required = false, editable = true, filter = true)
 	private byte[] image;
+
+	@JAView(order = 9, type = JAViewType.TEXT_BOX)
+	@JADescriptor(required = true, editable = true, filter = true,
+		validators = {
+				@JAValidator(validator = JACityValidator.class)
+		})
+	private Long cityId;
 	
 	public Hotel() { }
 
-	public Hotel(Long id, String name, String address, Type hotelType, Boolean preferred, Date creation) {
+	public Hotel(Long id, String name, String address, Type hotelType, Boolean preferred, Date creation,
+		Long cityId) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.hotelType = hotelType;
 		this.preferred = preferred;
 		this.creation = creation;
+		this.cityId = cityId;
 	}
 
 	public Long getId() {
@@ -134,10 +140,19 @@ public class Hotel {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
-	
+
+	public Long getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
+	}
+
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this).add("id", id).add("name", name).add("address", address)
-				.add("hotelType", hotelType).add("preferred", preferred).add("creation", creation).add("rate", rate).toString();
+				.add("hotelType", hotelType).add("preferred", preferred).add("creation", creation).add("rate", rate)
+				.add("cityId", cityId).toString();
 	}
 }
