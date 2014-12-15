@@ -34,7 +34,6 @@ public class JADateComponent implements JAViewComponent {
 		JAComponentUtils.addFieldLabel(field, container);
 		
 		JXDatePicker jCalendar = new JXDatePicker();
-		jCalendar.getEditor().setEditable(false);
 
 		container.addMember(JADateMember.getInstanceForAddAction(field, jCalendar));
 	}
@@ -48,7 +47,6 @@ public class JADateComponent implements JAViewComponent {
 		JXDatePicker jCalendar = new JXDatePicker();
 		jCalendar.setDate(JADateUtils.truncate((Date) itemValue));
 		jCalendar.setEnabled(field.isEditable());
-		jCalendar.getEditor().setEditable(false);
 		
 		container.addMember(JADateMember.getInstanceForUpdateAction(field, jCalendar, itemValue));
     }
@@ -67,7 +65,7 @@ public class JADateComponent implements JAViewComponent {
     		
     		final JADateMember dateMember = new JADateMember(field, jCalendar);
     		
-    		jCalendar.addFocusListener(JAComponentUtils.createFocusListenerForUpdateAction(field, dateMember, jCalendar, originalValue));
+    		jCalendar.getEditor().addFocusListener(JAComponentUtils.createFocusListenerForUpdateAction(field, dateMember, jCalendar, originalValue));
     		
     		return dateMember;
     	}
@@ -76,7 +74,7 @@ public class JADateComponent implements JAViewComponent {
     		
     		final JADateMember dateMember = new JADateMember(field, jCalendar);
     		
-    		jCalendar.addFocusListener(JAComponentUtils.createFocusListenerForAddAction(field, dateMember, jCalendar));
+    		jCalendar.getEditor().addFocusListener(JAComponentUtils.createFocusListenerForAddAction(field, dateMember, jCalendar));
     		
     		return dateMember;
     	}
