@@ -2,20 +2,22 @@ package ar.edu.utn.aadeed.domain;
 
 import ar.edu.utn.aadeed.annotation.JADescriptor;
 import ar.edu.utn.aadeed.annotation.JAEntity;
+import ar.edu.utn.aadeed.annotation.JAValidator;
 import ar.edu.utn.aadeed.annotation.JAView;
 import ar.edu.utn.aadeed.repository.memory.JAMemoryRepositoryFactory;
+import ar.edu.utn.aadeed.validator.JAHotelCityValidator;
 import com.google.common.base.MoreObjects;
 
 import static ar.edu.utn.aadeed.view.component.JAViewType.TEXT_BOX;
 
-/**
- * Created by fede on 15/12/14.
- */
 @JAEntity(repositoryFactory = JAMemoryRepositoryFactory.class)
 public class City {
 
     @JAView(order = 1, label = "Identificador", type = TEXT_BOX)
-    @JADescriptor(required = true, editable = false, filter = true)
+    @JADescriptor(required = true, editable = false, filter = true,
+        validators = {
+                @JAValidator(validator = JAHotelCityValidator.class)
+        })
     private Long id;
 
     @JAView(order = 1, label = "Descripcion", type = TEXT_BOX)

@@ -24,5 +24,6 @@ public class App
         hotelSession.add(new Hotel(666L, "Independiente", "Gaona 987", Hotel.Type.APPARTMENT, false, JADateUtils.truncate(new Date()), 2L));
 
         JASessionFactory.getInstance().getViewSession(Hotel.class).renderMainPagePanel();
+        JASessionFactory.getInstance().getViewSession(City.class).renderMainPagePanel();
     }
 }
