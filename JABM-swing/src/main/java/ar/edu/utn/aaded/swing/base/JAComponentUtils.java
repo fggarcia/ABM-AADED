@@ -17,7 +17,7 @@ public class JAComponentUtils {
 	public static void removeErrorStatus(final JComponent component) {
 		component.setToolTipText(null);
 		component.setBorder(null);
-		component.updateUI();
+		component.repaint();
 	}
 	
 	public static void setErrorStatus(final JComponent component, final Exception e) {
