@@ -53,10 +53,6 @@ public class Hotel {
 	@JADescriptor(required = false, editable = false, filter = true)
 	private BigDecimal rate;
 	
-	@JAView(order = 8, type = JAViewType.IMAGE)
-	@JADescriptor(required = false, editable = true, filter = true)
-	private byte[] image;
-
 	@JAView(order = 9, type = JAViewType.TEXT_BOX)
 	@JADescriptor(required = true, editable = true, filter = true,
 		validators = {
@@ -130,14 +126,6 @@ public class Hotel {
 	
 	public void setRate(BigDecimal rate) {
 		this.rate = rate;
-	}
-
-	public byte[] getImage() {
-		return image;
-	}
-	
-	public void setImage(byte[] image) {
-		this.image = image;
 	}
 
 	public Long getCityId() {
