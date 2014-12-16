@@ -6,7 +6,8 @@ import java.awt.Container;
 import java.awt.LayoutManager;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 
 import org.apache.commons.lang.NotImplementedException;
 
@@ -19,33 +20,42 @@ import com.google.common.base.Function;
 
 public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 
-	private Function<JFrame, LayoutManager> layout;
+	private Function<JInternalFrame, LayoutManager> layout;
+	
+	private JDesktopPane desktop;
 
-	public JAFrameContainerBuilder withLayout(Function<JFrame, LayoutManager> layout) {
+	public JAFrameContainerBuilder withLayout(Function<JInternalFrame, LayoutManager> layout) {
 		this.layout = layout;
+		return this;
+	}
+	
+	public JAFrameContainerBuilder withDesktop(final JDesktopPane desktop) {
+		this.desktop = desktop;
 		return this;
 	}
 
 	public <T> JAViewContainer<T> build(JAViewSession<T> viewSession) {
 
 		checkArgument(layout != null, "layout cannot be null");
+		checkArgument(desktop != null, "desktop cannot be null");
 
-		JFrame frame = new JFrame();
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JInternalFrame frame = new JInternalFrame(viewSession.getSession().getRepresentationFor().getSimpleName(), true, true, true, true);
 
 		Container container = frame.getContentPane();
 		container.setLayout(layout.apply(frame));
 
-		return new JAFrameContainer<T>(frame);
+		return new JAFrameContainer<T>(frame, desktop);
 	}
 
 	private static class JAFrameContainer<T> implements JAViewContainer<T> {
 
-		private JFrame frame;
+		private JInternalFrame frame;
+		
+		private JDesktopPane desktop;
 
-		public JAFrameContainer(JFrame frame) {
+		public JAFrameContainer(JInternalFrame frame, JDesktopPane desktop) {
 			this.frame = frame;
+			this.desktop = desktop;
 		}
 
 		public void addMember(Object member) {
@@ -53,10 +63,12 @@ public class JAFrameContainerBuilder implements JAViewContainerBuilder {
 		}
 
 		public void render() {
-			frame.setLocationRelativeTo(null);
+			
 			frame.setResizable(false);
 			frame.pack();
 			frame.setVisible(true);
+			
+			desktop.add(frame);
 		}
 
 		public T renderAndReturn() {

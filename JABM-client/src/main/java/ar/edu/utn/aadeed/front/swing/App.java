@@ -1,5 +1,6 @@
 package ar.edu.utn.aadeed.front.swing;
 
+import ar.edu.utn.aaded.swing.JADesktop;
 import ar.edu.utn.aaded.swing.JARegisterComponents;
 import ar.edu.utn.aadeed.JADateUtils;
 import ar.edu.utn.aadeed.domain.City;
@@ -23,7 +24,10 @@ public class App
         hotelSession.add(new Hotel(567L, "Churma", "Billinghurst 897", Hotel.Type.HOTEL, true, JADateUtils.truncate(new Date()), 1L));
         hotelSession.add(new Hotel(666L, "Independiente", "Gaona 987", Hotel.Type.APPARTMENT, false, JADateUtils.truncate(new Date()), 2L));
 
-        JASessionFactory.getInstance().getViewSession(Hotel.class).renderMainPagePanel();
-        JASessionFactory.getInstance().getViewSession(City.class).renderMainPagePanel();
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				JADesktop.getInstance().showGUI();
+			}
+		});
     }
 }

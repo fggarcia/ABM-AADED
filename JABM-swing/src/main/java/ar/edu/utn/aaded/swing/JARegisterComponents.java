@@ -3,7 +3,7 @@ package ar.edu.utn.aaded.swing;
 import java.awt.LayoutManager;
 
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 
 import ar.edu.utn.aaded.swing.component.JACheckBoxComponent;
 import ar.edu.utn.aaded.swing.component.JADateComponent;
@@ -27,11 +27,11 @@ public final class JARegisterComponents {
 
     static {
 
-        JAViewContainerBuilder mainFrameContainerBuilder = new JAFrameContainerBuilder().withLayout(new Function<JFrame, LayoutManager>() {
-            public LayoutManager apply(JFrame input) {
+        JAViewContainerBuilder mainFrameContainerBuilder = new JAFrameContainerBuilder().withLayout(new Function<JInternalFrame, LayoutManager>() {
+            public LayoutManager apply(JInternalFrame input) {
                 return new BoxLayout(input.getContentPane(), BoxLayout.Y_AXIS);
             }
-        });
+        }).withDesktop(JADesktop.getInstance().getDesktop());
         
         JAMainPagePanelBuilder mainPagePanelBuilder = new JAMainPagePanelBuilder()
         	.withTableBuilder(new JARecordTableBuilder())

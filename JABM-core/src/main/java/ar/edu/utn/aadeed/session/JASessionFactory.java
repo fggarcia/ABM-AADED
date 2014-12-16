@@ -2,6 +2,7 @@ package ar.edu.utn.aadeed.session;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import java.util.Collection;
 import java.util.Map;
 
 import ar.edu.utn.aadeed.parser.JASessionParser;
@@ -36,18 +37,22 @@ public final class JASessionFactory {
 		return instance;
 	}
 	
-	public <T> JAViewSession<T> getViewSession(Class<T> clazz) {
+	public <T> JAViewSession<T> getViewSession(final Class<T> clazz) {
 		checkArgument(clazz != null, "clazz cannot be null");
 		checkArgument(viewModule != null, "Please, register a view module first");
 		return new JAViewSession<T>(viewModule, getSession(clazz));
 	}
-
+	
 	public void registerViewModule(JAViewModule viewModule) {
 		this.viewModule = viewModule;
 	}
 
 	public JAViewModuleBuilder getViewModuleBuilder() {
 		return new JAViewModuleBuilder(this);
+	}
+	
+	public Collection<JASession<?>> getSessions() {
+		return sessions.values();
 	}
 	
 	@SuppressWarnings("unchecked")
