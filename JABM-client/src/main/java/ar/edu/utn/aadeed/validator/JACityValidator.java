@@ -21,17 +21,17 @@ public class JACityValidator extends JAOperationValidator {
 	}
 
 	private void checkCity(final Object newValue) throws JAException {
-		List<City> citiesList = JASessionFactory.getInstance().getSession(City.class)
-				.getFiltersBuilder().search();
+		
+		List<City> cities = JASessionFactory.getInstance().getSession(City.class).getFiltersBuilder().search();
 
-		final boolean any = Iterables.any(citiesList, new Predicate<City>() {
-			@Override
-			public boolean apply(City city) {
+		final boolean any = Iterables.any(cities, new Predicate<City>() {
+			public boolean apply(final City city) {
 				return city.getId().equals(newValue);
 			}
 		});
 
-		if (!any)
+		if (!any) {
 			throw new JAException("City not found");
+		}
 	}
 }
