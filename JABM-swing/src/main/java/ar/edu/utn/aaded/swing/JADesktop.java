@@ -115,7 +115,11 @@ public class JADesktop extends JFrame implements ActionListener {
 	}
 
 	public void showGUI() {
-		setJMenuBar(createMenuBar());
-		setVisible(true);
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				setJMenuBar(createMenuBar());
+				setVisible(true);
+			}
+		});
 	}
 }

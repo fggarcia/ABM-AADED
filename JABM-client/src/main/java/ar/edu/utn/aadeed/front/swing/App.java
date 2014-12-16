@@ -24,10 +24,6 @@ public class App
         hotelSession.add(new Hotel(567L, "Churma", "Billinghurst 897", Hotel.Type.HOTEL, true, JADateUtils.truncate(new Date()), 1L));
         hotelSession.add(new Hotel(666L, "Independiente", "Gaona 987", Hotel.Type.APPARTMENT, false, JADateUtils.truncate(new Date()), 2L));
 
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				JADesktop.getInstance().showGUI();
-			}
-		});
+		JADesktop.getInstance().showGUI();
     }
 }
