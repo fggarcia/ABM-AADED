@@ -15,6 +15,9 @@ public class App
     public static void main(String args[]) throws ClassNotFoundException {
     	
         Class.forName(JARegisterComponents.class.getName());
+        
+        JASessionFactory.getInstance().initSession(City.class);
+        JASessionFactory.getInstance().initSession(Hotel.class);
 
         JASession<City> citySession = JASessionFactory.getInstance().getSession(City.class);
         citySession.add(new City(1L, "Buenos Aires"));

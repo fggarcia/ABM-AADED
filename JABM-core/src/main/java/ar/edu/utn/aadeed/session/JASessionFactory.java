@@ -55,6 +55,10 @@ public final class JASessionFactory {
 		return sessions.values();
 	}
 	
+	public <T> void initSession(Class<T> clazz) {
+		getSession(clazz);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public <T> JASession<T> getSession(Class<T> clazz) {
 		checkArgument(clazz != null, "clazz cannot be null");
